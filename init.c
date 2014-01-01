@@ -2,5 +2,5 @@
 
 void init(void)
 {
-	putchar('a');
+	kputchar('a');
 }
