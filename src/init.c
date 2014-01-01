@@ -3,12 +3,11 @@
 void init(void)
 {
 	int i,j;
-	for(i=0;i<10;i++)
+	for(i=0;i<30;i++)
 	{
 		for(j=0;j<80;j++)
 		{
-			kputchar('0'+(i/10+j)%10);
+			kputchar('0'+(i+j)%10);
 		}
 	}
-	kputchar('#');
 }

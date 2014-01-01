@@ -4,15 +4,15 @@ void kputchar(char ch)
 {
 	static int position=0;
 
+	*(BUFFER_TEXT+position*2)=ch;
+	*(BUFFER_TEXT+position*2+1)=getcolor();
+	position++;
+
 	if(position>BUFFER_TEXT_WIDTH*BUFFER_TEXT_HEIGHT)
 	{
-		position=BUFFER_TEXT_WIDTH*(BUFFER_TEXT_HEIGHT-1);
 		movelinesup();
+		position=BUFFER_TEXT_WIDTH*(BUFFER_TEXT_HEIGHT-1)+1;
 	}
-
-	*(BUFFER_TEXT+position)=ch;
-	*(BUFFER_TEXT+position+1)=getcolor();
-	position+=2;
 }
 
 char color(char data,char set)
@@ -46,7 +46,7 @@ void movelinesup(void)
 	{
 		for(j=0;j<BUFFER_TEXT_WIDTH*2;j++)
 		{
-			*(BUFFER_TEXT+i*BUFFER_TEXT_WIDTH*2+j)=*(BUFFER_TEXT+(i+1)*BUFFER_TEXT_WIDTH+j);
+			*(BUFFER_TEXT+i*BUFFER_TEXT_WIDTH*2+j)=*(BUFFER_TEXT+(i+1)*BUFFER_TEXT_WIDTH*2+j);
 		}
 	}
 	for(i=0;i<BUFFER_TEXT_WIDTH*2;i++)
