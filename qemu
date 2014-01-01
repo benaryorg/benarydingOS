@@ -1,2 +1,2 @@
 #!/bin/sh
-qemu -kernel kernel
+qemu -kernel build/kernel
