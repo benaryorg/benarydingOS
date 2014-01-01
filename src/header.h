@@ -8,7 +8,7 @@ typedef __builtin_va_list       va_list;
 
 #define BUFFER_TEXT ((char *)0xb8000)
 #define BUFFER_TEXT_WIDTH 80
-#define BUFFER_TEXT_HEIGHT 24
+#define BUFFER_TEXT_HEIGHT 10
 
 void kputchar(char);
 char color(char,char);

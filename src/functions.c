@@ -51,6 +51,6 @@ void movelinesup(void)
 	}
 	for(i=0;i<BUFFER_TEXT_WIDTH*2;i++)
 	{
-		*(BUFFER_TEXT+(BUFFER_TEXT_HEIGHT-1)*2+i)=0;
+		*(BUFFER_TEXT+(BUFFER_TEXT_HEIGHT-1)*BUFFER_TEXT_WIDTH*2+i)=0;
 	}
 }

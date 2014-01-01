@@ -2,12 +2,13 @@
 
 void init(void)
 {
-	int i;
-	while(1)
+	int i,j;
+	for(i=0;i<10;i++)
 	{
-		for(i=0;i<26;i++)
+		for(j=0;j<80;j++)
 		{
-			kputchar('a'+i);
+			kputchar('0'+(i/10+j)%10);
 		}
 	}
+	kputchar('#');
 }
