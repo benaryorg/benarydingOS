@@ -1,7 +1,7 @@
 SRCS = $(shell find -name '*.[cS]')
 OBJS = $(addsuffix .o,$(basename $(SRCS)))
 
-CC = gcc
+CC = clang
 LD = ld
 
 ASFLAGS = -m32
