@@ -8,7 +8,7 @@ ASFLAGS = -m32
 CFLAGS = -m32 -Wall -g -fno-stack-protector -nostdinc
 LDFLAGS = -melf_i386 -Ttext=0x100000
 
-kernel: $(OBJS)
+build/kernel: $(OBJS)
 	$(LD) $(LDFLAGS) -o $(shell echo $@ | sed -e 's,src,build,') $(shell echo $^ | sed -e 's,src,build,g')
 
 %.o: %.c
