@@ -161,16 +161,3 @@ int puts(const char *s)
 	putchar('\n');
 	return (int)i+2;
 }
-
-int printf(const char *format,...)
-{
-	va_list list;
-	va_start(list,format);
-	va_arg(list,int);
-	while(0)
-	{
-		
-	}
-	va_end(list);
-	return 0;//Upon successful return, these functions return the number of characters printed (excluding the null byte used to end output to strings).
-}
