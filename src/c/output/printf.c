@@ -6,7 +6,9 @@ int printf(const char *format,...)
 	va_list list;
 	va_start(list,format);
 	
-	for (p)
+	for (p = format; *p != 0x00; p++) {
+		
+	}
 	
 	va_arg(list,int);
 	
