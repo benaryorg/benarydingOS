@@ -20,9 +20,4 @@ build/kernel: $(OBJS)
 clean:
 	rm $(OBJS)
 
-setup:
-	$(shell cp -r src build)
-	$(shell cd build)
-	$(rm -rf *.c)
-
 .PHONY: clean
