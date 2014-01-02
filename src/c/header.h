@@ -1,8 +1,8 @@
 #ifndef __BENARYDINGOS_HEADER__
 #define __BEANRYDINGOS_HEADER__
 
-#include "../header/stdargs.h"
-#include "../header/stdtype.h"
+#include "header/stdargs.h"
+#include "header/stdtype.h"
 
 #define BUFFER_TEXT ((char *)0xb8000)
 #define BUFFER_TEXT_WIDTH 80
