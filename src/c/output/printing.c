@@ -91,13 +91,13 @@ size_t printdouble(double d)
 			i-=x*(i/x);
 			n++;
 		}
-		putchar('.');
+	}
+	putchar('.');
+	n++;
+	for(i=0;i<6;i++)
+	{
+		putchar((char)('0'+((int)(d*=10))%10));
 		n++;
-		for(i=0;i<6;i++)
-		{
-			putchar((char)('0'+((int)(d*=10))%10));
-			n++;
-		}
 	}
 	return n;
 }
