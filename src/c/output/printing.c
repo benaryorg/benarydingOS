@@ -15,14 +15,38 @@ void kputchar(char ch)
 	position++;
 }
 
-void movelinesup(void)
+void kprintf(const char *format,...)
 {
+	char c;
 	int i;
-	for(i=0;i<BUFFER_TEXT_HEIGHT-1;i++)
+	double d;
+	char *cp;
+	void *ptr;
+
+	va_list list;
+	for(va_start(list,format);*format,format++)
 	{
-		memcpy(BUFFER_TEXT+i*BUFFER_TEXT_WIDTH*2,BUFFER_TEXT+(i+1)*BUFFER_TEXT_WIDTH*2,BUFFER_TEXT_WIDTH*2);
+		if(*format=='%')
+		{
+			switch(*++format)
+			{
+				case '%':
+					kputchar('%');
+					break;
+				case 'd':
+					i=(int)va_arg(list,int);
+					printint(i);
+				default:
+#warning Unknown symbol after '%'
+				break;
+			}
+		}
+		else
+		{
+			kputchar(*format);
+		}
 	}
-	memset(BUFFER_TEXT+BUFFER_TEXT_WIDTH*(BUFFER_TEXT_HEIGHT-1)*2,0,BUFFER_TEXT_WIDTH*2);
+	va_end(list);
 }
 
 int printf(const char *format,...)
@@ -30,7 +54,7 @@ int printf(const char *format,...)
 	va_list list;
 	va_start(list,format);
 	va_arg(list,int);
-	while(*format++)
+	while(0)
 	{
 		
 	}
