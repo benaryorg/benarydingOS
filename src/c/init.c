@@ -2,7 +2,14 @@
 
 void init(void)
 {
-	double d=5.3;
-	kprintf("This is a number: %d",d);
-	while(1);
+	cleardisplay();
+	int i,j;
+	for(i=0;i<5;i++)
+	{
+		for(j=0;j<i;j++)
+		{
+			putchar('\t');
+		}
+		kprintf("%i\n",i);
+	}
 }

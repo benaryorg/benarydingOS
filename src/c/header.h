@@ -8,7 +8,7 @@
 #define BUFFER_TEXT_WIDTH 80
 #define BUFFER_TEXT_HEIGHT 25
 
-void kputchar(char);
+int putchar(int);
 char color(char,char);
 void setcolor(char);
 char getcolor(void);
@@ -19,5 +19,6 @@ int printf(const char *format,...);
 void kprintf(const char *format,...);
 size_t printint(int);
 size_t printdouble(double);
+void cleardisplay(void);
 
 #endif

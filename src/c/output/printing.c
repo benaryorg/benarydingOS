@@ -1,8 +1,10 @@
 #include "../header.h"
 
-void kputchar(char ch)
+int putchar(int c)
 {
 	static int position=0;
+
+	unsigned char ch=(unsigned char)c;
 
 	if(position>BUFFER_TEXT_WIDTH*BUFFER_TEXT_HEIGHT)
 	{
@@ -10,9 +12,27 @@ void kputchar(char ch)
 		position=BUFFER_TEXT_WIDTH*(BUFFER_TEXT_HEIGHT-1)+1;
 	}
 
-	*(BUFFER_TEXT+position*2)=ch;
-	*(BUFFER_TEXT+position*2+1)=getcolor();
-	position++;
+	switch(ch)
+	{
+		case '\n':
+			position+=BUFFER_TEXT_WIDTH-position%BUFFER_TEXT_WIDTH;
+			break;
+		case '\t':
+			position+=5-position%5;
+			break;
+		case '\r':
+			position-=position%BUFFER_TEXT_WIDTH;
+			break;
+		case '\b':
+			position--;
+			break;
+		default:
+			*(BUFFER_TEXT+position*2)=ch;
+			*(BUFFER_TEXT+position*2+1)=getcolor();
+			position++;
+			break;
+	}
+	return c;
 }
 
 size_t printint(int i)
@@ -20,18 +40,26 @@ size_t printint(int i)
 	size_t n=0;
 	if(i<0)
 	{
-		kputchar('-');
+		putchar('-');
 		i=-i;
 		n++;
 	}
-	int x;
-	for(x=1;x<=i;x*=10);
-	x/=10;
-	for(;x;x/=10)
+	if(i==0)
 	{
-		kputchar((char)('0'+(i/x)));
-		i-=x*(i/x);
+		putchar('0');
 		n++;
+	}
+	else
+	{
+		int x;
+		for(x=1;x<=i;x*=10);
+		x/=10;
+		for(;x;x/=10)
+		{
+			putchar((char)('0'+(i/x)));
+			i-=x*(i/x);
+			n++;
+		}
 	}
 	return n;
 }
@@ -41,27 +69,35 @@ size_t printdouble(double d)
 	size_t n=0;
 	if(d<0)
 	{
-		kputchar('-');
+		putchar('-');
 		d=-d;
 		n++;
 	}
-	int x;
 	int i=(int)d;
 	d-=i;
-	for(x=1;x<=i;x*=10);
-	x/=10;
-	for(;x;x/=10)
+	if(i==0)
 	{
-		kputchar((char)('0'+(i/x)));
-		i-=x*(i/x);
+		putchar('0');
 		n++;
 	}
-	kputchar('.');
-	n++;
-	for(i=0;i<6;i++)
+	else
 	{
-		kputchar((char)('0'+((int)(d*=10))%10));
+		int x;
+		for(x=1;x<=i;x*=10);
+		x/=10;
+		for(;x;x/=10)
+		{
+			putchar((char)('0'+(i/x)));
+			i-=x*(i/x);
+			n++;
+		}
+		putchar('.');
 		n++;
+		for(i=0;i<6;i++)
+		{
+			putchar((char)('0'+((int)(d*=10))%10));
+			n++;
+		}
 	}
 	return n;
 }
@@ -82,7 +118,7 @@ void kprintf(const char *format,...)
 			switch(*++format)
 			{
 				case '%':
-					kputchar('%');
+					putchar('%');
 					break;
 				case 'i':
 					i=(int)va_arg(list,int);
@@ -92,6 +128,14 @@ void kprintf(const char *format,...)
 					d=(double)va_arg(list,double);
 					printdouble(d);
 					break;
+				case 'c':
+					c=(char)va_arg(list,char);
+					putchar(c);
+					break;
+				case 's':
+					cp=(char *)va_arg(list,char *);
+					puts(cp);
+					break;
 				default:
 //#warning Unknown symbol after '%'
 				break;
@@ -99,7 +143,7 @@ void kprintf(const char *format,...)
 		}
 		else
 		{
-			kputchar(*format);
+			putchar(*format);
 		}
 	}
 	va_end(list);
