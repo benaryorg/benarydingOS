@@ -24,11 +24,15 @@ size_t printint(int i)
 		i=-i;
 		n++;
 	}
-	do
+	int x;
+	for(x=1;x<=i;x*=10);
+	x/=10;
+	for(;x;x/=10)
 	{
-		kputchar((char)('0'+i%10));
+		kputchar((char)('0'+(i/x)));
+		i-=x*i/x;
 		n++;
-	}while(i/=10);
+	}
 	return n;
 }
 
@@ -41,13 +45,17 @@ size_t printdouble(double d)
 		d=-d;
 		n++;
 	}
+	int x;
 	int i=(int)d;
 	d-=i;
-	do
+	for(x=1;x<=i;x*=10);
+	x/=10;
+	for(;x;x/=10)
 	{
-		kputchar((char)('0'+i%10));
+		kputchar((char)('0'+(i/x)));
+		i-=x*i/x;
 		n++;
-	}while(d>1);
+	}
 	kputchar('.');
 	n++;
 	for(i=0;i<6;i++)
