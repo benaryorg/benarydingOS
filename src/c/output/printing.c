@@ -133,7 +133,10 @@ void kprintf(const char *format,...)
 					break;
 				case 's':
 					cp=(char *)va_arg(list,char *);
-					puts(cp);
+					while(*cp)
+					{
+						putchar(*cp++);
+					}
 					break;
 				default:
 //#warning Unknown symbol after '%'
