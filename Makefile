@@ -19,6 +19,6 @@ build/kernel: $(OBJS)
 	$(CC) $(ASFLAGS) -c -o $(shell echo $@ | sed -e 's,src,build,') $^
 
 clean:
-	rm $(OBJS)
+	rm $(subst ./src,./build,$(OBJS))
 
 .PHONY: clean
