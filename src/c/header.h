@@ -18,5 +18,6 @@ void *memset(void *,int,size_t);
 int printf(const char *format,...);
 void kprintf(const char *format,...);
 size_t printint(int);
+size_t printdouble(double);
 
 #endif

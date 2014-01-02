@@ -32,6 +32,32 @@ size_t printint(int i)
 	return n;
 }
 
+size_t printdouble(double d)
+{
+	size_t n=0;
+	if(d<0)
+	{
+		kputchar('-');
+		d=-d;
+		n++;
+	}
+	int i=(int)d;
+	d-=i;
+	do
+	{
+		kputchar((char)('0'+i%10));
+		n++;
+	}while(d>1);
+	kputchar('.');
+	n++;
+	for(i=0;i<6;i++)
+	{
+		kputchar((char)('0'+((int)(d*=10))%10));
+		n++;
+	}
+	return n;
+}
+
 void kprintf(const char *format,...)
 {
 	char c;
