@@ -2,6 +2,8 @@
 
 void init(void)
 {
+	kprintf("%s%c","test",'\n');
+	puts("asdf");
 	cleardisplay();
 	int i,j;
 	for(i=0;i<5;i++)

@@ -153,13 +153,13 @@ void kprintf(const char *format,...)
 
 int puts(const char *s)
 {
-	const char *copy=s;
-	while(*s)
+	int i;
+	for(i=0;s[i];i++)
 	{
-		putchar(*s++);
+		putchar(s[i]);
 	}
 	putchar('\n');
-	return (int)(s-copy)+1;
+	return (int)i+2;
 }
 
 int printf(const char *format,...)
