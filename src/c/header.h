@@ -3,8 +3,6 @@
 
 #include "header/stdargs.h"
 #include "header/stdtype.h"
-#include "gdt/gdt.h"
-#include "interrupts/interrupts.h"
 #include "utils/utils.h"
 
 #define BUFFER_TEXT ((char *)0xb8000)
@@ -27,7 +25,5 @@ int puts(const char *);
 void setposition(int);
 int getposition(void);
 int cursorposition(int,char);
-void init_pic(void);
-inline void outb(uint16_t,uint8_t);
 
 #endif

@@ -32,6 +32,7 @@ _halt:
 	hlt
 	jmp _halt
 
+/*
 .macro intr_stub nr
 .global intr_stub_\nr
 intr_stub_\nr:
@@ -106,6 +107,7 @@ intr_common_handler:
 
 	// Ruecksprung zum unterbrochenen Code
 	iret
+*/
 
 .section .bss
 .space 16384
