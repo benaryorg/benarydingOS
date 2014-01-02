@@ -8,7 +8,8 @@ int putchar(int c)
 
 	if(position>BUFFER_TEXT_WIDTH*BUFFER_TEXT_HEIGHT)
 	{
-		position-=BUFFER_TEXT_WIDTH;
+		position=BUFFER_TEXT_WIDTH*(BUFFER_TEXT_HEIGHT-1)+1;
+		setposition(position);
 		movelinesup();
 	}
 
