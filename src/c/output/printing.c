@@ -41,7 +41,7 @@ void kprintf(const char *format,...)
 	void *ptr;
 
 	va_list list;
-	for(va_start(list,format);*format,format++)
+	for(va_start(list,format);*format;format++)
 	{
 		if(*format=='%')
 		{
