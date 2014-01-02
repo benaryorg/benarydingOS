@@ -2,7 +2,10 @@
 
 int main(void)
 {
+	cleardisplay();
 	int i,j;
-	kprintf("%d",5.8);
+	for(i=0;i<100;i++)
+		for(j=0;j<80;j++)
+			putchar('0'+(i+j)%10);
 	return 0;
 }

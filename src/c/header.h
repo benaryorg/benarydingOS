@@ -21,5 +21,8 @@ size_t printint(int);
 size_t printdouble(double);
 void cleardisplay(void);
 int puts(const char *);
+void setposition(int);
+int getposition(void);
+int cursorposition(int,char);
 
 #endif
