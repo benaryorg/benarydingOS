@@ -2,6 +2,8 @@
 
 int main(void)
 {
+	load_gdt();
+	load_idt();
 	cleardisplay();
 	int i,j;
 	for(i=0;i<35;i++)
