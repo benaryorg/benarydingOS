@@ -53,6 +53,7 @@ void kprintf(const char *format,...)
 				case 'd':
 					i=(int)va_arg(list,int);
 					printint(i);
+					break;
 				default:
 #warning Unknown symbol after '%'
 				break;
