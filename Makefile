@@ -1,5 +1,5 @@
 SRCS = $(shell find -name '*.[cS]')
-OBJS = $(addsuffix .o,$(basename $(SRCS)))
+OBJS = $(addsuffix .o,$(subst 'src','build',$(basename $(SRCS))))
 
 CC = cc
 LD = ld
@@ -9,13 +9,12 @@ CFLAGS = -m32 -Wall -g -fno-stack-protector -nostdinc
 LDFLAGS = -melf_i386 -Ttext=0x100000
 
 build/kernel: $(OBJS)
-	$(LD) $(LDFLAGS) -o $(shell echo $@ | sed -e 's,src,build,') $(shell echo $^ | sed -e 's,src,build,g')
+	$(LD) $(LDFLAGS) -o $@ $^
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c -o $(shell echo $@ | sed -e 's,src,build,') $^
-
+	$(CC) $(CFLAGS) -c -o $@ $^
 %.o: %.S
-	$(CC) $(ASFLAGS) -c -o $(shell echo $@ | sed -e 's,src,build,') $^
+	$(CC) $(ASFLAGS) -c -o $@ $^
 
 clean:
 	rm $(OBJS)
