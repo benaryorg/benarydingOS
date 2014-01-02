@@ -1,8 +1,8 @@
 #ifndef __BENARYDINGOS_HEADER__
 #define __BEANRYDINGOS_HEADER__
 
-#include "header/stdargs.h"
-#include "header/stdtype.h"
+#include "../header/stdargs.h"
+#include "../header/stdtype.h"
 
 #define BUFFER_TEXT ((char *)0xb8000)
 #define BUFFER_TEXT_WIDTH 80
@@ -16,5 +16,6 @@ void movelinesup(void);
 void *memcpy(void *,const void *,size_t);
 void *memset(void *,int,size_t);
 int printf(const char *format,...);
+int kprintf(const char *format,...);
 
 #endif

@@ -1,5 +1,6 @@
 SRCS = $(shell find -name '*.[cS]')
-OBJS = $(subst ./src,./build,$(addsuffix .o,$(basename $(SRCS))))
+#OBJS = $(subst ./src,./build,$(addsuffix .o,$(basename $(SRCS))))
+OBJS = $(addsuffix .o,$(basename $(SRCS)))
 
 CC = cc
 LD = ld
