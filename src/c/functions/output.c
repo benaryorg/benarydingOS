@@ -1,4 +1,4 @@
-#include "header.h"
+#include "../header.h"
 
 void kputchar(char ch)
 {
@@ -16,30 +16,6 @@ void kputchar(char ch)
 	position++;
 }
 
-char color(char data,char set)
-{
-	static char color=(char)0x0a;
-	if(set)
-	{
-		color=data;
-	}
-	else
-	{
-		return color;
-	}
-	return 0;
-}
-
-char getcolor(void)
-{
-	return color(0,0);
-}
-
-void setcolor(char data)
-{
-	color(data,1);
-}
-
 void movelinesup(void)
 {
 /*
@@ -51,26 +27,6 @@ void movelinesup(void)
 	memset(BUFFER_TEXT+BUFFER_TEXT_WIDTH*(BUFFER_TEXT_HEIGHT-1)*2,0,BUFFER_TEXT_WIDTH*2);
 */
 	memset(BUFFER_TEXT,0,BUFFER_TEXT_WIDTH*BUFFER_TEXT_HEIGHT*2);
-}
-
-void *memcpy(void *dest,const void *src,size_t n)
-{
-	size_t i;
-	for(i=0;i<n;i++)
-	{
-		*((char *)dest+i)=*((const char *)src+i);
-	}
-	return dest;
-}
-
-void *memset(void *data,int byte,size_t n)
-{
-	size_t i;
-	for(i=0;i<n;i++)
-	{
-		*((char *)data+i)=(char)byte;
-	}
-	return data;
 }
 
 int printf(const char *format,...)
