@@ -17,13 +17,15 @@ if __name__ == '__main__':
                                                 +'in a directory with the following extension: %s' 
                                                 % (str(file_extensions)))
     
-    parser.add_argument('--text', type=str, help='The string to look for', required=True)
-    parser.add_argument('--replace', type=str, help='The string to replace `text\' with', required=True)
+#    parser.add_argument('--text', type=str, help='The string to look for', required=True)
+#    parser.add_argument('--replace', type=str, help='The string to replace `text\' with', required=True)
     parser.add_argument('--dir', dest='directory', default='.', help='directory to replace in')
     
     args = parser.parse_args()
-    str1 = args.text
-    str2 = args.replace
+#    str1 = args.text
+#    str2 = args.replace
+    str1=sys.argv[1]
+    str2=sys.argv[2]
     directory = args.directory
     
     file_list = []
