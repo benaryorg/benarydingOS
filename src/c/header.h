@@ -5,6 +5,7 @@
 #include "header/stdtype.h"
 #include "gdt/gdt.h"
 #include "interrupts/interrupts.h"
+#include "utils/utils.h"
 
 #define BUFFER_TEXT ((char *)0xb8000)
 #define BUFFER_TEXT_WIDTH 80
