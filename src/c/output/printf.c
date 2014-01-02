@@ -25,8 +25,7 @@ int printf(const char *format,...)
 			
 			case 's':
 				s = va_arg(list, char*);
-				for(i = 0; s[i]; i++)
-				{
+				for(i = 0; s[i]; i++) {
 					putchar(s[i]);
 					count++;
 				}
