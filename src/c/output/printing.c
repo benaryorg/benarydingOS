@@ -50,9 +50,13 @@ void kprintf(const char *format,...)
 				case '%':
 					kputchar('%');
 					break;
-				case 'd':
+				case 'i':
 					i=(int)va_arg(list,int);
 					printint(i);
+					break;
+				case 'd':
+					d=(double)va_arg(list,double);
+					printdouble(d);
 					break;
 				default:
 #warning Unknown symbol after '%'
