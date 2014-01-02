@@ -15,6 +15,23 @@ void kputchar(char ch)
 	position++;
 }
 
+size_t printint(int i)
+{
+	size_t n=0;
+	if(i<0)
+	{
+		kputchar('-');
+		i=-i;
+		n++;
+	}
+	do
+	{
+		kputchar((char)('0'+i%10));
+		n++;
+	}while(i/=10);
+	return n;
+}
+
 void kprintf(const char *format,...)
 {
 	char c;
