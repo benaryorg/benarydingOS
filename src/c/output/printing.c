@@ -155,7 +155,8 @@ int puts(const char *s)
 	{
 		putchar(*s++);
 	}
-	return (int)(s-copy);
+	putchar('\n');
+	return (int)(s-copy)+1;
 }
 
 int printf(const char *format,...)
