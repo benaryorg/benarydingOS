@@ -11,23 +11,30 @@ int printf(const char *format,...)
 	
 	for (p = format; *p != 0x00; p++) {
 		if (*p != '%') {
-			if (putchar(*p)) {
-				count++;
-			}
+			putchar(*p);
+			count++;
 			continue;
 		}
 		
 		switch (*++p) {
 			case 'c':
 				i = va_arg(list, int);
-				if (putchar(i)) {
-					count++;
-				}
+				putchar(i);
+				count++;
 				break;
 			
 			case 's':
 				s = va_arg(list, char*);
-				count += puts(s);
+				for(i = 0; s[i]; i++)
+				{
+					putchar(s[i]);
+					count++;
+				}
+				break;
+			
+			case '%':
+				putchar('%');
+				count++;
 				break;
 		}
 	}
