@@ -5,9 +5,7 @@ int main(void)
 	load_gdt();
 	load_idt();
 	cleardisplay();
-	int i,j;
-	for(i=0;i<35;i++)
-		for(j=0;j<80;j++)
-			putchar('0'+(i+j)%10);
+	asm volatile("int $0x0");
+	while(1);
 	return 0;
 }

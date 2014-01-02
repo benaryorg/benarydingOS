@@ -1,6 +1,6 @@
 #include "../header.h"
 
-void interrupt_handler(void)
+void handle_interrupt(struct cpu_state* cpu)
 {
 	kprintf("Interrupt\n");
 	while(1);

@@ -17,4 +17,6 @@ void init_pic(void)
 	// Alle IRQs aktivieren (demaskieren)
 	outb(0x20, 0x0);
 	outb(0xa0, 0x0);
+
+	asm volatile("sti");
 }
