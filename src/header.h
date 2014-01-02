@@ -1,10 +1,8 @@
 #ifndef __BENARYDINGOS_HEADER__
 #define __BEANRYDINGOS_HEADER__
 
-typedef __builtin_va_list       va_list;
-#define va_start(ap, X)         __builtin_va_start(ap, X)
-#define va_arg(ap, type)        __builtin_va_arg(ap, type)
-#define va_end(ap)              __builtin_va_end(ap)
+#include "header/stdargs.h"
+#include "header/stdtype.h"
 
 #define BUFFER_TEXT ((char *)0xb8000)
 #define BUFFER_TEXT_WIDTH 80
@@ -15,5 +13,8 @@ char color(char,char);
 void setcolor(char);
 char getcolor(void);
 void movelinesup(void);
+void *memcpy(void *,const void *,size_t);
+void *memset(void *,int,size_t);
+int printf(const char *format,...);
 
 #endif

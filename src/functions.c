@@ -4,15 +4,16 @@ void kputchar(char ch)
 {
 	static int position=0;
 
-	*(BUFFER_TEXT+position*2)=ch;
-	*(BUFFER_TEXT+position*2+1)=getcolor();
-	position++;
-
 	if(position>BUFFER_TEXT_WIDTH*BUFFER_TEXT_HEIGHT)
 	{
 		movelinesup();
-		position=BUFFER_TEXT_WIDTH*(BUFFER_TEXT_HEIGHT-1)+1;
+//		position=BUFFER_TEXT_WIDTH*(BUFFER_TEXT_HEIGHT-1)+1;
+		position=0;
 	}
+
+	*(BUFFER_TEXT+position*2)=ch;
+	*(BUFFER_TEXT+position*2+1)=getcolor();
+	position++;
 }
 
 char color(char data,char set)
@@ -41,16 +42,46 @@ void setcolor(char data)
 
 void movelinesup(void)
 {
-	int i,j;
+/*
+	int i;
 	for(i=0;i<BUFFER_TEXT_HEIGHT-1;i++)
 	{
-		for(j=0;j<BUFFER_TEXT_WIDTH*2;j++)
-		{
-			*(BUFFER_TEXT+i*BUFFER_TEXT_WIDTH*2+j)=*(BUFFER_TEXT+(i+1)*BUFFER_TEXT_WIDTH*2+j);
-		}
+		memcpy(BUFFER_TEXT+i*BUFFER_TEXT_WIDTH*2,BUFFER_TEXT+(i+1)*BUFFER_TEXT_WIDTH*2,BUFFER_TEXT_WIDTH*2);
 	}
-	for(i=0;i<BUFFER_TEXT_WIDTH*2;i++)
+	memset(BUFFER_TEXT+BUFFER_TEXT_WIDTH*(BUFFER_TEXT_HEIGHT-1)*2,0,BUFFER_TEXT_WIDTH*2);
+*/
+	memset(BUFFER_TEXT,0,BUFFER_TEXT_WIDTH*BUFFER_TEXT_HEIGHT*2);
+}
+
+void *memcpy(void *dest,const void *src,size_t n)
+{
+	size_t i;
+	for(i=0;i<n;i++)
 	{
-		*(BUFFER_TEXT+(BUFFER_TEXT_HEIGHT-1)*BUFFER_TEXT_WIDTH*2+i)=0;
+		*((char *)dest+i)=*((const char *)src+i);
 	}
+	return dest;
+}
+
+void *memset(void *data,int byte,size_t n)
+{
+	size_t i;
+	for(i=0;i<n;i++)
+	{
+		*((char *)data+i)=(char)byte;
+	}
+	return data;
+}
+
+int printf(const char *format,...)
+{
+	va_list list;
+	va_start(list,format);
+	va_arg(list,int);
+	while(*format++)
+	{
+		
+	}
+	va_end(list);
+	return 0;//Upon successful return, these functions return the number of characters printed (excluding the null byte used to end output to strings).
 }

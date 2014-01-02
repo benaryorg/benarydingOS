@@ -1,2 +1,2 @@
 #!/bin/sh
-qemu -kernel build/kernel
+qemu -kernel build/kernel $@
