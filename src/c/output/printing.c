@@ -30,7 +30,7 @@ size_t printint(int i)
 	for(;x;x/=10)
 	{
 		kputchar((char)('0'+(i/x)));
-		i-=x*i/x;
+		i-=x*(i/x);
 		n++;
 	}
 	return n;
@@ -53,7 +53,7 @@ size_t printdouble(double d)
 	for(;x;x/=10)
 	{
 		kputchar((char)('0'+(i/x)));
-		i-=x*i/x;
+		i-=x*(i/x);
 		n++;
 	}
 	kputchar('.');
@@ -93,7 +93,7 @@ void kprintf(const char *format,...)
 					printdouble(d);
 					break;
 				default:
-#warning Unknown symbol after '%'
+//#warning Unknown symbol after '%'
 				break;
 			}
 		}

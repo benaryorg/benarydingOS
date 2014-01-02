@@ -2,5 +2,7 @@
 
 void init(void)
 {
-	kprintf("This is a number: %d",58);
+	double d=5.3;
+	kprintf("This is a number: %d",d);
+	while(1);
 }
