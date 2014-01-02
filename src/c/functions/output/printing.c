@@ -7,8 +7,7 @@ void kputchar(char ch)
 	if(position>BUFFER_TEXT_WIDTH*BUFFER_TEXT_HEIGHT)
 	{
 		movelinesup();
-//		position=BUFFER_TEXT_WIDTH*(BUFFER_TEXT_HEIGHT-1)+1;
-		position=0;
+		position=BUFFER_TEXT_WIDTH*(BUFFER_TEXT_HEIGHT-1)+1;
 	}
 
 	*(BUFFER_TEXT+position*2)=ch;
@@ -18,15 +17,12 @@ void kputchar(char ch)
 
 void movelinesup(void)
 {
-/*
 	int i;
 	for(i=0;i<BUFFER_TEXT_HEIGHT-1;i++)
 	{
 		memcpy(BUFFER_TEXT+i*BUFFER_TEXT_WIDTH*2,BUFFER_TEXT+(i+1)*BUFFER_TEXT_WIDTH*2,BUFFER_TEXT_WIDTH*2);
 	}
 	memset(BUFFER_TEXT+BUFFER_TEXT_WIDTH*(BUFFER_TEXT_HEIGHT-1)*2,0,BUFFER_TEXT_WIDTH*2);
-*/
-	memset(BUFFER_TEXT,0,BUFFER_TEXT_WIDTH*BUFFER_TEXT_HEIGHT*2);
 }
 
 int printf(const char *format,...)
