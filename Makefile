@@ -1,5 +1,5 @@
 SRCS = $(shell find -name '*.[cS]')
-OBJS = $(addsuffix .o,$(basename $(SRCS)))
+OBJS = $(subst ./src,./build,$(addsuffix .o,$(basename $(SRCS))))
 
 CC = cc
 LD = ld
@@ -19,5 +19,10 @@ build/kernel: $(OBJS)
 
 clean:
 	rm $(OBJS)
+
+setup:
+	$(shell cp -r src build)
+	$(shell cd build)
+	$(rm -rf *.c)
 
 .PHONY: clean

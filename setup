@@ -1,0 +1,11 @@
+#!/bin/sh
+test build
+if [ $? ];then
+	rm -rf build
+fi
+mkdir build
+cd src
+for f in $(find * -dir);do
+	mkdir ../build/$f
+done
+cd ..
