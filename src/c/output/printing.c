@@ -108,7 +108,6 @@ void kprintf(const char *format,...)
 	int i;
 	double d;
 	char *cp;
-	void *ptr;
 
 	va_list list;
 	for(va_start(list,format);*format;format++)
@@ -129,7 +128,7 @@ void kprintf(const char *format,...)
 					printdouble(d);
 					break;
 				case 'c':
-					c=(char)va_arg(list,char);
+					c=(char)va_arg(list,int);
 					putchar(c);
 					break;
 				case 's':
@@ -147,6 +146,16 @@ void kprintf(const char *format,...)
 		}
 	}
 	va_end(list);
+}
+
+int puts(const char *s)
+{
+	const char *copy=s;
+	while(*s)
+	{
+		putchar(*s++);
+	}
+	return (int)(s-copy);
 }
 
 int printf(const char *format,...)

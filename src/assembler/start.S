@@ -14,16 +14,6 @@
 // Init ist eine Funktion aus init.c
 .extern init
 
-#define MB_MAGIC 0x1badb002
-#define MB_FLAGS 0x0
-#define MB_CHECKSUM -(MB_MAGIC + MB_FLAGS)
- 
-// Der Multiboot-Header
-.align 4
-.int    MB_MAGIC
-.int    MB_FLAGS
-.int    MB_CHECKSUM
- 
 // _start muss global sein, damit der Linker es findet und als Einsprungspunkt
 // benutzen kann (alle Labels, die nicht global sind, sind nur in dieser Datei
 // sichtbar)

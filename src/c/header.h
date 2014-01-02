@@ -20,5 +20,6 @@ void kprintf(const char *format,...);
 size_t printint(int);
 size_t printdouble(double);
 void cleardisplay(void);
+int puts(const char *);
 
 #endif
