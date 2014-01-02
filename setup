@@ -5,7 +5,10 @@ if [ $? ];then
 fi
 mkdir build
 cd src
-for f in $(find * -dir);do
-	mkdir ../build/$f
+for f in $(find *);do
+	ls $f/. >/dev/null 2>/dev/null
+	if [ $? -ne 2 ];then
+		mkdir ../build/$f
+	fi
 done
 cd ..
