@@ -102,4 +102,7 @@ typedef unsigned long long      uintmax_t;
 
 #define UINTMAX_MAX       UINT64_MAX
 
+/* ??? */
+typedef uint32_t          size_t;
+
 #endif /* __STDTYPE_HEADER__ */
