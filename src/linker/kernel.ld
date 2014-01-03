@@ -4,7 +4,7 @@ SECTIONS
 {
 	. = 0x100000;
 	
-	kernel_start=.;
+	krnl_start=.;
 
 	.text:
 	{
@@ -28,5 +28,5 @@ SECTIONS
 	}
 
 	. = ALIGN(4096);
-	kernel_end=.;
+	krnl_end=.;
 }
