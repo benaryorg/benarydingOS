@@ -4,7 +4,8 @@ SECTIONS
 {
 	. = 0x100000;
 	
-	krnl_start=.;
+	. = ALIGN(4096);
+	krnlstart=.;
 
 	.text:
 	{
@@ -28,5 +29,5 @@ SECTIONS
 	}
 
 	. = ALIGN(4096);
-	krnl_end=.;
+	krnlend=.;
 }
