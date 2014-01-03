@@ -26,7 +26,7 @@ int printf(const char *format,...)
 			
 			case 'd': /* integer */
 				i = va_arg(list, int);
-				buf = itoa(i, buf, 10);
+				itoa(i, buf, 10);
 				for(i = 0; buf[i]; i++) {
 					putchar(buf[i]);
 					count++;
@@ -35,7 +35,7 @@ int printf(const char *format,...)
 			
 			case 'x': /* heXXX */
 				i = va_arg(list, int);
-				buf = itoa(i, buf, 16);
+				itoa(i, buf, 16);
 				for(i = 0; buf[i]; i++) {
 					putchar(buf[i]);
 					count++;
@@ -52,7 +52,7 @@ int printf(const char *format,...)
 			
 			case 'b': /* we binary now! */
 				i = va_arg(list, int);
-				buf = itoa(i, buf, 2);
+				itoa(i, buf, 2);
 				for(i = 0; buf[i]; i++) {
 					putchar(buf[i]);
 					count++;
@@ -61,7 +61,7 @@ int printf(const char *format,...)
 				
 			case 'o': /* also octal! */
 				i = va_arg(list, int);
-				buf = itoa(i, buf, 8);
+				itoa(i, buf, 8);
 				for(i = 0; buf[i]; i++) {
 					putchar(buf[i]);
 					count++;
