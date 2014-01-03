@@ -1,9 +1,9 @@
 #include "header.h"
 
-int main(void)
+int init(multiboot_info_t *mb_info)
 {
+	physmeminit(mb_info);
 	cleardisplay();
-	//asm volatile("int $0x0");
 	
 	printf("Hello, world!\n");
 	

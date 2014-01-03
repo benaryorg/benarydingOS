@@ -3,11 +3,12 @@
 
 #include "header/stdargs.h"
 #include "header/stdtype.h"
+#include "memory/memory.h"
 #include "utils/utils.h"
 
 #define BUFFER_TEXT ((char *)0xb8000)
 #define BUFFER_TEXT_WIDTH 80
-#define BUFFER_TEXT_HEIGHT 25
+#define BUFFER_TEXT_HEIGHT 24
 
 int putchar(int);
 char color(char,char);

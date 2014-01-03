@@ -20,12 +20,13 @@
 .int    MB_CHECKSUM
 
 
-.extern main
+.extern init
 
 .global _start
 _start:
 	mov $kstack, %esp
-	call main
+	push %ebx
+	call init
 
 _halt:
 	cli
