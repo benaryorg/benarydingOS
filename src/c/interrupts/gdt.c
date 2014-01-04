@@ -19,7 +19,7 @@ uint64_t gdt_entry_get(int i)
 
 uint64_t *gdt_func(int i)
 {
-	static uint64_t gdt[GDT_SIZE];
+	static uint64_t gdt[GDT_SIZE]={};
 	
 	return gdt+i;
 }
@@ -39,12 +39,12 @@ void gdt_init(void)
 	struct
 	{
 		uint16_t limit;
-		void *ptr;
+		uint32_t base;
 	}
 	__attribute__((packed)) gdtptr=
 	{
 		.limit=GDT_SIZE*8-1,
-		.ptr=gdt_func(0),
+		.base=(uint32_t)gdt_func(0),
 	};
 
 	asm volatile("lgdt %0" : : "m" (gdtptr));
