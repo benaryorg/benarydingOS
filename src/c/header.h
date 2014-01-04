@@ -15,8 +15,6 @@ char color(char,char);
 void setcolor(char);
 char getcolor(void);
 void movelinesup(void);
-void *memcpy(void *,const void *,size_t);
-void *memset(void *,int,size_t);
 int printf(const char *format,...);
 void kprintf(const char *format,...);
 size_t printint(int);

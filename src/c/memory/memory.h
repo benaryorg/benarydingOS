@@ -52,10 +52,14 @@ mem_allocated_t;
 
 void *malloc(size_t);
 void free(void *);
+
 void physmeminit(multiboot_info_t *);
 mem_allocated_t *physmemgetallocation(size_t);
 void physmemsetallocation(mem_allocated_t *);
 void physmemrmalloc(void *);
 mem_allocated_t *phys_mem_allocation(size_t,mem_allocated_t *,char);
+
+void *memcpy(void *,const void *,size_t);
+void *memset(void *,int,size_t);
 
 #endif
