@@ -41,7 +41,7 @@ void physmeminit(multiboot_info_t *mb_info)
 	multiboot_mmap_t *mmap=mb_info->mbs_mmap_addr;
 	multiboot_mmap_t *map_end=(void*)((uintptr_t) mb_info->mbs_mmap_addr + mb_info->mbs_mmap_length);
 	mem_allocated_t addr;
-	while((void *)mmap<map_end)
+	while(mmap<map_end)
 	{
 		if(mmap->Type!=MEM_FREE)
 		{
