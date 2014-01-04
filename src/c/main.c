@@ -14,6 +14,9 @@ int init(multiboot_info_t *mb_info)
 	int i,j;
 	for(i=0;i<10;i++)
 	{
+
+		printf("Starting Allocation of %d\n",i);
+
 		f[i]=malloc(sizeof(int)*100);
 
 		printf("Allocated %d\n",i);
