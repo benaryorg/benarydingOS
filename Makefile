@@ -6,8 +6,8 @@ CC = cc
 LD = ld
 
 ASFLAGS = -m32
-CFLAGS = -m32 -Wall -g -fno-stack-protector -nostdinc
-LDFLAGS = -melf_i386 -Ttext=0x100000
+CFLAGS = -m32 -Wall -g -fno-stack-protector -nostdinc -std=gnu89
+LDFLAGS = -melf_i386 -Ttext=0x100000 -T src/linker/kernel.ld
 
 build/kernel: $(OBJS)
 	$(LD) $(LDFLAGS) -o $@ $(subst src,build,$^)
