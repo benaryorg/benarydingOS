@@ -23,6 +23,7 @@ void cleardisplay(void);
 int puts(const char *);
 void setposition(int);
 int getposition(void);
+void resetposition(void);
 int cursorposition(int,char);
 
 #endif

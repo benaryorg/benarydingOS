@@ -23,3 +23,8 @@ void setposition(int position)
 {
 	cursorposition(position,1);
 }
+
+void resetposition(void)
+{
+	setposition(0);
+}

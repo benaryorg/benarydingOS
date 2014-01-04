@@ -15,4 +15,5 @@ void cleardisplay(void)
 	{
 		*(BUFFER_TEXT+i)=0;
 	}
+	resetposition();
 }
