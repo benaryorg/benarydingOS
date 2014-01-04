@@ -27,3 +27,18 @@ int memtest(const int arrs,const int bytes)
 	
 	return 0;
 }
+
+void memdump(void)
+{
+	int i;
+	mem_allocated_t *tile;
+	for(i=0;i<MEM_STACK_SIZE;i++)
+	{
+		tile=physmemgetallocation(i);
+		if(tile->start||tile->end)
+		{
+			printf("%d: %x-%x\n",i,tile->start,tile->end);
+		}
+	}
+}
+

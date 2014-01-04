@@ -20,7 +20,7 @@ void *malloc(size_t size)
 			{
 				if((tmp=physmemgetallocation(j)))
 				{
-					if((tmp->start<tile.end&&tmp->start>tile.start)||(tmp->end<tile.end&&tmp->end>tile.start))
+					if((tmp->start<=tile.end&&tmp->start>=tile.start)||(tmp->end<=tile.end&&tmp->end>=tile.start))
 					{
 						break;
 					}
@@ -39,7 +39,7 @@ void *malloc(size_t size)
 void physmeminit(multiboot_info_t *mb_info)
 {
 	multiboot_mmap_t *mmap=mb_info->mbs_mmap_addr;
-	void *map_end=(void*)((uintptr_t) mb_info->mbs_mmap_addr + mb_info->mbs_mmap_length);
+	multiboot_mmap_t *map_end=(void*)((uintptr_t) mb_info->mbs_mmap_addr + mb_info->mbs_mmap_length);
 	mem_allocated_t addr;
 	while((void *)mmap<map_end)
 	{
@@ -89,10 +89,11 @@ mem_allocated_t *physmemgetallocation(size_t i)
 
 mem_allocated_t *phys_mem_allocation(size_t i,mem_allocated_t *tile,char set)
 {
-	static mem_allocated_t stack[MEM_STACK_SIZE]={};
+	static mem_allocated_t stack[MEM_STACK_SIZE];
 	if(set)
 	{
-		stack[i]=*tile;
+		stack[i].start=tile->start;
+		stack[i].end=tile->end;
 	}
 	else
 	{
