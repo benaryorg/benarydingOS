@@ -5,8 +5,8 @@
 #define MEM_BLOCK_SIZE 0x1000
 #define MEM_STACK_SIZE (1<<15)
 
-extern const void krnlstart;
-extern const void krnlend;
+extern const void _KERNEL_START;
+extern const void _KERNEL_END;
 
 typedef struct
 {

@@ -46,8 +46,8 @@ void physmeminit(multiboot_info_t *mb_info)
 		}
 		mmap++;
 	}
-	addr.start=(void *)&krnlstart;
-	addr.end=(void *)&krnlend;
+	addr.start=(void *)&_KERNEL_START;
+	addr.end=(void *)&_KERNEL_END;
 	physmemsetallocation(&addr);
 }
 
