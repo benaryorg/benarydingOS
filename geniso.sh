@@ -14,8 +14,6 @@ mkdir -p build/iso/boot/grub
 
 printf "\033[32;1m * \033[0mCopying grub stage2\033[0m\n"
 cp /lib/grub/i386-pc/stage2_eltorito build/iso/boot/grub/
-
-printf "\033[32;1m * \033[0mWriting menu.lst\033[0m\n"
 echo "default 0
 timeout 30
 
