@@ -59,6 +59,8 @@ void physmemsetallocation(mem_allocated_t *);
 void physmemrmalloc(void *);
 mem_allocated_t *phys_mem_allocation(size_t,mem_allocated_t *,char);
 
+int memtest(const int arrs,const int bytes);
+
 void *memcpy(void *,const void *,size_t);
 void *memset(void *,int,size_t);
 

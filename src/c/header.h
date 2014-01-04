@@ -5,6 +5,7 @@
 #include "header/stdtype.h"
 #include "memory/memory.h"
 #include "utils/utils.h"
+#include "output/color.h"
 
 #define BUFFER_TEXT ((char *)0xb8000)
 #define BUFFER_TEXT_WIDTH 80
@@ -13,9 +14,6 @@
 int main(void);
 
 int putchar(int);
-char color(char,char);
-void setcolor(char);
-char getcolor(void);
 void movelinesup(void);
 int printf(const char *format,...);
 void kprintf(const char *format,...);

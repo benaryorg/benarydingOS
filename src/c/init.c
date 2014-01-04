@@ -3,10 +3,19 @@
 void init(multiboot_info_t *mb_info)
 {
 	cleardisplay();
+	setcolor(_color_pair(COLOR_BLACK,COLOR_LIGHT_GREEN));
 	puts("Started");
 	physmeminit(mb_info);
 	puts("Physical Memory initialised");
-
+	if(memtest(128,128))
+	{
+		setcolor(_color_pair(COLOR_BLACK,COLOR_LIGHT_RED));
+		puts("Memtest:");
+		puts("Critical: Memory Overlapping!");
+		puts("Please contact your benarydingOS-supplier!");
+		return;
+	}
 	puts("Starting Main\n");
+	resetcolor();
 	main();
 }
