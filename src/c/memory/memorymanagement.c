@@ -1,5 +1,10 @@
 #include "../header.h"
 
+void free(void *ptr)
+{
+	physmemrmalloc(ptr);
+}
+
 void *malloc(size_t size)
 {
 	size_t i,j;
