@@ -8,9 +8,9 @@ int main(void)
 	memdump();
 	cleardisplay();
 	int i;
-	for(i=1;i<24;i++)
+	for(i=1;i<9999;i++)
 	{
-		printf("%d\n",i);
+		printf("%d",i%9);
 	}
 	return 0;
 }
