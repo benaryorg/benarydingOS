@@ -5,6 +5,8 @@ void init(multiboot_info_t *mb_info)
 	cleardisplay();
 	setcolor(_color_pair(COLOR_BLACK,COLOR_LIGHT_GREEN));
 	puts("benarydingOS booting");
+	gdt_init();
+	puts("Global Descriptor Table loaded");
 	physmeminit(mb_info);
 	puts("Physical Memory initialised");
 	if(memtest(10,100))
