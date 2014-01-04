@@ -1,26 +1,12 @@
 #include "header.h"
 
-int init(multiboot_info_t *mb_info)
+int main(void)
 {
-	cleardisplay();
-
-	printf("Started\n");
-
-	physmeminit(mb_info);
-
-	printf("Inited\n");
-
 	int *f[10]={};
 	int i,j;
 	for(i=0;i<10;i++)
 	{
-
-		printf("Starting Allocation of %d\n",i);
-
 		f[i]=malloc(sizeof(int)*100);
-
-		printf("Allocated %d\n",i);
-
 		for(j=0;j<100;j++)
 		{
 			f[i][j]=j;
@@ -36,6 +22,7 @@ int init(multiboot_info_t *mb_info)
 				printf("Fehler\n");
 			}
 		}
+		free(f[i]);
 	}
 
 	printf("Hello, world!\n");

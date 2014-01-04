@@ -10,6 +10,8 @@
 #define BUFFER_TEXT_WIDTH 80
 #define BUFFER_TEXT_HEIGHT 24
 
+int main(void);
+
 int putchar(int);
 char color(char,char);
 void setcolor(char);
