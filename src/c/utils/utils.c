@@ -4,7 +4,7 @@ static const char digits[] = "0123456789ABCDEF";
 
 /* this is a real one-liner. if you can manage to make it less readable, don't hesitate to do so */
 size_t strlen(const char *s) {
-	size_t len = 0; const char *p = s; for (; *p; p++, len++); return len;
+	size_t len = 0; while (s[len]) len++; return len;
 }
 
 const char *itoa (int value, char *str, int base) {
