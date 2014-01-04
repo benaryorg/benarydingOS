@@ -2,8 +2,9 @@
 
 int main(void)
 {
-	*(int *)0=0;
 	cleardisplay();
-	printf("BenarydingOS Running!");
+	puts("BenarydingOS Running!");
+	puts("Memorydump:");
+	memdump();
 	return 0;
 }
