@@ -5,6 +5,30 @@ size_t strlen(const char *s) {
 	size_t len = 0; while (s[len]) len++; return len;
 }
 
+/* inefficient and nonstandard pow() */
+int _pow(int a, int b) {
+	int i;
+	int retval = 1;
+	for (i = 0; i < b; i++) {
+		retval *= a;
+	}
+	return retval;
+}
+
+/* converts the string pointed to by nptr to int. */
+int atoi (const char *nptr) {
+	int i, len, retval = 0;
+	len = strlen(nptr);
+	for (i = 0; i < len; i++) {
+		if (isdigit(nptr[i])) {
+			retval += (nptr[i] - '0') * (_pow(10, len - i - 1));
+		} else {
+			break;
+		}
+	}
+	return retval;
+}
+
 const char *itoa (int value, char *str, int base) {
 	int i, j, pos = 0;
 	char c;

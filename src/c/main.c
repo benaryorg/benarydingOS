@@ -6,6 +6,5 @@ int main(void)
 	puts("BenarydingOS Running!");
 	puts("Memorydump:");
 	memdump();
-
 	return 0;
 }
