@@ -149,7 +149,7 @@ int printf(const char *format,...)
 					break;
 				
 				case 'p': /* pointers */
-					i = va_arg(list, void *);
+					i = (int)va_arg(list, void *);
 					uitoa(i, buf, 16);
 					for (i = 0; buf[i]; i++) {
 						putchar(buf[i]);
