@@ -43,7 +43,9 @@ Burn the built ISO to a CD, if you _really_ feel like wasting one.
 
 ## Licensing
 
-25% of our code is from lowlevel.eu (THANKS!) thats why this OS is under the "CC BY-NC-SA 3.0 DE"
+Some essential parts of our code are very similar to the code on lowlevel.eu and mostly based on it!
+
+Their code is under the "CC BY-NC-SA 3.0 DE" so our code is under this licence too.
 http://creativecommons.org/licenses/by-nc-sa/3.0/de/legalcode
 
 Human readable:
