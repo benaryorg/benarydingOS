@@ -4,6 +4,6 @@ int main(void)
 {
 	*(int *)0=0;
 	cleardisplay();
-	printf("System Running!");
+	printf("BenarydingOS Running!");
 	return 0;
 }

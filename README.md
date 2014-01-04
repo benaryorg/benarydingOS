@@ -4,9 +4,12 @@ An Operating System by benaryorg and nilsding
 
 ## How to build
 
-Building our OS easy!
+Seting up the environment:
 
     $ ./setup.sh
+
+Building our OS easy!
+
     $ make
 
 If you want to build a bootable ISO, run this:
