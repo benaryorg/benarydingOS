@@ -29,4 +29,4 @@ printf "\033[32;1m * \033[0mCopying kernel\033[0m\n"
 cp build/kernel build/iso/boot/kernel
 printf "\033[32;1m * \033[0mStarting mkisofs or genisoimage\033[0m\n"
 genisoimage $GENISOARGS || mkisofs $GENISOARGS
-printf "\033[32;1m * \033[0mThe iso was built in \033[1mbuild/iso/benarydingOS.iso\033[0m\n"
+printf "\033[32;1m * \033[0mThe iso is in \033[1mbuild/iso/benarydingOS.iso\033[0m\n"
