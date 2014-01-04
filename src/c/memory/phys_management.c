@@ -14,7 +14,7 @@ void *malloc(size_t size)
 	{
 		if((tmp=physmemgetallocation(i)))
 		{
-			tile.start=tmp->end;
+			tile.start=tmp->end+1;
 			tile.end=tile.start+size;
 			for(j=0;j<MEM_STACK_SIZE;j++)
 			{
