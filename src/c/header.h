@@ -10,7 +10,7 @@
 
 #define BUFFER_TEXT ((char *)0xb8000)
 #define BUFFER_TEXT_WIDTH 80
-#define BUFFER_TEXT_HEIGHT 24
+#define BUFFER_TEXT_HEIGHT 25
 
 int main(void);
 
