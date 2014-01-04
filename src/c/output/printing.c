@@ -6,9 +6,9 @@ int putchar(int c)
 
 	unsigned char ch=(unsigned char)c;
 
-	if(position>BUFFER_TEXT_WIDTH*BUFFER_TEXT_HEIGHT)
+	if(position>=BUFFER_TEXT_WIDTH*BUFFER_TEXT_HEIGHT)
 	{
-		position=BUFFER_TEXT_WIDTH*(BUFFER_TEXT_HEIGHT-1)+1;
+		position=BUFFER_TEXT_WIDTH*(BUFFER_TEXT_HEIGHT-1);
 		setposition(position);
 		movelinesup();
 	}
