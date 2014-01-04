@@ -7,10 +7,11 @@
 #include "header/memory.h"
 #include "header/utils.h"
 #include "header/color.h"
+#include "header/ctype.h"
 
 #define BUFFER_TEXT ((char *)0xb8000)
 #define BUFFER_TEXT_WIDTH 80
-#define BUFFER_TEXT_HEIGHT 24
+#define BUFFER_TEXT_HEIGHT 25
 
 int main(void);
 

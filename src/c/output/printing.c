@@ -6,9 +6,9 @@ int putchar(int c)
 
 	unsigned char ch=(unsigned char)c;
 
-	if(position>BUFFER_TEXT_WIDTH*BUFFER_TEXT_HEIGHT)
+	if(position>=BUFFER_TEXT_WIDTH*BUFFER_TEXT_HEIGHT)
 	{
-		position=BUFFER_TEXT_WIDTH*(BUFFER_TEXT_HEIGHT-1)+1;
+		position=BUFFER_TEXT_WIDTH*(BUFFER_TEXT_HEIGHT-1);
 		setposition(position);
 		movelinesup();
 	}
@@ -80,9 +80,11 @@ int puts(const char *s)
 int printf(const char *format,...)
 {
 	const char *p;
-	int i, count = 0;
+	int i, /* j, npos,*/ count = 0;
 	char *s;
 	char buf[256];
+	
+	/*int pad_with_zeros = 0; */
 	
 	va_list list;
 	va_start(list,format);
@@ -93,7 +95,9 @@ int printf(const char *format,...)
 			count++;
 		}
 		else {
-			switch (*++p) {
+			/*pad_with_zeros = npos = j = */ i = 0;
+			++p;
+			switch (*p) {
 				case 'c': /* character */
 					i = va_arg(list, int);
 					putchar(i);
@@ -111,7 +115,7 @@ int printf(const char *format,...)
 				
 				case 'x': /* heXXX */
 					i = va_arg(list, int);
-					itoa(i, buf, 16);
+					uitoa(i, buf, 16);
 					for(i = 0; buf[i]; i++) {
 						putchar(buf[i]);
 						count++;
@@ -128,7 +132,7 @@ int printf(const char *format,...)
 				
 				case 'b': /* we binary now! */
 					i = va_arg(list, int);
-					itoa(i, buf, 2);
+					uitoa(i, buf, 2);
 					for(i = 0; buf[i]; i++) {
 						putchar(buf[i]);
 						count++;
@@ -137,8 +141,17 @@ int printf(const char *format,...)
 					
 				case 'o': /* also octal! */
 					i = va_arg(list, int);
-					itoa(i, buf, 8);
+					uitoa(i, buf, 8);
 					for(i = 0; buf[i]; i++) {
+						putchar(buf[i]);
+						count++;
+					}
+					break;
+				
+				case 'p': /* pointers */
+					i = va_arg(list, void *);
+					uitoa(i, buf, 16);
+					for (i = 0; buf[i]; i++) {
 						putchar(buf[i]);
 						count++;
 					}

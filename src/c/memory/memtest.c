@@ -37,7 +37,7 @@ void memdump(void)
 		tile=physmemgetallocation(i);
 		if(tile->start||tile->end)
 		{
-			printf("%d: %x-%x\n",i,tile->start,tile->end);
+			printf("%d: %p-%p\n",i,tile->start,tile->end);
 		}
 	}
 }
