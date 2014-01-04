@@ -3,9 +3,10 @@
 
 #include "header/stdargs.h"
 #include "header/stdtype.h"
-#include "memory/memory.h"
-#include "utils/utils.h"
-#include "output/color.h"
+#include "header/multiboot.h"
+#include "header/memory.h"
+#include "header/utils.h"
+#include "header/color.h"
 
 #define BUFFER_TEXT ((char *)0xb8000)
 #define BUFFER_TEXT_WIDTH 80
