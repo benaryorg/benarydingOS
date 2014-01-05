@@ -4,13 +4,13 @@ void haltcpu(void)
 {
 	while(1)
 	{
-		asm volatile("hlt\n");
+		asm volatile("cli;hlt\n");
 	}
 }
 
 void kernelpanic(const char *str)
 {
-	char s[300] = "Kernel Panic: ";
+	char s[256] = "Kernel Panic: ";
 	strcat(s, str);
 	setcolor(0x0c);
 	puts(s);
