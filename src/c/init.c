@@ -3,7 +3,6 @@
 void init(multiboot_info_t *mb_info)
 {
 	cleardisplay();
-	asm volatile("cli\n");
 	setcolor(_color_pair(COLOR_BLACK,COLOR_LIGHT_GREEN));
 	puts("benarydingOS booting");
 	gdt_init();
