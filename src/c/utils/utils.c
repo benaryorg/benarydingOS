@@ -31,7 +31,6 @@ void register_reload(void)
 		"ljmp $0x8, $.1\n"
 		".1:\n"
 	);
-	asm volatile("ltr %%ax" : : "a" (5 << 3));
 }
 
 /* inefficient and nonstandard pow() */

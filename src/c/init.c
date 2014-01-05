@@ -3,10 +3,13 @@
 void init(multiboot_info_t *mb_info)
 {
 	cleardisplay();
+	asm volatile("cli\n");
 	setcolor(_color_pair(COLOR_BLACK,COLOR_LIGHT_GREEN));
 	puts("benarydingOS booting");
 	gdt_init();
 	puts("Global Descriptor Table loaded");
+	tss_init();
+	puts("Task Segment Segment initialised");
 	idt_init();
 	puts("Interrupt Descriptor Table loaded");
 	physmeminit(mb_info);
@@ -22,6 +25,8 @@ void init(multiboot_info_t *mb_info)
 		puts("It is possible, that this is a bug!");
 		return;
 	}
+	activate_hardware_ints();
+	puts("Activated Hardware Interrupts");
 	puts("Starting Main\n");
 	resetcolor();
 	main();
