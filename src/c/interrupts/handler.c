@@ -1,4 +1,6 @@
-#ifndef __INTERRUPT_HANDLER_HEADER__
-#define __INTERRUPT_HANDLER_HEADER__
+#include "../header.h"
 
-#endif
+void int_handler(void)
+{
+	kernelpanic("Interrupt");
+}
