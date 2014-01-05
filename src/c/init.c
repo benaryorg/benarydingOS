@@ -7,8 +7,6 @@ void init(multiboot_info_t *mb_info)
 	puts("benarydingOS booting");
 	gdt_init();
 	puts("Global Descriptor Table loaded");
-	tss_init();
-	puts("Task Segment Segment initialised");
 	idt_init();
 	puts("Interrupt Descriptor Table loaded");
 	physmeminit(mb_info);

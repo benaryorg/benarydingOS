@@ -49,5 +49,6 @@ void gdt_init(void)
 	};
 
 	asm volatile("lgdt %0" : : "m" (gdtptr));
+	asm volatile("ltr %%ax" : : "a" (5 << 3));
 	register_reload();
 }
