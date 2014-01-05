@@ -47,7 +47,7 @@ void int_handler(cpu_state_t *cpu)
 				puts("Stack Fault");
 				break;
 			case 0x0d:
-				printf("General Protection Fault\nError Code: %4d\n",cpu->error);
+				printf("General Protection Fault\nError Code: %4u\n",cpu->error);
 				while(1);
 				break;
 			case 0x0e:
