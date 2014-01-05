@@ -1,6 +1,6 @@
 #include "../header.h"
 
-void int_handler(cpu_state_t *cpu)
+cpu_state_t *int_handler(cpu_state_t *cpu)
 {
 	unsigned int intr=cpu->intr;
 	if(intr<0x20)
@@ -78,14 +78,14 @@ void int_handler(cpu_state_t *cpu)
 			}
 			if(intr<0x29)
 			{
-				outb(0x20,0x20);
+			//	outb(0x20,0x20);
 			}
-			outb(0xa0,0x20);
+			//outb(0xa0,0x20);
 		}
 		else
 		{
 			kernelpanic("Something happened!");
 		}
 	}
-//	return cpu;
+	return cpu;
 }
