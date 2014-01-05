@@ -7,7 +7,7 @@ size_t strlen(const char *s) {
 
 /* the strcat */
 char* strcat(char* dest, const char* src) {
-	char *retp = dest;
+/*	char *retp = dest;
 	
 	while (*dest) {
 		dest++;
@@ -15,5 +15,13 @@ char* strcat(char* dest, const char* src) {
 	while ((*dest++ = *src++)) {
 	}
 	
-	return retp;
+	return retp; */
+	size_t i, j;
+	
+	for (i = 0; dest[i]; i++)
+		;
+	for (j = 0; src[j]; j++)
+		dest[i + j] = src[j];
+	
+	return dest;
 }
