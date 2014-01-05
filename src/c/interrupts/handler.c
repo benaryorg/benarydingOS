@@ -1,6 +1,6 @@
 #include "../header.h"
 
-cpu_state_t *int_handler(cpu_state_t *cpu)
+void int_handler(cpu_state_t *cpu)
 {
 	unsigned int intr=cpu->intr;
 	if(intr<0x20)
@@ -47,7 +47,7 @@ cpu_state_t *int_handler(cpu_state_t *cpu)
 				puts("Stack Fault");
 				break;
 			case 0x0d:
-				puts("General Protection Fault");
+				printf("General Protection Fault\nError Code: %4d\n",cpu->error);
 				while(1);
 				break;
 			case 0x0e:
@@ -70,20 +70,22 @@ cpu_state_t *int_handler(cpu_state_t *cpu)
 				case 0x00:
 					puts("Timer");
 					break;
+				case 0x01:
+					puts("");
 				default:
 					printf("IRQ %3d\n",intr-0x20);
 					break;
 			}
-			if(intr>0x27)
+			if(intr<0x29)
 			{
-				outb(0xa0,0x20);
+				outb(0x20,0x20);
 			}
-			outb(0x20,0x20);
+			outb(0xa0,0x20);
 		}
 		else
 		{
 			kernelpanic("Something happened!");
 		}
 	}
-	return cpu;
+//	return cpu;
 }
