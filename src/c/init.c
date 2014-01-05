@@ -13,7 +13,7 @@ void init(multiboot_info_t *mb_info)
 	puts("Interrupt Descriptor Table loaded");
 	physmeminit(mb_info);
 	puts("Physical Memory initialised");
-	if(memtest(128,128))
+	if(memtest(64,64))
 	{
 		kernelpanic("Memtest Failure!");
 		setcolor(_color_pair(COLOR_BLACK,COLOR_LIGHT_RED));
@@ -24,7 +24,6 @@ void init(multiboot_info_t *mb_info)
 		puts("It is possible, that this is a bug!");
 		return;
 	}
-	activate_hardware_ints();
 	puts("Activated Hardware Interrupts");
 	puts("Starting Main\n");
 	resetcolor();

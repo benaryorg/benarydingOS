@@ -2,7 +2,6 @@
 
 cpu_state_t *int_handler(cpu_state_t *cpu)
 {
-	printf("Interrupt %03x\n",(int)cpu->intr);
 	unsigned int intr=cpu->intr;
 	if(intr<0x20)
 	{
@@ -49,6 +48,7 @@ cpu_state_t *int_handler(cpu_state_t *cpu)
 				break;
 			case 0x0d:
 				puts("General Protection Fault");
+				while(1);
 				break;
 			case 0x0e:
 				puts("Page Fault");
@@ -71,9 +71,14 @@ cpu_state_t *int_handler(cpu_state_t *cpu)
 					puts("Timer");
 					break;
 				default:
-					printf("IRQ %3d",intr-0x20);
+					printf("IRQ %3d\n",intr-0x20);
 					break;
 			}
+			if(intr>0x27)
+			{
+				outb(0xa0,0x20);
+			}
+			outb(0x20,0x20);
 		}
 		else
 		{
