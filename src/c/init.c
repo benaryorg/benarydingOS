@@ -24,7 +24,8 @@ void init(multiboot_info_t *mb_info)
 		puts("It is possible, that this is a bug!");
 		return;
 	}
-	puts("Activated Hardware Interrupts");
+//	activate_hardware_ints();
+//	puts("Activated Hardware Interrupts");
 	puts("Starting Main\n");
 	resetcolor();
 	main();
