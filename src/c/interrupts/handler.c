@@ -2,7 +2,7 @@
 
 cpu_state_t *int_handler(cpu_state_t *cpu)
 {
-//	printf("Interrupt %d\n",(int)cpu->intr);
+	printf("Interrupt %03x\n",(int)cpu->intr);
 	int intr=cpu->intr;
 	if(intr<0)
 	{
