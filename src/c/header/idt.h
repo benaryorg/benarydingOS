@@ -3,10 +3,19 @@
 
 #define IDT_SIZE 256
 
-uint64_t idt_entry_get(int);
-uint64_t *idt_func(int);
+typedef struct
+{
+	uint16_t lsb_handler;
+	uint16_t selector;
+	uint8_t reserved;
+	uint8_t access;
+	uint16_t msb_handler;
+}
+int_desc_t;
+
+int_desc_t idt_entry_get(int);
+int_desc_t *idt_func(int);
 void idt_init(void);
-void idt_reload(void);
-//void idt_entry_set(int,unsigned int,unsigned int,int);
+void idt_entry_set(int,uint16_t,void *,int,int);
 
 #endif

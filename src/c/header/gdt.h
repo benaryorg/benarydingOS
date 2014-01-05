@@ -19,6 +19,5 @@ void gdt_entry_set(int,unsigned int,unsigned int,int);
 uint64_t gdt_entry_get(int);
 uint64_t *gdt_func(int);
 void gdt_init(void);
-void gdt_reload(void);
 
 #endif

@@ -48,20 +48,5 @@ void gdt_init(void)
 	};
 
 	asm volatile("lgdt %0" : : "m" (gdtptr));
-	gdt_reload();
-}
-
-void gdt_reload(void)
-{
-	asm volatile
-	(
-		"mov $0x10, %ax\n"
-		"mov %ax, %ds\n"
-		"mov %ax, %es\n"
-		"mov %ax, %fs\n"
-		"mov %ax, %gs\n"
-		"mov %ax, %ss\n"
-		"ljmp $0x8, $.1\n"
-		".1:\n"
-	); 
+	register_reload();
 }

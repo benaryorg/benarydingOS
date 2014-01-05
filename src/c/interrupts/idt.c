@@ -1,33 +1,32 @@
 #include "../header.h"
 
-/*
- * void idt_entry_set(int i,unsigned int base,unsigned int limit,int flags)
+void idt_entry_set(int intr,uint16_t selector,void *handler,int dpl,int type)
 {
-	uint64_t entry=0;
-	entry|=limit&0xffffLL;
-	entry|=(base&0xffffffLL)<<16;
-	entry|=(flags&0xffLL)<<40;
-	entry|=((limit>>16)&0xfLL)<<48;
-	entry|=((flags>>8)&0xffLL)<<52;
-	entry|=((base>>24)&0xffLL)<<56;
-	*idt_func(i)=entry;
+	int_desc_t entry;
+	entry.lsb_handler=((uint32_t)handler)&0xFFFF;
+	entry.msb_handler=(((uint32_t) handler)>>16)&0xFFFF;
+	entry.access=0x80|((dpl&3)<<5)|type;
+	entry.selector=selector;
+	entry.reserved=0;
+	*idt_func(intr)=entry;
 }
-*/
 
-uint64_t idt_entry_get(int i)
+int_desc_t idt_entry_get(int i)
 {
 	return *idt_func(i);
 }
 
-uint64_t *idt_func(int i)
+int_desc_t *idt_func(int i)
 {
-	static uint64_t idt[IDT_SIZE]={};
+	static int_desc_t idt[IDT_SIZE]={};
 	
 	return idt+i;
 }
 
 void idt_init(void)
 {
+	idt_entry_set(0,0x08,int_handler,0,0x07);
+
 	struct
 	{
 		uint16_t limit;
@@ -40,20 +39,5 @@ void idt_init(void)
 	};
 
 	asm volatile("lidt %0" : : "m" (idtptr));
-	idt_reload();
-}
-
-void idt_reload(void)
-{
-	asm volatile
-	(
-		"mov $0x10, %ax\n"
-		"mov %ax, %ds\n"
-		"mov %ax, %es\n"
-		"mov %ax, %fs\n"
-		"mov %ax, %gs\n"
-		"mov %ax, %ss\n"
-		"ljmp $0x8, $.1\n"
-		".1:\n"
-	); 
+	register_reload();
 }
