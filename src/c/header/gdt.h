@@ -1,7 +1,7 @@
 #ifndef __HEADER_GTD__
 #define __HEADER_GTD__
 
-#define GDT_SIZE 128
+#define GDT_SIZE 8
 
 #define GDT_FLAG_DATASEG 0x02
 #define GDT_FLAG_CODESEG 0x0a

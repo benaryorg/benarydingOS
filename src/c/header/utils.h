@@ -3,6 +3,10 @@
 
 static const char digits[] = "0123456789ABCDEF";
 
+/* benaryorglib */
+void haltcpu(void);
+void kernelpanic(const char *);
+
 /* stdlib */
 int atoi (const char *nptr);
 

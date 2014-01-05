@@ -39,12 +39,12 @@ void gdt_init(void)
 	struct
 	{
 		uint16_t limit;
-		uint32_t base;
+		void *ptr;
 	}
 	__attribute__((packed)) gdtptr=
 	{
 		.limit=GDT_SIZE*8-1,
-		.base=(uint32_t)gdt_func(0),
+		.ptr=gdt_func(0),
 	};
 
 	asm volatile("lgdt %0" : : "m" (gdtptr));

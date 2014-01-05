@@ -1,5 +1,18 @@
 #include "../header.h"
 
+void haltcpu(void)
+{
+	asm volatile("hlt\n");
+}
+
+void kernelpanic(const char *str)
+{
+	setcolor(0x0c);
+	puts(str);
+	resetcolor();
+	haltcpu();
+}
+
 /* this is a real one-liner. if you can manage to make it less readable, don't hesitate to do so */
 size_t strlen(const char *s) {
 	size_t len = 0; while (s[len]) len++; return len;
