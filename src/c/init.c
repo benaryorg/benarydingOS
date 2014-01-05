@@ -9,7 +9,7 @@ void init(multiboot_info_t *mb_info)
 	puts("Global Descriptor Table loaded");
 	physmeminit(mb_info);
 	puts("Physical Memory initialised");
-	if(memtest(10,100))
+	if(memtest(1024,1024))
 	{
 		setcolor(_color_pair(COLOR_BLACK,COLOR_LIGHT_RED));
 		memdump();

@@ -1,5 +1,5 @@
-#ifndef __HEADER_GTD__
-#define __HEADER_GTD__
+#ifndef __HEADER_GDT__
+#define __HEADER_GDT__
 
 #define GDT_SIZE 8
 
