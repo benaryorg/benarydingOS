@@ -2,13 +2,23 @@
 
 void int_handler(cpu_state_t *cpu)
 {
+	printf("Interrupt %d\n",(int)cpu->intr);
 	if(cpu->intr<0x20)
 	{
-		printf("Exception %d\n",(int)cpu->intr);
-		kernelpanic("Interrupt");
+		kernelpanic("Exception");
 	}
-	if(cpu->intr==0x20)
+	else
 	{
-		puts("Timer");
+		if(cpu->intr>0x27)
+		{
+			switch(cpu->intr)
+			{
+				case 0x20:
+					puts("Timer");
+					break;
+			}
+			outb(0xa0, 0x20);
+		}
+		outb(0x20, 0x20);
 	}
 }
