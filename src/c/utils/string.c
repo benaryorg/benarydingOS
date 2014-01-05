@@ -9,8 +9,7 @@ size_t strlen(const char *s) {
 char* strcat(char* dest, const char* src) {
 	size_t i, j;
 	
-	for (i = 0; dest[i]; i++) {
-	}
+	i=strlen(dest)-1;
 	for (j = 0; src[j]; j++) {
 		dest[i + j] = src[j];
 	}
