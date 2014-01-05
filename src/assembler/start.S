@@ -92,33 +92,34 @@ intr_stub 48
 .extern int_handler
 intr_common_handler:
     // CPU-Zustand sichern
-	push %ebp
-	push %edi
-	push %esi
-	push %edx
-	push %ecx
-	push %ebx
-	push %eax
-
-	// Handler aufrufen
-	push %esp
-	call int_handler
-	mov %eax, %esp
+    push %ebp
+    push %edi
+    push %esi
+    push %edx
+    push %ecx
+    push %ebx
+    push %eax
  
-	// CPU-Zustand wiederherstellen
-	pop %eax
-	pop %ebx
-	pop %ecx
-	pop %edx
-	pop %esi
-	pop %edi
-	pop %ebp
+    // Handler aufrufen
+    push %esp
+    call int_handler
+    mov %eax,%esp
+//    add $4, %esp
+ 
+    // CPU-Zustand wiederherstellen
+    pop %eax
+    pop %ebx
+    pop %ecx
+    pop %edx
+    pop %esi
+    pop %edi
+    pop %ebp
  
     // Fehlercode und Interruptnummer vom Stack nehmen
-	add $8, %esp
+    add $8, %esp
  
-	// Ruecksprung zum unterbrochenen Code
-	iret
+    // Ruecksprung zum unterbrochenen Code
+    iret
 
 .section .bss
 .space 16384

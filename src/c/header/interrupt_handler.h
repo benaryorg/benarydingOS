@@ -63,6 +63,6 @@ typedef struct
 }
 cpu_state_t;
 
-void int_handler(cpu_state_t *);
+cpu_state_t *int_handler(cpu_state_t *);
 
 #endif

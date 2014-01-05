@@ -1,6 +1,6 @@
 #include "../header.h"
 
-void int_handler(cpu_state_t *cpu)
+cpu_state_t *int_handler(cpu_state_t *cpu)
 {
 //	printf("Interrupt %d\n",(int)cpu->intr);
 	int intr=cpu->intr;
@@ -87,4 +87,5 @@ void int_handler(cpu_state_t *cpu)
 			}
 		}
 	}
+	return cpu;
 }
