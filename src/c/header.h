@@ -13,6 +13,7 @@
 #include "header/idt.h"
 #include "header/interrupt_handler.h"
 #include "header/pic.h"
+#include "header/tss.h"
 
 #define BUFFER_TEXT ((char *)0xb8000)
 #define BUFFER_TEXT_WIDTH 80
