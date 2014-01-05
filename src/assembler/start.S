@@ -87,10 +87,9 @@ intr_stub 45
 intr_stub 46
 intr_stub 47
 
-
 intr_stub 48
 
-.extern handle_interrupt
+.extern int_handler
 intr_common_handler:
     // CPU-Zustand sichern
     push %ebp
@@ -103,7 +102,7 @@ intr_common_handler:
  
     // Handler aufrufen
     push %esp
-    call handle_interrupt
+    call int_handler
     add $4, %esp
  
     // CPU-Zustand wiederherstellen
