@@ -26,19 +26,8 @@ uint64_t *idt_func(int i)
 	return idt+i;
 }
 
-/*
 void idt_init(void)
 {
-	idt_entry_set(0,0,0,0);
-	idt_entry_set(1,0,0xfffff,
-		IDT_FLAG_SEGMENT|IDT_FLAG_32_BIT|IDT_FLAG_CODESEG|IDT_FLAG_4K_GRAN|IDT_FLAG_PRESENT);
-	idt_entry_set(2,0,0xfffff,
-		IDT_FLAG_SEGMENT|IDT_FLAG_32_BIT|IDT_FLAG_DATASEG|IDT_FLAG_4K_GRAN|IDT_FLAG_PRESENT);
-	idt_entry_set(3,0,0xfffff,
-		IDT_FLAG_SEGMENT|IDT_FLAG_32_BIT|IDT_FLAG_CODESEG|IDT_FLAG_4K_GRAN|IDT_FLAG_PRESENT|IDT_FLAG_RING3);
-	idt_entry_set(4,0,0xfffff,
-		IDT_FLAG_SEGMENT|IDT_FLAG_32_BIT|IDT_FLAG_DATASEG|IDT_FLAG_4K_GRAN|IDT_FLAG_PRESENT|IDT_FLAG_RING3);
-
 	struct
 	{
 		uint16_t limit;
@@ -68,4 +57,3 @@ void idt_reload(void)
 		".1:\n"
 	); 
 }
-*/

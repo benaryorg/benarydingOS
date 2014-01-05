@@ -2,7 +2,10 @@
 
 void haltcpu(void)
 {
-	asm volatile("hlt\n");
+	while(1)
+	{
+		asm volatile("hlt\n");
+	}
 }
 
 void kernelpanic(const char *str)
