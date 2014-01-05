@@ -8,6 +8,7 @@
 #include "header/utils.h"
 #include "header/color.h"
 #include "header/ctype.h"
+#include "header/string.h"
 #include "header/gdt.h"
 #include "header/idt.h"
 #include "header/interrupt_handler.h"

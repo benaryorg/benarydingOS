@@ -17,10 +17,6 @@ int atoi (const char *nptr);
 /* math */
 int _pow(int a, int b);
 
-/* string functions */
-size_t strlen (const char *s);
-char *strcat (char *dest, const char *src);
-
 /* nonstandard extensions, fuck yeah! */
 const char *itoa (int value, char *str, int base);
 const char *uitoa (unsigned int value, char *str, int base);
