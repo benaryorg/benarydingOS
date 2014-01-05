@@ -78,5 +78,4 @@ void idt_init(void)
 	pic_init();
 	asm volatile("lidt %0" : : "m" (idtptr));
 	register_reload();
-	asm volatile("sti");
 }

@@ -7,6 +7,7 @@ int main(void)
 	puts("Memorydump:");
 	memdump();
 	cleardisplay();
+	activate_hardware_ints();
 	while(1);
 	return 0;
 }

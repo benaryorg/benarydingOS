@@ -19,3 +19,7 @@ void pic_init(void)
 	outb(0xa0, 0x0);
 }
 
+void activate_hardware_ints(void)
+{
+	asm volatile("sti");
+}
