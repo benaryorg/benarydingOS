@@ -141,7 +141,24 @@ int printf(const char *format,...)
 						count++;
 					}
 					break;
+
+				case 'u': /* unsigned integer */
+					i = va_arg(list, int);
+					uitoa(i, buf, 10);
+					if (npos) {
+						j -= strlen(buf);
+						for (npos = 0; npos < j; npos++) {
+							putchar(pad_with_zeros ? '0' : ' ');
+							count++;
+						}
+					}
+					for(i = 0; buf[i]; i++) {
+						putchar(buf[i]);
+						count++;
+					}
+					break;
 				
+
 				case 'x': /* heXXX */
 					i = va_arg(list, int);
 					uitoa(i, buf, 16);
