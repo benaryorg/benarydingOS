@@ -57,7 +57,7 @@ cpu_state_t *int_handler(cpu_state_t *cpu)
 				kernelpanic("Reserved Exception");
 				break;
 			default:
-				kernelpanic("It is impossible to get this Error!");
+				kernelpanic("It is impossible to get this Error!\nIf you have this Error, please kill yourself, you have no life and had to hack yourself into your own Kernel!");
 				break;
 		}
 	}

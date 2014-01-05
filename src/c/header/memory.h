@@ -3,7 +3,7 @@
 
 #define MEM_FREE 1
 #define MEM_BLOCK_SIZE 0x1000
-#define MEM_STACK_SIZE (1<<15)
+#define MEM_STACK_SIZE (1<<20)
 
 extern const void _KERNEL_START;
 extern const void _KERNEL_END;

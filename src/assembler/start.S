@@ -122,5 +122,5 @@ intr_common_handler:
     iret
 
 .section .bss
-.space 16384
+.space 65536
 kstack:
