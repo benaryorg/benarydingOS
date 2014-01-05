@@ -8,6 +8,7 @@ void haltcpu(void)
 void kernelpanic(const char *str)
 {
 	setcolor(0x0c);
+	puts("Kernel Panic!");
 	puts(str);
 	resetcolor();
 	haltcpu();
