@@ -1,7 +1,7 @@
 #ifndef __TSS_HEADER__
 #define __TSS_HEADER__
 
-#define TSS_SIZE 128
+#define TSS_SIZE 32
 
 void tss_entry_set(int,uint32_t);
 uint32_t tss_entry_get(int);

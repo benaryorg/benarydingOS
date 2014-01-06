@@ -1,7 +1,7 @@
 #ifndef __COLOR_HEADER__
 #define __COLOR_HEADER__
 
-#define DEFAULTCOLOR 0x07
+#define DEFAULTCOLOR 0xf0
 
 /* hardware text mode colours */
 enum hw_color {
@@ -27,6 +27,8 @@ char color(char,char);
 uint8_t _color_pair(enum hw_color bg, enum hw_color fg);
 void resetcolor(void);
 void setcolor(char);
+void setfgcolor(enum hw_color);
+void setbgcolor(enum hw_color);
 char getcolor(void);
 
 #endif

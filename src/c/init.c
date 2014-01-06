@@ -3,7 +3,7 @@
 void init(multiboot_info_t *mb_info)
 {
 	cleardisplay();
-	setcolor(_color_pair(COLOR_BLACK,COLOR_LIGHT_GREEN));
+	setfgcolor(COLOR_LIGHT_GREEN);
 	puts("benarydingOS booting");
 	gdt_init();
 	puts("Global Descriptor Table loaded");
@@ -14,7 +14,7 @@ void init(multiboot_info_t *mb_info)
 	if(memtest(64,64))
 	{
 		kernelpanic("Memtest Failure!");
-		setcolor(_color_pair(COLOR_BLACK,COLOR_LIGHT_RED));
+		setfgcolor(COLOR_LIGHT_RED);
 		memdump();
 		puts("Memtest:");
 		puts("Critical: Memory Overlapping!");

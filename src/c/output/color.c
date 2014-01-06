@@ -37,6 +37,16 @@ void setcolor(char data)
 	color(data,1);
 }
 
+void setfgcolor(enum hw_color data)
+{
+	color(((getcolor()>>4)<<4)+((data<<4)>>4),1);
+}
+
+void setbgcolor(enum hw_color data)
+{
+	color((getcolor()>>4)+(data<<4),1);
+}
+
 void resetcolor(void)
 {
 	color(0,-1);
