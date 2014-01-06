@@ -41,7 +41,7 @@ intr_stub_\nr:
 	pushl $\nr
 	jmp intr_common_handler
 .endm
-			 
+  
 .macro intr_stub_error_code nr
 .global intr_stub_\nr
 	intr_stub_\nr:
@@ -103,7 +103,7 @@ intr_common_handler:
     // Handler aufrufen
     push %esp
     call int_handler
-    add $4,%esp
+//    add $4,%esp
     mov %eax,%esp
  
     // CPU-Zustand wiederherstellen
@@ -117,7 +117,7 @@ intr_common_handler:
  
     // Fehlercode und Interruptnummer vom Stack nehmen
     add $8, %esp
- 
+
     // Ruecksprung zum unterbrochenen Code
     iret
 

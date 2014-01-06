@@ -12,7 +12,7 @@ void kernelpanic(const char *str)
 {
 	char s[256] = "Kernel Panic: ";
 	strcat(s, str);
-	setcolor(0x0c);
+	setfgcolor(COLOR_LIGHT_RED);
 	puts(s);
 	resetcolor();
 	haltcpu();
