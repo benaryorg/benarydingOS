@@ -90,8 +90,6 @@ cpu_state_t *int_handler(cpu_state_t *cpu)
 				case 0x00:
 					puts("Timer");
 					break;
-				case 0x01:
-					puts("");
 				default:
 					printf("IRQ %3d\n",intr-0x20);
 					break;
