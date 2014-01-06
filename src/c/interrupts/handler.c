@@ -1,7 +1,27 @@
 #include "../header.h"
 
+cpu_state_t *get_new_cpu(void)
+{
+	cpu_state_t *cpu=malloc(sizeof(cpu_state_t));
+	cpu->eax=0;
+	cpu->ebx=0;
+	cpu->ecx=0;
+	cpu->edx=0;
+	cpu->esi=0;
+	cpu->edi=0;
+	cpu->ebp=0;
+	cpu->eip=0;
+	cpu->cs=0x08;
+	cpu->eflags=0x202;
+	return cpu;
+}
+
 cpu_state_t *int_handler(cpu_state_t *cpu)
 {
+	if(!cpu)
+	{
+		return 0;
+	}
 	unsigned int intr=cpu->intr;
 	if(intr<0x20)
 	{
@@ -78,9 +98,9 @@ cpu_state_t *int_handler(cpu_state_t *cpu)
 			}
 			if(intr<0x29)
 			{
-			//	outb(0x20,0x20);
+				outb(0x20,0x20);
 			}
-			//outb(0xa0,0x20);
+			outb(0xa0,0x20);
 		}
 		else
 		{

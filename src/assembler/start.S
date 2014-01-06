@@ -103,6 +103,7 @@ intr_common_handler:
     // Handler aufrufen
     push %esp
     call int_handler
+	add $4,%esp
     mov %eax,%esp
  
     // CPU-Zustand wiederherstellen
@@ -121,5 +122,5 @@ intr_common_handler:
     iret
 
 .section .bss
-.space 65536
+.space 32768
 kstack:

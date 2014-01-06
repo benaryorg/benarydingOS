@@ -7,7 +7,6 @@ int main(void)
 	puts("Memorydump:");
 	memdump();
 //	cleardisplay();
-	printf("%d",4/0);
-//	asm volatile("int $0x00");
+	asm volatile("int $0x20");
 	return 0;
 }
