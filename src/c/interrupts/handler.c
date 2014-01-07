@@ -68,7 +68,6 @@ cpu_state_t *int_handler(cpu_state_t *cpu)
 				break;
 			case 0x0d:
 				printf("General Protection Fault\nError Code: %u\n",(unsigned int)cpu->error);
-				while(1);
 				break;
 			case 0x0e:
 				puts("Page Fault");
