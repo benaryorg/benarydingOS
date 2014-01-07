@@ -25,6 +25,7 @@ int_desc_t *idt_func(int i)
 
 void idt_init(void)
 {
+	pic_init();
 ///*
 	int i;
 
@@ -84,7 +85,6 @@ void idt_init(void)
 		.ptr=idt_func(0),
 	};
 
-	pic_init();
 	asm volatile("lidt %0" : : "m" (idtptr));
 	register_reload();
 }
