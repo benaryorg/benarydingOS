@@ -25,6 +25,6 @@ typedef struct
 cpu_state_t;
 
 cpu_state_t *get_new_cpu(void);
-void int_handler(cpu_state_t *);
+cpu_state_t *int_handler(cpu_state_t *);
 
 #endif

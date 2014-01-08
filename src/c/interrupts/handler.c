@@ -16,11 +16,11 @@ cpu_state_t *get_new_cpu(void)
 	return cpu;
 }
 
-void int_handler(cpu_state_t *cpu)
+cpu_state_t *int_handler(cpu_state_t *cpu)
 {
 	if(!cpu)
 	{
-		return;
+		return 0;
 	}
 	unsigned int intr=cpu->intr;
 	if(intr<0x20)
@@ -105,35 +105,5 @@ void int_handler(cpu_state_t *cpu)
 			kernelpanic("Something happened!");
 		}
 	}
-//	return taskschedule(cpu);
-//	return cpu;
+	return cpu;
 }
-
-/*
-cpu_state_t *taskschedule(cpu_state_t *cpu)
-{
-	static int task=-1;
-
-	if(task>=0)
-	{
-		for(i=0;!tss_entry_get(i)&&i<TSS_SIZE;i++);
-		if(i>=TSS_SIZE)
-		{
-			return cpu;
-		}
-		else
-		{
-			tmp=tss_entry_get(i);
-		}
-	}
-	cpu_state_t *tmp;
-	{
-		
-		return cpu;
-	}
-	else
-	{
-		
-	}
-}
-*/
