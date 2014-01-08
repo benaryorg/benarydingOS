@@ -9,6 +9,16 @@
 
 GENISOARGS='-R -b boot/grub/stage2_eltorito -no-emul-boot -boot-load-size 4 -boot-info-table -V "BDOS" -o build/benarydingOS.iso build/iso'
 
+command -v genisoimage >/dev/null 2>&1 || {
+    echo "genisoimage is required but was not found on your system."
+    exit 1
+}
+
+command -v mkisofs >/dev/null 2>&1 || {
+    echo "mkisofs is required but was not found on your system."
+    exit 1
+}
+
 printf "\033[32;1m * \033[0mCreating directories\033[0m\n"
 mkdir -p build/iso/boot/grub
 

@@ -7,6 +7,11 @@ BUILDDIR=build
 KERNEL=$BUILDDIR/kernel
 QEMU_ARGS="-s -S -kernel $KERNEL"
 
+command -v qemu >/dev/null 2>&1 || {
+    echo "qemu is required but was not found on your system."
+    exit 1
+}
+
 printf "\033[32;1m * \033[0mStarting QEMU ...\n"
 printf "\033[32;1m * \033[0mOpen another terminal, start gdb and type the following:\n"
 printf "\033[32;1m * \033[0m  (gdb)\033[1m target remote localhost:1234\033[0m\n"
