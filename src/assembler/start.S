@@ -108,7 +108,8 @@ intr_common_handler:
 
     // Ruecksprung zum unterbrochenen Code
     iret
-
+.section .data
+.section .rodata
 .section .bss
-.space 32768
+.space 65536
 kstack:
