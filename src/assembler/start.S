@@ -11,7 +11,6 @@
 .section .text
 
 .extern init 
-.extern int_handler
 
 .global _start
 _start:
@@ -59,7 +58,6 @@ intr_stub 16
 intr_stub_error_code 17
 intr_stub 18
 
-
 intr_stub 32
 intr_stub 33
 intr_stub 34
@@ -93,8 +91,8 @@ intr_common_handler:
     // Handler aufrufen
     push %esp
     call int_handler
-//    add $4,%esp
-    mov %eax,%esp
+//    add $4, %esp
+//    mov %eax, %esp
  
     // CPU-Zustand wiederherstellen
     pop %eax

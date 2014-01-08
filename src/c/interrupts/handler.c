@@ -16,11 +16,11 @@ cpu_state_t *get_new_cpu(void)
 	return cpu;
 }
 
-cpu_state_t *int_handler(cpu_state_t *cpu)
+void int_handler(cpu_state_t *cpu)
 {
 	if(!cpu)
 	{
-		return 0;
+		return;
 	}
 	unsigned int intr=cpu->intr;
 	if(intr<0x20)
@@ -68,6 +68,7 @@ cpu_state_t *int_handler(cpu_state_t *cpu)
 				break;
 			case 0x0d:
 				printf("General Protection Fault\nError Code: %u\n",(unsigned int)cpu->error);
+				while(1);
 				break;
 			case 0x0e:
 				puts("Page Fault");
@@ -104,5 +105,35 @@ cpu_state_t *int_handler(cpu_state_t *cpu)
 			kernelpanic("Something happened!");
 		}
 	}
-	return cpu;
+//	return taskschedule(cpu);
+//	return cpu;
 }
+
+/*
+cpu_state_t *taskschedule(cpu_state_t *cpu)
+{
+	static int task=-1;
+
+	if(task>=0)
+	{
+		for(i=0;!tss_entry_get(i)&&i<TSS_SIZE;i++);
+		if(i>=TSS_SIZE)
+		{
+			return cpu;
+		}
+		else
+		{
+			tmp=tss_entry_get(i);
+		}
+	}
+	cpu_state_t *tmp;
+	{
+		
+		return cpu;
+	}
+	else
+	{
+		
+	}
+}
+*/

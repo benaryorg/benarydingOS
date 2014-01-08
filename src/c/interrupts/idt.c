@@ -31,7 +31,7 @@ void idt_init(void)
 
 	for(i=0;i<IDT_SIZE;i++)
 	{
-		idt_entry_set(i,0x08,intr_stub_0,0,0x07);
+		idt_entry_set(i,0x08,intr_stub_14,0,0x07);
 	}
 //*/
 
