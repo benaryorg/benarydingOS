@@ -10,7 +10,7 @@ void *malloc(size_t size)
 	size_t i,j;
 	mem_allocated_t tile;
 	mem_allocated_t *tmp;
-	for(i=0;i<MEM_STACK_SIZE;i++)
+	for(i=MEM_STACK_SIZE-1;i>=0;i--)
 	{
 		if((tmp=physmemgetallocation(i))->start)
 		{
@@ -40,7 +40,7 @@ void physmeminit(multiboot_info_t *mb_info)
 {
 	int i;
 	mem_allocated_t addr;
-	/*multiboot_module_t *modules=mb_info->mbs_mods_addr;
+	multiboot_module_t *modules=mb_info->mbs_mods_addr;
 	for(i=0;i<mb_info->mbs_mods_count;i++)
 	{
 		addr.start=(void *)modules[i].mod_start;
@@ -50,9 +50,9 @@ void physmeminit(multiboot_info_t *mb_info)
 		void *load_addr=(void *)0x200000;
 		memcpy(load_addr,addr.start,length);
 		task_new(load_addr);
-	}*/
+	}
 	multiboot_mmap_t *mmap=mb_info->mbs_mmap_addr;
-	multiboot_mmap_t *map_end=(void*)((uintptr_t) mb_info->mbs_mmap_addr + mb_info->mbs_mmap_length);
+	multiboot_mmap_t *map_end=(void*)((uintptr_t)mb_info->mbs_mmap_addr+mb_info->mbs_mmap_length);
 	while(mmap<map_end)
 	{
 		if(mmap->Type!=MEM_FREE)
