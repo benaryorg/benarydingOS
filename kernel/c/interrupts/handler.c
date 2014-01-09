@@ -80,7 +80,7 @@ cpu_state_t *int_handler(cpu_state_t *cpu)
 			switch(intr-0x20)
 			{
 				case 0x00:
-					puts("Timer");
+					//puts("Timer");
 					cpu=task_next(cpu);
 					tss_entry_set(1,(uint32_t)(cpu+1));
 					break;
