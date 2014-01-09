@@ -7,10 +7,16 @@ BUILDDIR=build
 KERNEL=$BUILDDIR/kernel
 QEMU_ARGS="-s -S -kernel $KERNEL"
 
-command -v qemu >/dev/null 2>&1 || {
-    echo "qemu is required but was not found on your system."
-    exit 1
-}
+if command -v qemu >/dev/null 2>&1 ; then
+	qemu='qemu'
+elif command -v qemu-system-i386 >/dev/null 2>&1 ; then
+	qemu='qemu-system-i386'
+elif command -v qemu-system-x86_64 >/dev/null 2>&1 ; then
+	qemu='qemu-system-x86_64'
+else
+	echo "qemu is required but was not found on your system."
+	exit 1
+fi
 
 printf "\033[32;1m * \033[0mStarting QEMU ...\n"
 printf "\033[32;1m * \033[0mOpen another terminal, start gdb and type the following:\n"
