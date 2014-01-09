@@ -10,13 +10,13 @@ CFLAGS = -m32 -Wall -g -fno-stack-protector -nostdinc -std=gnu89
 LDFLAGS = -melf_i386 -Ttext=0x100000 -T src/linker/kernel.ld
 
 ../build/kernel: $(OBJS)
-	$(LD) $(LDFLAGS) -o $@ $(subst src,../build,$^)
+	$(LD) $(LDFLAGS) -o $@ $(subst src,../build/kernel_,$^)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c -o $(subst src,../build,$@) $^
+	$(CC) $(CFLAGS) -c -o $(subst src,../build/kernel_,$@) $^
 
 %.o: %.S
-	$(CC) $(ASFLAGS) -c -o $(subst src,../build,$@) $^
+	$(CC) $(ASFLAGS) -c -o $(subst src,../build/kernel_,$@) $^
 
 setup:
 	$(shell ./setup.sh)
