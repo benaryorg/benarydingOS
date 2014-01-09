@@ -18,6 +18,9 @@ build/kernel: $(OBJS)
 %.o: %.S
 	$(CC) $(ASFLAGS) -c -o $(subst src,build,$@) $^
 
+setup:
+	$(shell ./setup.sh)
+
 clean:
 	rm $(subst ./src,./build,$(OBJS))
 
