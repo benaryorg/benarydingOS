@@ -22,9 +22,18 @@ int getposition(void)
 void setposition(int position)
 {
 	cursorposition(position,1);
+	setcursor(position);
 }
 
 void resetposition(void)
 {
 	setposition(0);
+}
+
+void setcursor(uint16_t pos)
+{
+	outb(0x3D4,14);
+	outb(0x3D5,pos>>8);
+	outb(0x3D4,15);
+	outb(0x3D5,pos);
 }

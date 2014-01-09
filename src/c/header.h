@@ -33,5 +33,6 @@ void setposition(int);
 int getposition(void);
 void resetposition(void);
 int cursorposition(int,char);
+void setcursor(uint16_t);
 
 #endif
