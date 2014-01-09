@@ -2,10 +2,10 @@
 
 void foo(void)
 {
+	int i;
 	while(1)
 	{
-		//putchar('#');
-		//asm volatile("cli;hlt");
+		i=5/0;
 	}
 }
 
@@ -17,7 +17,7 @@ int main(void)
 	memdump();
 	cleardisplay();
 
-	//task_new(foo);
+	task_new(foo);
 
 	while(1);
 	return 0;

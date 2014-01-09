@@ -58,6 +58,7 @@ cpu_state_t *int_handler(cpu_state_t *cpu)
 				break;
 			case 0x0d:
 				printf("General Protection Fault\nError Code: %u\n",(unsigned int)cpu->error);
+				kernelpanic("#GP");
 				break;
 			case 0x0e:
 				puts("Page Fault");
@@ -70,7 +71,7 @@ cpu_state_t *int_handler(cpu_state_t *cpu)
 				printf("Exception %d\n",intr);
 				break;
 		}
-		kernelpanic("Exception");
+		//kernelpanic("Exception");
 	}
 	else
 	{
