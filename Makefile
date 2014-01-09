@@ -19,10 +19,7 @@ build/kernel: $(OBJS)
 %.o: %.S
 	$(CC) $(ASFLAGS) -c -o $(subst kernel,build/kernel_,$@) $^
 
-setup:
-	$(shell ./setup.sh)
-
 clean:
-	rm $(subst ./src,./build,$(OBJS))
+	rm $(subst ./kernel,./build/kernel_,$(OBJS))
 
 .PHONY: clean
