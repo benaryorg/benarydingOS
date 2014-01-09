@@ -6,6 +6,7 @@ int cursorposition(int data,char set)
 	if(set)
 	{
 		pos=data;
+		setcursor(pos);
 	}
 	else
 	{
@@ -22,7 +23,6 @@ int getposition(void)
 void setposition(int position)
 {
 	cursorposition(position,1);
-	setcursor(position);
 }
 
 void resetposition(void)

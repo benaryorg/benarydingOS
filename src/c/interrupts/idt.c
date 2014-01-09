@@ -25,13 +25,6 @@ int_desc_t *idt_func(int i)
 
 void idt_init(void)
 {
-	int i;
-
-	for(i=0;i<IDT_SIZE;i++)
-	{
-		idt_entry_set(i,0x08,intr_stub_13,0,0x07);
-	}
-
 	idt_entry_set(0,0x08,intr_stub_0 ,0,0x07);
 	idt_entry_set(1,0x08,intr_stub_1 ,0,0x07);
 	idt_entry_set(2,0x08,intr_stub_2 ,0,0x07);
