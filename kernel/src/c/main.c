@@ -2,11 +2,7 @@
 
 void foo(void)
 {
-	int i;
-	while(1)
-	{
-		i=5/0;
-	}
+	while(1);
 }
 
 int main(void)
