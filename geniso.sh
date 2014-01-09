@@ -9,11 +9,14 @@
 
 GENISOARGS='-R -b boot/grub/stage2_eltorito -no-emul-boot -boot-load-size 4 -boot-info-table -V "BDOS" -o build/benarydingOS.iso build/iso'
 
+GENISOCOMMAND='genisoimage'
+
 command -v genisoimage >/dev/null 2>&1 || {
 	command -v mkisofs >/dev/null 2>&1 || {
 		echo "mkisofs or genisoimage is required but was not found on your system."
 		exit 1
 	}
+	GENISOCOMMAND='mkisofs'
 }
 
 printf "\033[32;1m * \033[0mCreating directories\033[0m\n"
@@ -33,5 +36,5 @@ chainloader (hd0)+1
 printf "\033[32;1m * \033[0mCopying kernel\033[0m\n"
 cp build/kernel build/iso/boot/kernel
 printf "\033[32;1m * \033[0mStarting mkisofs or genisoimage\033[0m\n"
-genisoimage $GENISOARGS || mkisofs $GENISOARGS
+$GENISOCOMMAND $GENISOARGS
 printf "\033[32;1m * \033[0mThe iso is in \033[1mbuild/benarydingOS.iso\033[0m\n"
