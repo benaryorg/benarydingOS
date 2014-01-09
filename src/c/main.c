@@ -1,5 +1,13 @@
 #include "header.h"
 
+void foo(void)
+{
+	while(1)
+	{
+		putchar('#');
+	}
+}
+
 int main(void)
 {
 	cleardisplay();
@@ -7,6 +15,12 @@ int main(void)
 	puts("Memorydump:");
 	memdump();
 	cleardisplay();
-	while(1);
+
+	task_new(foo);
+
+	while(1)
+	{
+		putchar(' ');
+	}
 	return 0;
 }

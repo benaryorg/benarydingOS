@@ -3,17 +3,7 @@
 cpu_state_t *get_new_cpu(void)
 {
 	cpu_state_t *cpu=malloc(sizeof(cpu_state_t));
-	cpu->eax=0;
-	cpu->ebx=0;
-	cpu->ecx=0;
-	cpu->edx=0;
-	cpu->esi=0;
-	cpu->edi=0;
-	cpu->ebp=0;
-	cpu->eip=0;
-	cpu->cs=0x08;
-	cpu->eflags=0x202;
-	return cpu;
+		return cpu;
 }
 
 cpu_state_t *int_handler(cpu_state_t *cpu)
@@ -90,6 +80,7 @@ cpu_state_t *int_handler(cpu_state_t *cpu)
 			{
 				case 0x00:
 					puts("Timer");
+					cpu=task_next(cpu);
 					break;
 				default:
 					printf("IRQ %3d\n",intr-0x20);
@@ -107,4 +98,76 @@ cpu_state_t *int_handler(cpu_state_t *cpu)
 		}
 	}
 	return cpu;
+}
+
+cpu_state_t *task_next(cpu_state_t *task)
+{
+	return task_schedule(task,0);
+}
+
+void task_new(void *ptr)
+{
+	cpu_state_t cpu;
+	cpu.eax=0;
+	cpu.ebx=0;
+	cpu.ecx=0;
+	cpu.edx=0;
+	cpu.esi=0;
+	cpu.edi=0;
+	cpu.ebp=0;
+	cpu.eip=(uint32_t)ptr;
+	cpu.cs=0x08;
+	cpu.eflags=0x202;
+	ptr=0;
+	while(!ptr)
+	{
+		ptr=malloc(4096);
+	}
+	cpu_state_t *state=(void *)(ptr+4096-sizeof(cpu));
+	*state=cpu;
+	task_schedule(state,1);
+}
+
+cpu_state_t *task_schedule(cpu_state_t *task,char add)
+{
+	static task_t tasks[TASKS_SIZE]={};
+
+	int i;
+
+	for(i=0;tasks[i].cpu&&i<TASKS_SIZE;i++);
+	if(i<TASKS_SIZE)
+	{
+		tasks[i].cpu=task;
+		tasks[i].ticks=3;
+		tasks[i].tick=4;
+	}
+
+	if(add)
+	{
+		return 0;
+	}
+	
+	task=0;
+
+	do
+	{
+		for(i=0;i<TASKS_SIZE;i++)
+		{
+			if(tasks[i].ticks>tasks[i].tick)
+			{
+				tasks[i].tick++;
+				task=tasks[i].cpu;
+				tasks[i].cpu=0;
+				break;
+			}
+		}
+		if(!task)
+		{
+			for(i=0;i<TASKS_SIZE;i++)
+			{
+				tasks[i].tick=0;
+			}
+		}
+	} while(!task);
+	return task;
 }
