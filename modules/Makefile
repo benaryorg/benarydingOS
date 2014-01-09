@@ -10,6 +10,7 @@ LDFLAGS = -melf_i386 -Tlinker.ld
 
 $(addprefix ../build/,$(addsuffix .bin,$(basename $(notdir $(OBJS))))): $(OBJS)
 	$(LD) $(LDFLAGS) -o $@ $^
+	@clean
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $^
