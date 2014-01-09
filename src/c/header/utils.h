@@ -5,6 +5,7 @@ static const char digits[] = "0123456789ABCDEF";
 
 /* I/O */
 inline void outb(uint16_t,uint8_t);
+inline unsigned char inb(uint16_t);
 
 /* benaryorglib */
 void haltcpu(void);
