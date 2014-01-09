@@ -28,7 +28,6 @@ void init(multiboot_info_t *mb_info)
 	puts("Memtest OK");
 	activate_hardware_ints();
 	puts("Activated Hardware Interrupts");
-	while(1);
 	puts("Starting Main\n");
 	resetcolor();
 	main();
