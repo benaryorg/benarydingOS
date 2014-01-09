@@ -5,6 +5,8 @@ void init(multiboot_info_t *mb_info)
 	cleardisplay();
 	setfgcolor(COLOR_LIGHT_GREEN);
 	puts("benarydingOS booting");
+	pic_init();
+	puts("PIC Reprogrammed");
 	idt_init();
 	puts("Interrupt Descriptor Table loaded");
 	gdt_init();
@@ -23,7 +25,7 @@ void init(multiboot_info_t *mb_info)
 		return;
 	}
 	puts("Memtest OK");
-	activate_hardware_ints();
+	//activate_hardware_ints();
 	puts("Activated Hardware Interrupts");
 	puts("Starting Main\n");
 	resetcolor();

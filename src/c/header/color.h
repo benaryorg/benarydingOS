@@ -1,7 +1,7 @@
 #ifndef __COLOR_HEADER__
 #define __COLOR_HEADER__
 
-#define DEFAULTCOLOR 0xe0
+#define DEFAULTCOLOR 0x07
 
 /* hardware text mode colours */
 enum hw_color {
