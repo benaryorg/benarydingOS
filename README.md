@@ -39,7 +39,17 @@ After building the ISO, you can run our OS in Bochs using the following command:
 
 ### Real hardware
 
-Burn the built ISO to a CD, if you _really_ feel like wasting one.
+There are two ways to run our OS on real hardware:
+
+#### GRUB Legacy (0.xx)
+Add the following three lines to your `/boot/grub/menu.lst`:
+
+    title benarydingOS
+    root (hd0,0)
+    kernel /boot/kernel
+
+#### Burn the ISO
+You can burn the built ISO to a CD, if you _really_ feel like wasting one.
 
 ## Licensing
 
