@@ -38,9 +38,21 @@ void *malloc(size_t size)
 
 void physmeminit(multiboot_info_t *mb_info)
 {
+	int i;
+	mem_allocated_t addr;
+	/*multiboot_module_t *modules=mb_info->mbs_mods_addr;
+	for(i=0;i<mb_info->mbs_mods_count;i++)
+	{
+		addr.start=(void *)modules[i].mod_start;
+		addr.end=(void *)modules[i].mod_end;
+		size_t length=addr.end-addr.start;
+		physmemsetallocation(&addr);
+		void *load_addr=(void *)0x200000;
+		memcpy(load_addr,addr.start,length);
+		task_new(load_addr);
+	}*/
 	multiboot_mmap_t *mmap=mb_info->mbs_mmap_addr;
 	multiboot_mmap_t *map_end=(void*)((uintptr_t) mb_info->mbs_mmap_addr + mb_info->mbs_mmap_length);
-	mem_allocated_t addr;
 	while(mmap<map_end)
 	{
 		if(mmap->Type!=MEM_FREE)

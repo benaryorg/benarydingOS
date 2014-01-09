@@ -1,4 +1,4 @@
-SRCS = $(shell find -name '*.[cS]')
+SRCS = $(shell find kernel -name '*.[cS]')
 OBJS = $(addsuffix .o,$(basename $(SRCS)))
 
 CC = cc

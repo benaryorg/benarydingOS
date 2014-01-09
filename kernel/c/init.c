@@ -13,15 +13,16 @@ void init(multiboot_info_t *mb_info)
 	puts("Global Descriptor Table loaded");
 	physmeminit(mb_info);
 	puts("Physical Memory initialised");
+	printf("Loaded %d Modules\n",(int)mb_info->mbs_mods_count);
 	if(memtest(64,64))
 	{
-		kernelpanic("Memtest Failure!");
 		setfgcolor(COLOR_LIGHT_RED);
 		memdump();
 		puts("Memtest:");
 		puts("Critical: Memory Overlapping!");
 		puts("Please contact your local benarydingOS-supplier immediately!");
 		puts("It is possible, that this is a bug!");
+		kernelpanic("Memtest Failure!");
 		return;
 	}
 	puts("Memtest OK");
