@@ -81,6 +81,7 @@ cpu_state_t *int_handler(cpu_state_t *cpu)
 				case 0x00:
 					puts("Timer");
 					cpu=task_next(cpu);
+					tss_entry_set(1,(uint32_t)(cpu+1));
 					break;
 				default:
 					printf("IRQ %3d\n",intr-0x20);
@@ -107,6 +108,7 @@ cpu_state_t *task_next(cpu_state_t *task)
 
 void task_new(void *ptr)
 {
+	const int stackspace=4096;
 	cpu_state_t cpu;
 	cpu.eax=0;
 	cpu.ebx=0;
@@ -116,14 +118,16 @@ void task_new(void *ptr)
 	cpu.edi=0;
 	cpu.ebp=0;
 	cpu.eip=(uint32_t)ptr;
-	cpu.cs=0x08;
+	cpu.cs=0x18|0x03;
+	cpu.ss=0x20|0x03;
 	cpu.eflags=0x202;
 	ptr=0;
 	while(!ptr)
 	{
-		ptr=malloc(4096);
+		ptr=malloc(stackspace);
 	}
-	cpu_state_t *state=(void *)(ptr+4096-sizeof(cpu));
+	cpu.esp=(uint32_t)ptr+stackspace;
+	cpu_state_t *state=(void *)(ptr+stackspace-sizeof(cpu));
 	*state=cpu;
 	task_schedule(state,1);
 }

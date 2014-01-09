@@ -87,12 +87,19 @@ intr_common_handler:
     push %ecx
     push %ebx
     push %eax
- 
-    // Handler aufrufen
+
+    mov $0x10, %ax
+	mov %ax, %ds
+	mov %ax, %es
+	
+	// Handler aufrufen
     push %esp
     call int_handler
-    add $4, %esp
     mov %eax, %esp
+
+	mov $0x23, %ax
+	mov %ax, %ds
+	mov %ax, %es
  
     // CPU-Zustand wiederherstellen
     pop %eax

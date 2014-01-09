@@ -4,7 +4,8 @@ void foo(void)
 {
 	while(1)
 	{
-		putchar('#');
+		//putchar('#');
+		//asm volatile("cli;hlt");
 	}
 }
 
@@ -16,11 +17,8 @@ int main(void)
 	memdump();
 	cleardisplay();
 
-	task_new(foo);
+	//task_new(foo);
 
-	while(1)
-	{
-		putchar(' ');
-	}
+	while(1);
 	return 0;
 }
