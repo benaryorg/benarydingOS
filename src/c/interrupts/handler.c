@@ -23,7 +23,7 @@ cpu_state_t *int_handler(cpu_state_t *cpu)
 		return 0;
 	}
 	unsigned int intr=cpu->intr;
-	if(intr<0x10)
+	if(intr<0x20)
 	{
 		switch(intr)
 		{
@@ -76,40 +76,34 @@ cpu_state_t *int_handler(cpu_state_t *cpu)
 				kernelpanic("Reserved Exception");
 				break;
 			default:
-				kernelpanic("It is impossible to get this Error!\nIf you have this Error, please kill yourself, you have no life and no friends!");
+				//kernelpanic("It is impossible to get this Error!\nIf you have this Error, please kill yourself, you have no life and no friends!");
+				printf("Exception %d\n",intr);
 				break;
 		}
 		kernelpanic("Exception");
 	}
 	else
 	{
-		if(intr<0x20)
+		if(intr<0x30)
 		{
-			kernelpanic("Exception>0x0f");
+			switch(intr-0x20)
+			{
+				case 0x00:
+					puts("Timer");
+					break;
+				default:
+					printf("IRQ %3d\n",intr-0x20);
+					break;
+			}
+			if(intr<0x29)
+			{
+				outb(0x20,0x20);
+			}
+			outb(0xa0,0x20);
 		}
 		else
 		{
-			if(intr<0x30)
-			{
-				switch(intr-0x20)
-				{
-					case 0x00:
-						puts("Timer");
-						break;
-					default:
-						printf("IRQ %3d\n",intr-0x20);
-						break;
-				}
-				if(intr<0x29)
-				{
-					outb(0x20,0x20);
-				}
-				outb(0xa0,0x20);
-			}
-			else
-			{
-				kernelpanic("Something happened!");
-			}
+			kernelpanic("Something happened!");
 		}
 	}
 	return cpu;

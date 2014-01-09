@@ -4,7 +4,7 @@ void idt_entry_set(int intr,uint16_t selector,void *handler,int dpl,int type)
 {
 	int_desc_t entry;
 	entry.lsb_handler=((uint32_t)handler)&0xFFFF;
-	entry.msb_handler=(((uint32_t) handler)>>16)&0xFFFF;
+	entry.msb_handler=(((uint32_t)handler)>>16)&0xFFFF;
 	entry.access=0x80|((dpl&3)<<5)|type;
 	entry.selector=selector;
 	entry.reserved=0;
