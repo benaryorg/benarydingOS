@@ -8,9 +8,10 @@ ASFLAGS = -m32
 CFLAGS = -m32 -Wall -g -fno-stack-protector -nostdinc -I include
 LDFLAGS = -melf_i386 -Tlinker.ld
 
+all:*
+
 $(addprefix ../build/,$(addsuffix .bin,$(basename $(notdir $(OBJS))))): $(OBJS)
 	$(LD) $(LDFLAGS) -o $@ $^
-	@clean
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $^
