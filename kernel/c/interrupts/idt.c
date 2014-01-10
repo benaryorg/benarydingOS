@@ -45,7 +45,7 @@ void idt_init(void)
 	idt_entry_set(17,0x08,intr_stub_17,0,IDT_TRAP_GATE);
 	idt_entry_set(18,0x08,intr_stub_18,0,IDT_TRAP_GATE);
 
-	idt_entry_set(32,0x08,intr_stub_32,0,IDT_INTERRUPT_GATE);
+	idt_entry_set(32,0x08,intr_stub_32,0,IDT_TRAP_GATE);
 	idt_entry_set(33,0x08,intr_stub_33,0,IDT_TRAP_GATE);
 	idt_entry_set(34,0x08,intr_stub_34,0,IDT_TRAP_GATE);
 	idt_entry_set(35,0x08,intr_stub_35,0,IDT_TRAP_GATE);
