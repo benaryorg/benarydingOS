@@ -8,6 +8,7 @@ cpu_state_t *get_new_cpu(void)
 
 cpu_state_t *int_handler(cpu_state_t *cpu)
 {
+	char key;
 	if(!cpu)
 	{
 		return 0;
@@ -83,6 +84,13 @@ cpu_state_t *int_handler(cpu_state_t *cpu)
 					//puts("Timer");
 					cpu=task_next(cpu);
 					tss_entry_set(1,(uint32_t)(cpu+1));
+					break;
+				case 0x01://Typing (only for testing!)
+					key=inb(0x60);
+					if(!(key&0x80))
+						printf("Taste %d\n",inb(0x60));
+					while(inb(0x64)&0x01)
+						inb(0x60);
 					break;
 				default:
 					printf("IRQ %3d\n",intr-0x20);
