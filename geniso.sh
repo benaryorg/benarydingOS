@@ -24,6 +24,7 @@ mkdir -p build/iso/boot/grub
 
 printf "\033[32;1m * \033[0mCopying grub stage2\033[0m\n"
 cp /lib/grub/i386-pc/stage2_eltorito build/iso/boot/grub/
+
 echo "default 0
 timeout 30
 
@@ -33,8 +34,11 @@ kernel /boot/kernel
 title Boot from hard disk
 chainloader (hd0)+1
 " > build/iso/boot/grub/menu.lst
+
 printf "\033[32;1m * \033[0mCopying kernel\033[0m\n"
 cp build/kernel build/iso/boot/kernel
+
 printf "\033[32;1m * \033[0mStarting mkisofs or genisoimage\033[0m\n"
 $GENISOCOMMAND $GENISOARGS
+
 printf "\033[32;1m * \033[0mThe iso is in \033[1mbuild/benarydingOS.iso\033[0m\n"
