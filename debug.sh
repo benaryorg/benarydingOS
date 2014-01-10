@@ -33,4 +33,4 @@ printf "\033[33;1m * \033[0m  (gdb)\033[1m step\033[0m\n"
 printf "\033[33;1m * \033[0m Examine the contents of a variable:\n"
 printf "\033[33;1m * \033[0m  (gdb)\033[1m print i\033[0m\n\n"
 
-qemu $QEMU_ARGS || qemu-system-i386 $QEMU_ARGS
+$qemu $QEMU_ARGS
