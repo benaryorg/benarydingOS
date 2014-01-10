@@ -14,6 +14,7 @@
 #include "header/interrupt_handler.h"
 #include "header/pic.h"
 #include "header/tss.h"
+#include "header/elf.h"
 
 #define BUFFER_TEXT ((char *)0xb8000)
 #define BUFFER_TEXT_WIDTH 80
