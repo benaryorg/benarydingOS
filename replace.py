@@ -64,5 +64,5 @@ if __name__ == '__main__':
         except:
             traceback.print_exc()
 
-# top modeline
+# toplel modeline
 # kate: indent-width 4; replace-tabs on
