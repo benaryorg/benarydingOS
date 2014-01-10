@@ -49,7 +49,7 @@ cpu_state_t *int_handler(cpu_state_t *cpu)
 				kernelpanic("Coprocessor Segment Overrun");
 				break;
 			case 0x0a:
-				puts("Invalit TSS");
+				puts("Invalid TSS");
 				break;
 			case 0x0b:
 				puts("Segment not Present");
