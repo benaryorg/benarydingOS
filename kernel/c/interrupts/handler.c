@@ -143,8 +143,8 @@ cpu_state_t *task_schedule(cpu_state_t *task,char add)
 	if(i<TASKS_SIZE)
 	{
 		tasks[i].cpu=task;
-		tasks[i].ticks=3;
-		tasks[i].tick=4;
+		tasks[i].ticks=4;
+		tasks[i].tick=5;
 	}
 
 	if(add)
