@@ -7,22 +7,33 @@ void free(void *ptr)
 
 void *malloc(size_t size)
 {
-	size_t i,j;
+	int i,j;
 	mem_allocated_t tile;
 	mem_allocated_t *tmp;
 	for(i=MEM_STACK_SIZE-1;i>=0;i--)
 	{
-		if((tmp=physmemgetallocation(i))->start)
+		if(((tmp=physmemgetallocation(i))->start))
 		{
+			if(tmp->start<(void *)0xA000000)
+			{
+				continue;
+			}
 			tile.start=tmp->end+1;
 			tile.end=tile.start+size;
 			for(j=0;j<MEM_STACK_SIZE;j++)
 			{
 				if((tmp=physmemgetallocation(j))->start)
 				{
-					if((tmp->start<=tile.end&&tmp->start>=tile.start)||(tmp->end<=tile.end&&tmp->end>=tile.start))
+					if
+					(
+						(tmp->start>=tile.start && tmp->start<=tile.end)||
+						(tmp->end>=tile.start && tmp->end<=tile.end)||
+						(tmp->start<tile.start && tmp->end>tile.end)
+					)
 					{
-						break;
+						tile.start=tmp->end+1;
+						j=MEM_STACK_SIZE+1;
+						continue;
 					}
 				}
 			}
@@ -38,9 +49,18 @@ void *malloc(size_t size)
 
 void physmeminit(multiboot_info_t *mb_info)
 {
-	int i;
 	mem_allocated_t addr;
+	addr.start=(void *)0xA000001;
+	addr.end=(void *)0xA000001;
+	physmemsetallocation(&addr);
 	multiboot_module_t *modules=mb_info->mbs_mods_addr;
+	addr.start=mb_info;
+	addr.end=(char *)addr.start+4096;
+	physmemsetallocation(&addr);
+	addr.start=modules;
+	addr.end=(char *)addr.start+4096;
+	physmemsetallocation(&addr);
+	int i;
 	for(i=0;i<mb_info->mbs_mods_count;i++)
 	{
 		addr.start=(void *)modules[i].mod_start;
@@ -83,19 +103,16 @@ void physmemsetallocation(mem_allocated_t *tile)
 
 void physmemrmalloc(void *ptr)
 {
-	if(ptr)
+	size_t i;
+	for(i=0;i<MEM_STACK_SIZE;i++)
 	{
-		size_t i;
-		for(i=0;i<MEM_STACK_SIZE;i++)
+		if(physmemgetallocation(i)->start==ptr)
 		{
-			if(physmemgetallocation(i)->start==ptr)
-			{
-				mem_allocated_t tile;
-				tile.start=0;
-				tile.end=0;
-				phys_mem_allocation(i,&tile,1);
-				break;
-			}
+			mem_allocated_t tile;
+			tile.start=0;
+			tile.end=0;
+			phys_mem_allocation(i,&tile,1);
+			break;
 		}
 	}
 }

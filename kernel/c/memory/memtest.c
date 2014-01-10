@@ -2,14 +2,18 @@
 
 int memtest(const int arrs,const int bytes)
 {
-	int **f=malloc(sizeof(int *)*arrs);
+	void *ptr;
+	char **f=malloc(sizeof(char *)*arrs);
 	int i,j;
 	for(i=0;i<arrs;i++)
 	{
-		f[i]=malloc(sizeof(int)*bytes);
+		
+		ptr=malloc(sizeof(char)*bytes);
+		f[i]=ptr;
+		printf("%p/%p\t",ptr,f[i]);
 		for(j=0;j<bytes;j++)
 		{
-			f[i][j]=j%256;
+			f[i][j]=j%(i%255+1);
 		}
 	}
 
@@ -17,8 +21,11 @@ int memtest(const int arrs,const int bytes)
 	{
 		for(j=0;j<bytes;j++)
 		{
-			if(f[i][j]!=j%256)
+			if(f[i][j]!=j%(i%255+1))
 			{
+				printf("%d/%d=%d\n",i,j,f[i][j]);
+				printf("%p/%p\n",f[i-1],f[i]);
+				while(1);
 				return 1;
 			}
 		}
@@ -37,7 +44,7 @@ void memdump(void)
 		tile=physmemgetallocation(i);
 		if(tile->start||tile->end)
 		{
-			printf("%d: %p-%p\n",i,tile->start,tile->end);
+			printf("%10d: %10p-%10p\n",i,tile->start,tile->end);
 		}
 	}
 }
