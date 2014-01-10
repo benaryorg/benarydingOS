@@ -16,4 +16,4 @@ else
 	exit 1
 fi
 
-$qemu $QEMU_ARGS $QEMU_ARGS
+$qemu $QEMU_ARGS
