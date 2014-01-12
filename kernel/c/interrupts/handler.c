@@ -103,10 +103,31 @@ cpu_state_t *int_handler(cpu_state_t *cpu)
 		}
 		else
 		{
-			kernelpanic("Something happened!");
+			switch(intr-0x30)
+			{
+				case 0x00:
+					syscall(cpu);
+					break;
+				default:
+					kernelpanic("Something happened");
+					break;
+			}
 		}
 	}
 	return cpu;
+}
+
+void syscall(cpu_state_t *cpu)
+{
+	switch(cpu->eax)
+	{
+		case 0x00:
+			putchar(cpu->ebx);
+			break;
+		default:
+			kernelpanic("Unknown Syscall");
+			break;
+	}
 }
 
 cpu_state_t *task_next(cpu_state_t *task)
