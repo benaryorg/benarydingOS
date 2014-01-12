@@ -69,7 +69,7 @@ void physmeminit(multiboot_info_t *mb_info)
 		physmemsetallocation(&addr);
 		void *load_addr=(void *)0x200000;
 		memcpy(load_addr,addr.start,length);
-		task_new(load_addr);
+		//task_new(load_addr);
 	}
 	multiboot_mmap_t *mmap=mb_info->mbs_mmap_addr;
 	multiboot_mmap_t *map_end=(void*)((uintptr_t)mb_info->mbs_mmap_addr+mb_info->mbs_mmap_length);

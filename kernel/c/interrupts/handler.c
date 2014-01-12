@@ -81,7 +81,7 @@ cpu_state_t *int_handler(cpu_state_t *cpu)
 			switch(intr-0x20)
 			{
 				case 0x00:
-					//puts("Timer");
+					puts("Timer");
 					cpu=task_next(cpu);
 					tss_entry_set(1,(uint32_t)(cpu+1));
 					break;
@@ -147,8 +147,8 @@ void task_new(void *ptr)
 	cpu.edi=0;
 	cpu.ebp=0;
 	cpu.eip=(uint32_t)ptr;
-//	cpu.cs=0x18|0x03;
-//	cpu.ss=0x20|0x03;
+	cpu.cs=0x18|0x03;
+	cpu.ss=0x20|0x03;
 	cpu.eflags=0x202;
 	ptr=0;
 	while(!ptr)
