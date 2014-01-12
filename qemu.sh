@@ -1,6 +1,6 @@
 #!/bin/sh
 
-QEMU_ARGS="-kernel build/kernel $@"
+QEMU_ARGS="-kernel build/kernel -initrd build/*.bin $@"
 
 err=0
 qemu=''
