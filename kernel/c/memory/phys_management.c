@@ -14,10 +14,6 @@ void *malloc(size_t size)
 	{
 		if(((tmp=physmemgetallocation(i))->start))
 		{
-			if(tmp->start<(void *)0xA000000)
-			{
-				continue;
-			}
 			tile.start=tmp->end+1;
 			tile.end=tile.start+size;
 			for(j=0;j<MEM_STACK_SIZE;j++)
@@ -50,9 +46,6 @@ void *malloc(size_t size)
 void physmeminit(multiboot_info_t *mb_info)
 {
 	mem_allocated_t addr;
-	addr.start=(void *)0xA000001;
-	addr.end=(void *)0xA000001;
-	physmemsetallocation(&addr);
 	multiboot_module_t *modules=mb_info->mbs_mods_addr;
 	addr.start=mb_info;
 	addr.end=(char *)addr.start+4096;

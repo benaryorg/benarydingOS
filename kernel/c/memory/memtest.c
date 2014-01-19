@@ -10,7 +10,6 @@ int memtest(const int arrs,const int bytes)
 		
 		ptr=malloc(sizeof(char)*bytes);
 		f[i]=ptr;
-		printf("%p/%p\t",ptr,f[i]);
 		for(j=0;j<bytes;j++)
 		{
 			f[i][j]=j%(i%255+1);
@@ -25,7 +24,6 @@ int memtest(const int arrs,const int bytes)
 			{
 				printf("%d/%d=%d\n",i,j,f[i][j]);
 				printf("%p/%p\n",f[i-1],f[i]);
-				while(1);
 				return 1;
 			}
 		}
