@@ -58,6 +58,7 @@ cpu_state_t *int_handler(cpu_state_t *cpu)
 				puts("Stack Fault");
 				break;
 			case 0x0d:
+				resetcolor();
 				printf("General Protection Fault\nError Code: %u\n",(unsigned int)cpu->error);
 				kernelpanic("#GP");
 				break;
@@ -171,8 +172,8 @@ cpu_state_t *task_schedule(cpu_state_t *task,char add)
 	if(i<TASKS_SIZE)
 	{
 		tasks[i].cpu=task;
-		tasks[i].ticks=4;
-		tasks[i].tick=5;
+		tasks[i].ticks=3;
+		tasks[i].tick=4;
 	}
 
 	if(add)

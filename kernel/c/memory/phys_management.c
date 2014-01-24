@@ -7,11 +7,17 @@ void free(void *ptr)
 
 void *malloc(size_t size)
 {
+	static int last=0;
 	int i,j;
 	mem_allocated_t tile;
 	mem_allocated_t *tmp;
-	for(i=MEM_STACK_SIZE-1;i>=0;i--)
+	for(i=last;i!=last;i++)
 	{
+		if(i>MEM_STACK_SIZE)
+		{
+			i=-1;
+			continue;
+		}
 		if(((tmp=physmemgetallocation(i))->start))
 		{
 			tile.start=tmp->end+1;
@@ -27,14 +33,14 @@ void *malloc(size_t size)
 						(tmp->start<tile.start && tmp->end>tile.end)
 					)
 					{
-						tile.start=tmp->end+1;
-						j=MEM_STACK_SIZE+1;
-						continue;
+						j=-1;
+						break;
 					}
 				}
 			}
-			if(j>=MEM_STACK_SIZE)
+			if(j!=-1)
 			{
+				last=i;
 				physmemsetallocation(&tile);
 				return tile.start;
 			}
@@ -46,7 +52,10 @@ void *malloc(size_t size)
 void physmeminit(multiboot_info_t *mb_info)
 {
 	mem_allocated_t addr;
-	multiboot_module_t *modules=mb_info->mbs_mods_addr;
+	addr.start=addr.end=0;
+	physmemsetallocation(&addr);
+
+	multiboot_module_t *modules=(multiboot_module_t *)mb_info->mbs_mods_addr;
 	addr.start=mb_info;
 	addr.end=(char *)addr.start+4096;
 	physmemsetallocation(&addr);
@@ -54,8 +63,8 @@ void physmeminit(multiboot_info_t *mb_info)
 	addr.end=(char *)addr.start+4096;
 	physmemsetallocation(&addr);
 	int i;
-	multiboot_mmap_t *mmap=mb_info->mbs_mmap_addr;
-	multiboot_mmap_t *map_end=(void*)((uintptr_t)mb_info->mbs_mmap_addr+mb_info->mbs_mmap_length);
+	multiboot_mmap_t *mmap=(multiboot_mmap_t *)mb_info->mbs_mmap_addr;
+	multiboot_mmap_t *map_end=(multiboot_mmap_t *)((uintptr_t)mb_info->mbs_mmap_addr+mb_info->mbs_mmap_length);
 	while(mmap<map_end)
 	{
 		if(mmap->Type!=MEM_FREE)
@@ -77,6 +86,9 @@ void physmeminit(multiboot_info_t *mb_info)
 		physmemsetallocation(&addr);
 		void *load_addr=(void *)0x200000;
 		memcpy(load_addr,addr.start,length);
+		addr.start=load_addr;
+		addr.end=addr.start+length;
+		physmemsetallocation(&addr);
 		task_new(load_addr);
 	}
 }

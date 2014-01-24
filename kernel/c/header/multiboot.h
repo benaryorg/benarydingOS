@@ -4,7 +4,7 @@
 typedef struct
 {
 	uint16_t size;
-	uintptr_t BaseAddr;
+	uint32_t BaseAddr;
 	uint32_t Length;
 	uint16_t Type;
 }
@@ -27,11 +27,11 @@ typedef struct
 	uint32_t mbs_bootdevice;
 	uint32_t mbs_cmdline;
 	uint32_t mbs_mods_count;
-	multiboot_module_t *mbs_mods_addr;
+	uint32_t mbs_mods_addr;
 	uint64_t mbs_syms1;
 	uint64_t mbs_syms2;
 	uint32_t mbs_mmap_length;
-	multiboot_mmap_t *mbs_mmap_addr;
+	uint32_t mbs_mmap_addr;
 	uint32_t mbs_drives_length;
 	uint32_t mbs_drives_addr;
 	uint32_t mbs_config_table;
