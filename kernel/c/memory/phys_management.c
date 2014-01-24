@@ -80,16 +80,21 @@ void physmeminit(multiboot_info_t *mb_info)
 	physmemsetallocation(&addr);
 	for(i=0;i<mb_info->mbs_mods_count;i++)
 	{
+		printf("Module %d:\n",i);
 		addr.start=(void *)modules[i].mod_start;
 		addr.end=(void *)modules[i].mod_end;
 		size_t length=addr.end-addr.start;
 		physmemsetallocation(&addr);
+		puts("\tOld Memory allocated");
 		void *load_addr=(void *)0x200000;
 		memcpy(load_addr,addr.start,length);
+		puts("\tModule copied");
 		addr.start=load_addr;
 		addr.end=addr.start+length;
 		physmemsetallocation(&addr);
+		puts("\tNew Memory allocated");
 		task_new(load_addr);
+		puts("\tNew Task added\n");
 	}
 }
 
