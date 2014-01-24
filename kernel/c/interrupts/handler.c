@@ -107,7 +107,7 @@ cpu_state_t *int_handler(cpu_state_t *cpu)
 			switch(intr-0x30)
 			{
 				case 0x00:
-					syscall(cpu);
+					syscall_handle(cpu);
 					break;
 				default:
 					kernelpanic("Something happened");
@@ -118,7 +118,7 @@ cpu_state_t *int_handler(cpu_state_t *cpu)
 	return cpu;
 }
 
-void syscall(cpu_state_t *cpu)
+void syscall_handle(cpu_state_t *cpu)
 {
 	switch(cpu->eax)
 	{
