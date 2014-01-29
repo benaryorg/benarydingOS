@@ -1,4 +1,4 @@
-#include "../header.h"
+#include "header.h"
 
 uint8_t _color_pair(enum hw_color bg, enum hw_color fg) {
 	return bg << 4 | fg;

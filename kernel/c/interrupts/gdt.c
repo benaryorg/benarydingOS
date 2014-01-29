@@ -1,4 +1,4 @@
-#include "../header.h"
+#include "header.h"
 
 void gdt_entry_set(int i,unsigned int base,unsigned int limit,int flags)
 {

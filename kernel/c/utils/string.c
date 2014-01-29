@@ -1,4 +1,4 @@
-#include "../header.h"
+#include "header.h"
 
 /* this is a real one-liner. if you can manage to make it less readable, don't hesitate to do so */
 unsigned strlen(const char *s) {

@@ -1,4 +1,4 @@
-#include "../header.h"
+#include "header.h"
 
 int memtest(const int arrs,const int bytes)
 {

@@ -1,20 +1,20 @@
 #ifndef __BENARYDINGOS_HEADER__
 #define __BEANRYDINGOS_HEADER__
 
-#include "header/stdargs.h"
-#include "header/stdint.h"
-#include "header/multiboot.h"
-#include "header/memory.h"
-#include "header/utils.h"
-#include "header/color.h"
-#include "header/ctype.h"
-#include "header/string.h"
-#include "header/gdt.h"
-#include "header/idt.h"
-#include "header/interrupt_handler.h"
-#include "header/pic.h"
-#include "header/tss.h"
-#include "header/elf.h"
+#include "stdargs.h"
+#include "stdint.h"
+#include "multiboot.h"
+#include "memory.h"
+#include "utils.h"
+#include "color.h"
+#include "ctype.h"
+#include "string.h"
+#include "gdt.h"
+#include "idt.h"
+#include "interrupt_handler.h"
+#include "pic.h"
+#include "tss.h"
+#include "elf.h"
 
 #define BUFFER_TEXT ((char *)0xb8000)
 #define BUFFER_TEXT_WIDTH 80

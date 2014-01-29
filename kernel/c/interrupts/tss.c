@@ -1,4 +1,4 @@
-#include "../header.h"
+#include "header.h"
 
 void tss_entry_set(int i,uint32_t data)
 {

@@ -3,7 +3,7 @@
 #ifndef __CTYPE_H_DEFINED__
 #define __CTYPE_H_DEFINED__
 
-#include "../header.h"
+#include "header.h"
 
 /* character classification routines */
 int isalnum(int);

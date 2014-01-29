@@ -1,4 +1,4 @@
-#include "../header.h"
+#include "header.h"
 
 void free(void *ptr)
 {

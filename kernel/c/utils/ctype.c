@@ -1,4 +1,4 @@
-#include "../header.h"
+#include "header.h"
 
 int isalnum(int c) {
 	return (isalpha(c) || isdigit(c));

@@ -1,4 +1,4 @@
-#include "../header.h"
+#include "header.h"
 
 cpu_state_t *get_new_cpu(void)
 {

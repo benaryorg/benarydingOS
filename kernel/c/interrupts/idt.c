@@ -1,4 +1,4 @@
-#include "../header.h"
+#include "header.h"
 
 void idt_entry_set(int intr,uint16_t selector,void *handler,int dpl,int type)
 {
