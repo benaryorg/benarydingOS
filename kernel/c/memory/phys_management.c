@@ -18,7 +18,7 @@ void *malloc(unsigned int size)
 			i=-1;
 			continue;
 		}
-		if(((tmp=physmemgetallocation(i))->start)&&tmp->start>&_KERNEL_START)
+		if(((tmp=physmemgetallocation(i))->start)&&tmp->start>&_KERNEL_END)
 		{
 			tile.start=tmp->end+1;
 			tile.end=tile.start+size;
