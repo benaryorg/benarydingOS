@@ -9,6 +9,7 @@ CFLAGS = -m32 -Wall -g -fno-stack-protector -nostdinc -std=gnu89
 LDFLAGS = -melf_i386 -Ttext=0x100000 -T kernel/linker/kernel.ld
 
 all: build/kernel
+	make -Cmodules
 
 build/kernel: $(OBJS)
 	$(LD) $(LDFLAGS) -o $@ $(subst kernel,build/kernel_,$^)
@@ -18,6 +19,7 @@ build/kernel: $(OBJS)
 
 %.o: %.S
 	$(CC) $(ASFLAGS) -c -o $(subst kernel,build/kernel_,$@) $^
+
 
 clean:
 	rm $(subst ./kernel,./build/kernel_,$(OBJS))

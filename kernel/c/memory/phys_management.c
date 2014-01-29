@@ -9,16 +9,16 @@ void *malloc(size_t size)
 {
 	static int last=0;
 	int i,j;
-	mem_allocated_t tile;
-	mem_allocated_t *tmp;
-	for(i=last;i!=last;i++)
+	mem_allocation_t tile;
+	mem_allocation_t *tmp;
+	for(i=last+1;i!=last;i++)
 	{
 		if(i>MEM_STACK_SIZE)
 		{
 			i=-1;
 			continue;
 		}
-		if(((tmp=physmemgetallocation(i))->start))
+		if(((tmp=physmemgetallocation(i))->start)&&tmp->start>&_KERNEL_START)
 		{
 			tile.start=tmp->end+1;
 			tile.end=tile.start+size;
@@ -51,7 +51,7 @@ void *malloc(size_t size)
 
 void physmeminit(multiboot_info_t *mb_info)
 {
-	mem_allocated_t addr;
+	mem_allocation_t addr;
 	addr.start=addr.end=0;
 	physmemsetallocation(&addr);
 
@@ -98,7 +98,7 @@ void physmeminit(multiboot_info_t *mb_info)
 	}
 }
 
-void physmemsetallocation(mem_allocated_t *tile)
+void physmemsetallocation(mem_allocation_t *tile)
 {
 	size_t i;
 	for(i=0;i<MEM_STACK_SIZE;i++)
@@ -118,7 +118,7 @@ void physmemrmalloc(void *ptr)
 	{
 		if(physmemgetallocation(i)->start==ptr)
 		{
-			mem_allocated_t tile;
+			mem_allocation_t tile;
 			tile.start=0;
 			tile.end=0;
 			phys_mem_allocation(i,&tile,1);
@@ -127,14 +127,14 @@ void physmemrmalloc(void *ptr)
 	}
 }
 
-mem_allocated_t *physmemgetallocation(size_t i)
+mem_allocation_t *physmemgetallocation(size_t i)
 {
 	return phys_mem_allocation(i,0,0);
 }
 
-mem_allocated_t *phys_mem_allocation(size_t i,mem_allocated_t *tile,char set)
+mem_allocation_t *phys_mem_allocation(size_t i,mem_allocation_t *tile,char set)
 {
-	static mem_allocated_t stack[MEM_STACK_SIZE];
+	static mem_allocation_t stack[MEM_STACK_SIZE];
 	if(set)
 	{
 		stack[i].start=tile->start;

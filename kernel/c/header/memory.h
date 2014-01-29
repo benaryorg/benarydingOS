@@ -13,16 +13,16 @@ typedef struct
 	void *start;
 	void *end;
 }
-mem_allocated_t;
+mem_allocation_t;
 
 void *malloc(size_t);
 void free(void *);
 
 void physmeminit(multiboot_info_t *);
-mem_allocated_t *physmemgetallocation(size_t);
-void physmemsetallocation(mem_allocated_t *);
+mem_allocation_t *physmemgetallocation(size_t);
+void physmemsetallocation(mem_allocation_t *);
 void physmemrmalloc(void *);
-mem_allocated_t *phys_mem_allocation(size_t,mem_allocated_t *,char);
+mem_allocation_t *phys_mem_allocation(size_t,mem_allocation_t *,char);
 
 int memtest(const int arrs,const int bytes);
 void memdump(void);

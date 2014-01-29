@@ -36,7 +36,7 @@ int memtest(const int arrs,const int bytes)
 void memdump(void)
 {
 	int i;
-	mem_allocated_t *tile;
+	mem_allocation_t *tile;
 	for(i=0;i<MEM_STACK_SIZE;i++)
 	{
 		tile=physmemgetallocation(i);
