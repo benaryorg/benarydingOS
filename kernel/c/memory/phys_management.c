@@ -18,7 +18,7 @@ void *malloc(unsigned int size)
 			i=-1;
 			continue;
 		}
-		if(((tmp=physmemgetallocation(i))->start)&&tmp->start>&_KERNEL_END)
+		if(((tmp=physmemgetallocation(i))->start))
 		{
 			tile.start=tmp->end+1;
 			tile.end=tile.start+size;
@@ -53,6 +53,14 @@ void physmeminit(multiboot_info_t *mb_info)
 {
 	mem_allocation_t addr;
 	addr.start=addr.end=0;
+
+	addr.start=(void *)1;
+	addr.end=(void *)&_KERNEL_END;
+	printf("\nKernel End: %p\n",addr.end);
+	physmemsetallocation(&addr);
+
+	addr.start=BUFFER_TEXT;
+	addr.end=addr.start+BUFFER_TEXT_WIDTH*BUFFER_TEXT_HEIGHT;
 	physmemsetallocation(&addr);
 
 	multiboot_module_t *modules=(multiboot_module_t *)mb_info->mbs_mods_addr;
@@ -75,9 +83,6 @@ void physmeminit(multiboot_info_t *mb_info)
 		}
 		mmap++;
 	}
-	addr.start=(void *)&_KERNEL_START;
-	addr.end=(void *)&_KERNEL_END;
-	physmemsetallocation(&addr);
 	for(i=0;i<mb_info->mbs_mods_count;i++)
 	{
 		printf("Module %d:\n",i);
@@ -105,7 +110,16 @@ void physmemsetallocation(mem_allocation_t *tile)
 	{
 		if(!(physmemgetallocation(i)->start))
 		{
-			phys_mem_allocation(i,tile,1);
+			if(!tile->start)
+			{
+				tile->start+=1;
+				phys_mem_allocation(i,tile,1);
+				tile->start-=1;
+			}
+			else
+			{
+				phys_mem_allocation(i,tile,1);
+			}
 			break;
 		}
 	}
