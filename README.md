@@ -54,7 +54,7 @@ Somthing not working?  Have questions?  Want to help?
 
 ### Github
 
-Feel free to submit issues! Please, we need them!
+Feel free to submit issues!  Please, we need them!
 You can also send pull requests if you already fixed something!
 
 ### E-Mail
