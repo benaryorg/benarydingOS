@@ -21,6 +21,7 @@ command -v genisoimage >/dev/null 2>&1 || {
 
 printf "\033[32;1m * \033[0mCreating directories\033[0m\n"
 mkdir -p build/iso/boot/grub
+mkdir -p build/iso/boot/modules
 
 printf "\033[32;1m * \033[0mCopying grub stage2\033[0m\n"
 
@@ -35,14 +36,19 @@ echo "default 0
 timeout 30
 
 title Boot benarydingOS
-kernel /boot/kernel
+kernel /boot/kernel" > build/iso/boot/grub/menu.lst
 
-title Boot from hard disk
+for f in $(find build/ -maxdepth 1|grep \.bin|cut -c 7-);do echo "module /boot/modules/$f">>build/iso/boot/grub/menu.lst;done
+
+echo "title Boot from hard disk
 chainloader (hd0)+1
-" > build/iso/boot/grub/menu.lst
+" >> build/iso/boot/grub/menu.lst
 
 printf "\033[32;1m * \033[0mCopying kernel\033[0m\n"
 cp build/kernel build/iso/boot/kernel
+
+printf "\033[32;1m * \033[0mCopying modules\033[0m\n"
+cp build/*.bin build/iso/boot/modules/
 
 printf "\033[32;1m * \033[0mStarting mkisofs or genisoimage\033[0m\n"
 $GENISOCOMMAND $GENISOARGS
