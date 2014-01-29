@@ -48,6 +48,23 @@ Add the following three lines to your `/boot/grub/menu.lst`:
 #### Burn the ISO
 You can burn the built ISO to a CD, if you _really_ feel like wasting one.  Currently **NOT** supported!
 
+## Support
+
+Somthing not working?  Have questions?  Want to help?
+
+### Github
+
+Feel free to submit issues! Please, we need them!
+You can also send pull requests if you already fixed something!
+
+### E-Mail
+
+benaryorg: binary@benary.org
+
+### Twitter
+
+benaryorg: @benaryorg
+
 ## Licensing
 
 Some essential parts of our code are very similar to the code on lowlevel.eu and mostly based on it!
