@@ -46,7 +46,7 @@ Add the following three lines to your `/boot/grub/menu.lst`:
     kernel /boot/kernel
 
 #### Burn the ISO
-You can burn the built ISO to a CD, if you _really_ feel like wasting one.  Currently **NOT** supported!
+You can burn the built ISO to a CD, if you _really_ feel like wasting one.  Currently supported (see Bug #11)!
 
 ## Support
 
