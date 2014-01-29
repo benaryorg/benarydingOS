@@ -24,8 +24,12 @@ mkdir -p build/iso/boot/grub
 
 printf "\033[32;1m * \033[0mCopying grub stage2\033[0m\n"
 
-#If you are using Ubuntu/Debian it is possible, the right path to the stage2_eltorito is "/usr/lib/grub/i386-pc/stage2_eltorito"
-cp /lib/grub/i386-pc/stage2_eltorito build/iso/boot/grub/
+if [ -f /usr/lib/grub/i386-pc/stage2_eltorito ]
+  then
+    cp /usr/lib/grub/i386-pc/stage2_eltorito build/iso/boot/grub/
+else
+    cp /lib/grub/i386-pc/stage2_eltorito build/iso/boot/grub/
+fi
 
 echo "default 0
 timeout 30
