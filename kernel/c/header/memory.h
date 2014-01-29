@@ -15,7 +15,7 @@ typedef struct
 }
 mem_allocation_t;
 
-void *malloc(size_t);
+void *malloc(unsigned int);
 void free(void *);
 
 void physmeminit(multiboot_info_t *);
@@ -27,7 +27,7 @@ mem_allocation_t *phys_mem_allocation(size_t,mem_allocation_t *,char);
 int memtest(const int arrs,const int bytes);
 void memdump(void);
 
-void *memcpy(void *,const void *,size_t);
-void *memset(void *,int,size_t);
+void *memcpy(void *,const void *,unsigned int);
+void *memset(void *,int,unsigned int);
 
 #endif

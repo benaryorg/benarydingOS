@@ -1,6 +1,6 @@
 #include "../header.h"
 
-void *memcpy(void *dest,const void *src,size_t n)
+void *memcpy(void *dest,const void *src,unsigned int n)
 {
 	size_t i;
 	for(i=0;i<n;i++)
@@ -10,7 +10,7 @@ void *memcpy(void *dest,const void *src,size_t n)
 	return dest;
 }
 
-void *memset(void *data,int byte,size_t n)
+void *memset(void *data,int byte,unsigned int n)
 {
 	size_t i;
 	for(i=0;i<n;i++)

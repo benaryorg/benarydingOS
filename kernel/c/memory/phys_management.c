@@ -5,7 +5,7 @@ void free(void *ptr)
 	physmemrmalloc(ptr);
 }
 
-void *malloc(size_t size)
+void *malloc(unsigned int size)
 {
 	static int last=0;
 	int i,j;

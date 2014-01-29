@@ -28,8 +28,8 @@ void register_reload(void)
 		"mov %ax, %fs\n"
 		"mov %ax, %gs\n"
 		"mov %ax, %ss\n"
-		"ljmp $0x8, $.1\n"
-		".1:\n"
+//		"ljmp $0x8, $.1\n"
+//		".1:\n"
 	);
 }
 
