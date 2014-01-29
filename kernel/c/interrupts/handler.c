@@ -161,7 +161,7 @@ cpu_state_t *task_next(cpu_state_t *task)
 	return task_schedule(task,0);
 }
 
-void task_new(void *ptr)
+void task_new(void *ptr,char userspace)
 {
 	const int stackspace=4096;
 	cpu_state_t cpu;
@@ -173,8 +173,12 @@ void task_new(void *ptr)
 	cpu.edi=0;
 	cpu.ebp=0;
 	cpu.eip=(uint32_t)ptr;
-	cpu.cs=0x18|0x03;
-	cpu.ss=0x20|0x03;
+	cpu.cs=0x08;
+	if(userspace)
+	{
+		cpu.cs=0x18|0x03;
+		cpu.ss=0x20|0x03;
+	}
 	cpu.eflags=0x202;
 	ptr=0;
 	while(!ptr)

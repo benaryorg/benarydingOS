@@ -39,6 +39,6 @@ cpu_state_t *int_handler(cpu_state_t *);
 cpu_state_t *task_schedule(cpu_state_t *,char);
 cpu_state_t *task_next(cpu_state_t *);
 void syscall_handle(cpu_state_t *cpu);
-void task_new(void *);
+void task_new(void *,char);
 
 #endif

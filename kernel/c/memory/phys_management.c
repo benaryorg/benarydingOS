@@ -92,7 +92,7 @@ void physmeminit(multiboot_info_t *mb_info)
 		addr.end=addr.start+length;
 		physmemsetallocation(&addr);
 		puts("\tNew Memory allocated");
-		task_new(load_addr);
+		task_new(load_addr,0);
 		puts("\tNew Task added\n");
 	}
 }
