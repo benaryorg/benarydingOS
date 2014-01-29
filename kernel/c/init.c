@@ -14,7 +14,7 @@ void init(multiboot_info_t *mb_info)
 	physmeminit(mb_info);
 	puts("Physical Memory initialised");
 	printf("Loaded %d Modules\n",(int)mb_info->mbs_mods_count);
-	if(memtest(128,128))
+	if(memtest(64,64))
 	{
 		setfgcolor(COLOR_LIGHT_RED);
 		memdump();
