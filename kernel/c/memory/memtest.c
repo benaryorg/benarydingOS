@@ -2,14 +2,12 @@
 
 int memtest(const int arrs,const int bytes)
 {
-	void *ptr;
-	char **f=malloc(sizeof(char *)*arrs);
+	unsigned char **f=malloc(sizeof(unsigned char *)*arrs);
 	int i,j;
 	for(i=0;i<arrs;i++)
 	{
 		
-		ptr=malloc(sizeof(char)*bytes);
-		f[i]=ptr;
+		f[i]=malloc(sizeof(unsigned char)*bytes);
 		if(!f[i])
 		{
 			printf("Got no more Memory @arr=%d\n",i);
@@ -17,7 +15,7 @@ int memtest(const int arrs,const int bytes)
 		}
 		for(j=0;j<bytes;j++)
 		{
-			f[i][j]=j%(i%255+1);
+			f[i][j]=j%256;
 		}
 	}
 
@@ -27,7 +25,7 @@ int memtest(const int arrs,const int bytes)
 		{
 			for(j=0;j<bytes;j++)
 			{
-				if(f[i][j]!=j%(i%255+1))
+				if(f[i][j]!=j%256)
 				{
 					printf("%d/%d=%d\n",i,j,f[i][j]);
 					printf("%p/%p\n",f[i-1],f[i]);

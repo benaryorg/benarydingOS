@@ -7,17 +7,12 @@ void free(void *ptr)
 
 void *malloc(unsigned int size)
 {
-	static int last=0;
+//	static int last=0;
 	int i,j;
 	mem_allocation_t tile;
 	mem_allocation_t *tmp;
-	for(i=last+1;i!=last;i++)
+	for(i=MEM_STACK_SIZE;i>=0;i--)
 	{
-		if(i>MEM_STACK_SIZE)
-		{
-			i=-1;
-			continue;
-		}
 		if(((tmp=physmemgetallocation(i))->start))
 		{
 			tile.start=tmp->end+1;
@@ -40,7 +35,7 @@ void *malloc(unsigned int size)
 			}
 			if(j!=-1)
 			{
-				last=i;
+//				last=i;
 				physmemsetallocation(&tile);
 				return tile.start;
 			}
@@ -54,7 +49,6 @@ void physmeminit(multiboot_info_t *mb_info)
 	mem_allocation_t addr;
 	addr.start=addr.end=0;
 
-	addr.start=(void *)1;
 	addr.end=(void *)&_KERNEL_END;
 	printf("\nKernel End: %p\n",addr.end);
 	physmemsetallocation(&addr);
