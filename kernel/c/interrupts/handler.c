@@ -65,12 +65,37 @@ cpu_state_t *int_handler(cpu_state_t *cpu)
 			case 0x0e:
 				puts("Page Fault");
 				break;
+			case 0x10:
+				puts("#MF - x87 Floating Point");
+				break;
+			case 0x11:
+				kernelpanic("#AC - Alignment Check");
+				break;
+			case 0x12:
+				puts("#MC - Machine Check");
+				break;
+			case 0x13:
+				puts("#XF - SIMD Floating Point");
+				break;
 			case 0x0f:
+			case 0x14:
+			case 0x15:
+			case 0x16:
+			case 0x17:
+			case 0x18:
+			case 0x19:
+			case 0x1a:
+			case 0x1b:
+			case 0x1c:
+			case 0x1d:
+			case 0x1f:
 				kernelpanic("Reserved Exception");
 				break;
+			case 0x1e:
+				kernelpanic("#SX - Security-sensitive event in Host");
 			default:
-				//kernelpanic("It is impossible to get this Error!\nIf you have this Error, please kill yourself, you have no life and no friends!");
 				printf("Exception %d\n",intr);
+				kernelpanic("It is impossible to get this Error!\nIf you have this Error, please kill yourself, you have no life and no friends!");
 				break;
 		}
 		//kernelpanic("Exception");
