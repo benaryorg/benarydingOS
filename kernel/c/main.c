@@ -8,7 +8,7 @@ int main(void)
 	memdump();
 	cleardisplay();
 
-	puts("Awaiting Input!");
+	puts("Awaiting Input!\n");
 
 	while(1);
 	return 0;
