@@ -28,43 +28,43 @@ cpu_state_t *handler_exception(cpu_state_t *cpu)
 	switch(intr)
 	{
 		case 0x00:
-			puts("Division by Zero");
+			puts("#DE - Division by Zero");
 			break;
 		case 0x01:
-			puts("Debug Exception");
+			puts("#DB - Debug");
 			break;
 		case 0x02:
-			puts("Non Maskable Interrupt Exception");
+			puts("#NMI - Non Maskable Interrupt");
 			break;
 		case 0x03:
-			puts("BreakPoint");
+			puts("#BP - BreakPoint");
 			break;
 		case 0x04:
-			puts("Overflow");
+			puts("#OF - Overflow");
 			break;
 		case 0x05:
-			puts("Bound Range Exception");
+			puts("#BR - Bound Range Exception");
 			break;
 		case 0x06:
-			puts("Invalid Opcode");
+			puts("#UD - Invalid Opcode");
 			break;
 		case 0x07:
-			puts("Device n/a");
+			puts("#NM - Device n/a");
 			break;
 		case 0x08:
-			kernelpanic("Double Fault");
+			kernelpanic("#DF - Double Fault");
 			break;
 		case 0x09:
 			kernelpanic("Coprocessor Segment Overrun");
 			break;
 		case 0x0a:
-			puts("Invalid TSS");
+			puts("#TS - Invalid TSS");
 			break;
 		case 0x0b:
-			puts("Segment not Present");
+			puts("#NP - Segment not Present");
 			break;
 		case 0x0c:
-			puts("Stack Fault");
+			puts("#SS - Stack Fault");
 			break;
 		case 0x0d:
 			resetcolor();
@@ -72,7 +72,7 @@ cpu_state_t *handler_exception(cpu_state_t *cpu)
 			kernelpanic("#GP");
 			break;
 		case 0x0e:
-			puts("Page Fault");
+			kernelpanic("#PF - Page Fault");
 			break;
 		case 0x10:
 			puts("#MF - x87 Floating Point");

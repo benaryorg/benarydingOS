@@ -24,6 +24,8 @@ void physmemsetallocation(mem_allocation_t *);
 void physmemrmalloc(void *);
 mem_allocation_t *phys_mem_allocation(size_t,mem_allocation_t *,char);
 
+void paging_init(void);
+
 int memtest(const int arrs,const int bytes);
 void memdump(void);
 
