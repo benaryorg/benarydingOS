@@ -147,8 +147,11 @@ void syscall_handle(cpu_state_t *cpu)
 {
 	switch(cpu->eax)
 	{
-		case 0x00:
+		case SYSCALL_PUTCHAR:
 			putchar(cpu->ebx);
+			break;
+		case SYSCALL_CLEAR:
+			cleardisplay();
 			break;
 		default:
 			kernelpanic("Unknown Syscall");

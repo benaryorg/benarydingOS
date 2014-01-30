@@ -1,6 +1,7 @@
 #ifndef __BENARYDINGOS_HEADER__
 #define __BEANRYDINGOS_HEADER__
 
+#include "syscalls.h"
 #include "stdargs.h"
 #include "stdint.h"
 #include "multiboot.h"

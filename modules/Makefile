@@ -5,7 +5,7 @@ CC = cc
 LD = ld
 
 ASFLAGS = -m32
-CFLAGS = -m32 -Wall -g -fno-stack-protector -nostdinc -Iinclude
+CFLAGS = -m32 -Wall -g -fno-stack-protector -nostdinc -Iheader
 LDFLAGS = -melf_i386 -Tlinker/linker.ld
 
 all: $(addprefix ../build/,$(addsuffix .bin,$(basename $(notdir $(OBJS))))) clean

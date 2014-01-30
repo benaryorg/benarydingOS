@@ -1,5 +1,5 @@
-#ifndef __STDTYPE_HEADER__
-#define __STDTYPE_HEADER__
+#ifndef __STDINT_HEADER__
+#define __STDINT_HEADER__
 
 /* taken from: /usr/include/stdint.h */
 
@@ -105,4 +105,4 @@ typedef unsigned long long      uintmax_t;
 /* ??? */
 typedef uint32_t          size_t;
 
-#endif /* __STDTYPE_HEADER__ */
+#endif /* __STDINT_HEADER__ */
