@@ -2,7 +2,6 @@
 
 void _start(void)
 {
-	return;
 	int i;
 	while(1)
 	{
