@@ -1,11 +1,5 @@
 #include "header.h"
 
-cpu_state_t *get_new_cpu(void)
-{
-	cpu_state_t *cpu=malloc(sizeof(cpu_state_t));
-	return cpu;
-}
-
 cpu_state_t *(**interrupt_handlers(int i))(cpu_state_t *)
 {
 	static cpu_state_t *(*ints[256])(cpu_state_t *)={};
@@ -177,7 +171,7 @@ void task_new(void *ptr,char userspace)
 	ptr=0;
 	while(!ptr)
 	{
-		ptr=malloc(stackspace);
+		ptr=physmalloc(stackspace);
 	}
 	cpu.esp=(uint32_t)ptr+stackspace;
 	cpu_state_t *state=(void *)(ptr+stackspace-sizeof(cpu));

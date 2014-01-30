@@ -2,12 +2,11 @@
 
 int memtest(const int arrs,const int bytes)
 {
-	unsigned char **f=malloc(sizeof(unsigned char *)*arrs);
+	unsigned char **f=physmalloc(sizeof(unsigned char *)*arrs);
 	int i,j;
 	for(i=0;i<arrs;i++)
 	{
-		
-		f[i]=malloc(sizeof(unsigned char)*bytes);
+		f[i]=physmalloc(sizeof(unsigned char)*bytes);
 		if(!f[i])
 		{
 			printf("Got no more Memory @arr=%d\n",i);
@@ -32,7 +31,7 @@ int memtest(const int arrs,const int bytes)
 					return 1;
 				}
 			}
-			free(f[i]);
+			physfree(f[i]);
 		}
 	}
 	return 0;

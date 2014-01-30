@@ -1,11 +1,11 @@
 #include "header.h"
 
-void free(void *ptr)
+void physfree(void *ptr)
 {
 	physmemrmalloc(ptr);
 }
 
-void *malloc(unsigned int size)
+void *physmalloc(unsigned int size)
 {
 //	static int last=0;
 	int i,j;

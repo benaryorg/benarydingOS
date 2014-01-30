@@ -15,8 +15,8 @@ typedef struct
 }
 mem_allocation_t;
 
-void *malloc(unsigned int);
-void free(void *);
+void *physmalloc(unsigned int);
+void physfree(void *);
 
 void physmeminit(multiboot_info_t *);
 mem_allocation_t *physmemgetallocation(size_t);
