@@ -1,6 +1,7 @@
 #ifndef __BENARYDINGOS_HEADER__
-#define __BEANRYDINGOS_HEADER__
+#define __BENARYDINGOS_HEADER__
 
+#include "types.h"
 #include "syscalls.h"
 #include "stdargs.h"
 #include "stdint.h"
@@ -12,7 +13,7 @@
 #include "string.h"
 #include "gdt.h"
 #include "idt.h"
-#include "interrupt_handler.h"
+#include "interrupt_handlers.h"
 #include "pic.h"
 #include "tss.h"
 #include "elf.h"

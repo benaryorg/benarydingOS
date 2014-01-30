@@ -25,6 +25,8 @@ int_desc_t *idt_func(int i)
 
 void idt_init(void)
 {
+	int i;
+
 	idt_entry_set(0,0x08,intr_stub_0 ,0,IDT_TRAP_GATE);
 	idt_entry_set(1,0x08,intr_stub_1 ,0,IDT_TRAP_GATE);
 	idt_entry_set(2,0x08,intr_stub_2 ,0,IDT_TRAP_GATE);
@@ -63,6 +65,16 @@ void idt_init(void)
 	idt_entry_set(47,0x08,intr_stub_47,0,IDT_TRAP_GATE);
 
 	idt_entry_set(48,0x08,intr_stub_48,0,IDT_TRAP_GATE);
+
+	for(i=0;i<0x20;i++)
+	{
+		setinterrupthandler(i,handler_exception);
+	}
+	for(;i<0x30;i++)
+	{
+		setinterrupthandler(i,handler_hardware_int);
+	}
+	setinterrupthandler(0x30,handler_syscall);
 
 	struct
 	{

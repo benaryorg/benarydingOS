@@ -8,9 +8,6 @@ int main(void)
 	memdump();
 	cleardisplay();
 
-	while(1)
-	{
-		putchar('#');
-	}
+	while(1);
 	return 0;
 }
