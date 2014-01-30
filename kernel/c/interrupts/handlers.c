@@ -124,17 +124,13 @@ cpu_state_t *handler_hardware_int(cpu_state_t *cpu)
 			printf("IRQ %3d\n",intr-0x20);
 			break;
 	}
-	if(intr<0x29)
-	{
-		outb(0x20,0x20);
-	}
-	outb(0xa0,0x20);
 	return cpu;
 }
 
 cpu_state_t *int_handler(cpu_state_t *cpu)
 {
 	cpu_state_t *(*f)(cpu_state_t *)=getinterrupthandler(cpu->intr);
+	cpu_state_t *old_cpu=cpu;
 	if(!f)
 	{
 		kernelpanic("Unhandeled Interrupt!");
@@ -142,6 +138,14 @@ cpu_state_t *int_handler(cpu_state_t *cpu)
 	else
 	{
 		cpu=f(cpu);
+	}
+	if(old_cpu->intr>=0x20&&old_cpu->intr<0x30)
+	{
+		if(old_cpu->intr<0x29)
+		{
+			outb(0x20,0x20);
+		}
+		outb(0xa0,0x20);
 	}
 	return cpu;
 }

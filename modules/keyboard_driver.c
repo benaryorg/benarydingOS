@@ -1,6 +1,8 @@
 #include "header.h"
 
 cpu_state_t *onkey(cpu_state_t *);
+int inb(int);
+int putchar(int);
 
 void _start(void)
 {
@@ -10,17 +12,28 @@ void _start(void)
 
 cpu_state_t *onkey(cpu_state_t *cpu)
 {
-	char key=0;
-//	while(inb(0x64)&0x01)
+	int key=0;
+	while(inb(0x64)&0x01)
 	{
-//		key=inb(0x60);
-//		asm("int $0x30" : : "a" (SYSCALL_PUTCHAR), "b" ('#'));
+		key=inb(0x60);
 		if(!(key&0x80))
 		{
-			asm("int $0x30" : : "a" (SYSCALL_PUTCHAR), "b" ('#'));
-//			printf("Taste %d\n",inb(0x60));
-//			break;
+			inb(0x60);
+			putchar('#');
 		}
 	}
 	return cpu;
+}
+
+int putchar(int ch)
+{
+	asm("int $0x30" : : "a" (SYSCALL_PUTCHAR), "b" (ch));
+	return ch;
+}
+
+int inb(int port)
+{
+	int res;
+	asm("int $0x30" : : "a" (SYSCALL_INB), "b" (port), "c" (&res));
+	return res;
 }
