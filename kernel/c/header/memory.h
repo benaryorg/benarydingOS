@@ -24,10 +24,21 @@ void physmemsetallocation(mem_allocation_t *);
 void physmemrmalloc(void *);
 mem_allocation_t *phys_mem_allocation(size_t,mem_allocation_t *,char);
 
-void paging_init(void);
-
 int memtest(const int arrs,const int bytes);
 void memdump(void);
+
+/** PAGING **/
+
+typedef struct
+{
+	uint32_t *pagedir;
+}
+page_context_t;
+
+page_context_t *page_mk_context(void);
+void paging_init(void);
+
+/** PAGING END **/
 
 void *memcpy(void *,const void *,unsigned int);
 void *memset(void *,int,unsigned int);

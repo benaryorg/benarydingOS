@@ -24,6 +24,7 @@ void setinterrupthandler(int,cpu_state_t *(*)(cpu_state_t *));
 
 cpu_state_t *task_schedule(cpu_state_t *,char);
 cpu_state_t *task_next(cpu_state_t *);
+void exit(int);
 void task_new(void *,char);
 
 #endif

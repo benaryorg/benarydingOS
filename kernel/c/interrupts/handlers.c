@@ -185,20 +185,23 @@ cpu_state_t *task_schedule(cpu_state_t *task,char add)
 
 	int i;
 
-	for(i=0;tasks[i].cpu&&i<TASKS_SIZE;i++);
-	if(i<TASKS_SIZE)
+	if(task)
 	{
-		tasks[i].cpu=task;
-		tasks[i].ticks=3;
-		tasks[i].tick=4;
-	}
+		for(i=0;tasks[i].cpu&&i<TASKS_SIZE;i++);
+		if(i<TASKS_SIZE)
+		{
+			tasks[i].cpu=task;
+			tasks[i].ticks=3;
+			tasks[i].tick=4;
+		}
 
-	if(add)
-	{
-		return 0;
+		if(add)
+		{
+			return 0;
+		}
+
+		task=0;
 	}
-	
-	task=0;
 
 	do
 	{
@@ -222,3 +225,12 @@ cpu_state_t *task_schedule(cpu_state_t *task,char add)
 	} while(!task);
 	return task;
 }
+
+void exit(int ret)
+{
+	while(1)
+	{
+		asm("int $0x30" : : "a" (SYSCALL_TASK_EXIT), "b" (ret));
+	}
+}
+

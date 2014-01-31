@@ -10,6 +10,5 @@ int main(void)
 
 	puts("Awaiting Input!\n");
 
-	while(1);
-	return 0;
+	exit(0);
 }
