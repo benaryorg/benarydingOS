@@ -22,8 +22,8 @@ cpu_state_t *onkey(cpu_state_t *cpu)
 		key=inb(0x60);
 		if(!(key&0x80))
 		{
-			inb(0x60);
-			putchar('#');
+			key=inb(0x60);
+			putchar(key);
 		}
 	}
 	return cpu;
