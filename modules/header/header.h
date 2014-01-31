@@ -4,5 +4,6 @@
 #include "stdint.h"
 #include "syscalls.h"
 #include "types.h"
+#include "stdio.h"
 
 #endif
