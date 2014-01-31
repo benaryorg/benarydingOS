@@ -17,5 +17,5 @@ page_context_t *page_mk_context(void)
 
 void vmm_map_page(page_context_t *c,void *virt,void *phys)
 {
-	int i=(int)((uint64_t)phys/4096);
+//	int i=(int)((uint64_t)phys/4096);
 }

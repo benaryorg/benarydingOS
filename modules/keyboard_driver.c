@@ -3,6 +3,7 @@
 cpu_state_t *onkey(cpu_state_t *);
 int inb(int);
 int putchar(int);
+void exit(int);
 
 void _start(void)
 {
@@ -11,7 +12,7 @@ void _start(void)
 	{
 		inb(0x60);
 	}
-	while(1);
+	exit(0);
 }
 
 cpu_state_t *onkey(cpu_state_t *cpu)
@@ -27,6 +28,14 @@ cpu_state_t *onkey(cpu_state_t *cpu)
 		}
 	}
 	return cpu;
+}
+
+void exit(int ret)
+{
+	while(1)
+	{
+		asm("int $0x30" : : "a" (SYSCALL_TASK_EXIT), "b" (ret));
+	}
 }
 
 int putchar(int ch)
