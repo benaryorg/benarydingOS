@@ -46,6 +46,9 @@ void memdump(void)
 		tile=physmemgetallocation(i);
 		if(tile->start||tile->end)
 		{
+			int j;
+			for(j=0;j<25;j++)
+			asm("int $0x30" : : "a" (SYSCALL_TASK_NEXT));
 			printf("%10d: %10p-%10p\n",i,tile->start,tile->end);
 		}
 	}

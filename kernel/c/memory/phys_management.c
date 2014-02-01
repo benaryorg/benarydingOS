@@ -12,6 +12,7 @@ void *physmalloc(unsigned int size)
 	mem_allocation_t tile;
 	mem_allocation_t *tmp;
 	for(i=MEM_STACK_SIZE;i>=0;i--)
+//	for(i=0;i<MEM_STACK_SIZE;i++)
 	{
 		if(((tmp=physmemgetallocation(i))->start))
 		{
@@ -21,12 +22,7 @@ void *physmalloc(unsigned int size)
 			{
 				if((tmp=physmemgetallocation(j))->start)
 				{
-					if
-					(
-						(tmp->start>=tile.start && tmp->start<=tile.end)||
-						(tmp->end>=tile.start && tmp->end<=tile.end)||
-						(tmp->start<tile.start && tmp->end>tile.end)
-					)
+					if(!((tmp->end<tile.start&&tmp->start<tile.start)||(tmp->start>tile.end&&tmp->end>tile.end)))
 					{
 						j=-1;
 						break;
