@@ -67,9 +67,18 @@ benaryorg: @benaryorg
 
 ## Licensing
 
-This Projekt is under the WTFPL:
-http://www.wtfpl.net/txt/copying/
+This projekt is under the license found in the LICENSE file!
 
 Some essential parts of our code are very similar to the code on lowlevel.eu and mostly based on it!
 
 Their code is under the "CC BY-NC-SA 3.0 DE" so we thought we better mention them!
+
+## Authors
+
+The main authors are:
+
+benaryorg
+nilsding
+
+We *trust* you!
+
