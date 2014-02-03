@@ -24,12 +24,11 @@ void *physmalloc(unsigned int size)
 				{
 					if(!((tmp->end<tile.start&&tmp->start<tile.start)||(tmp->start>tile.end&&tmp->end>tile.end)))
 					{
-						j=-1;
 						break;
 					}
 				}
 			}
-			if(j!=-1)
+			if(j>=MEM_STACK_SIZE)
 			{
 //				last=i;
 				physmemsetallocation(&tile);
@@ -110,6 +109,7 @@ void physmemsetallocation(mem_allocation_t *tile)
 			{
 				phys_mem_allocation(i,tile,1);
 			}
+			printf("Allocation at %p\n",tile->start);
 			break;
 		}
 	}
