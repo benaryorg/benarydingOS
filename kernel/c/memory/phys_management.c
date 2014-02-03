@@ -5,24 +5,48 @@ void physfree(void *ptr)
 	physmemrmalloc(ptr);
 }
 
+void *getramsize(void)
+{
+	return ram_size_func(0);
+}
+
+void setramsize(void *ptr)
+{
+	ram_size_func(ptr);
+}
+
+void *ram_size_func(void *ptr)
+{
+	static void *ramsize=0;
+	if(ptr)
+	{
+		ramsize=ptr;
+	}
+	return ramsize;
+}
+
 void *physmalloc(unsigned int size)
 {
 //	static int last=0;
 	int i,j;
 	mem_allocation_t tile;
 	mem_allocation_t *tmp;
-	for(i=MEM_STACK_SIZE;i>=0;i--)
-//	for(i=0;i<MEM_STACK_SIZE;i++)
+//	for(i=MEM_STACK_SIZE;i>=0;i--)
+	for(i=0;i<MEM_STACK_SIZE;i++)
 	{
 		if(((tmp=physmemgetallocation(i))->start))
 		{
 			tile.start=tmp->end+1;
-			tile.end=tile.start+size;
+			tile.end=tile.start+size-1;
+			if(tile.end>getramsize())
+			{
+				break;
+			}
 			for(j=0;j<MEM_STACK_SIZE;j++)
 			{
 				if((tmp=physmemgetallocation(j))->start)
 				{
-					if(!((tmp->end<tile.start&&tmp->start<tile.start)||(tmp->start>tile.end&&tmp->end>tile.end)))
+					if(!((tmp->end<tile.start&&tmp->start<tile.start)||(tmp->start>=tile.end&&tmp->end>=tile.end)))
 					{
 						break;
 					}
@@ -72,6 +96,7 @@ void physmeminit(multiboot_info_t *mb_info)
 		}
 		mmap++;
 	}
+	setramsize((void *)((mmap-1)->BaseAddr+(mmap-1)->Length));
 	for(i=0;i<mb_info->mbs_mods_count;i++)
 	{
 		printf("Module %d:\n",i);
@@ -109,7 +134,6 @@ void physmemsetallocation(mem_allocation_t *tile)
 			{
 				phys_mem_allocation(i,tile,1);
 			}
-			printf("Allocation at %p\n",tile->start);
 			break;
 		}
 	}

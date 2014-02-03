@@ -67,10 +67,9 @@ benaryorg: @benaryorg
 
 ## Licensing
 
+This Projekt is under the WTFPL:
+http://www.wtfpl.net/txt/copying/
+
 Some essential parts of our code are very similar to the code on lowlevel.eu and mostly based on it!
 
-Their code is under the "CC BY-NC-SA 3.0 DE" so our code is under this licence too.
-http://creativecommons.org/licenses/by-nc-sa/3.0/de/legalcode
-
-Human readable:
-http://creativecommons.org/licenses/by-nc-sa/3.0/de/
+Their code is under the "CC BY-NC-SA 3.0 DE" so we thought we better mention them!

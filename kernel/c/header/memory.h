@@ -3,7 +3,7 @@
 
 #define MEM_FREE 1
 #define MEM_BLOCK_SIZE 0x1000
-#define MEM_STACK_SIZE (1<<16)
+#define MEM_STACK_SIZE (1<<12)
 
 extern const void _KERNEL_START;
 extern const void _KERNEL_END;
@@ -14,6 +14,10 @@ typedef struct
 	void *end;
 }
 mem_allocation_t;
+
+void *getramsize(void);
+void *ram_size_func(void *);
+void setramsize(void *);
 
 void *physmalloc(unsigned int);
 void physfree(void *);
