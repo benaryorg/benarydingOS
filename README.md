@@ -71,7 +71,9 @@ This projekt is under the license found in the LICENSE file!
 
 Some essential parts of our code are very similar to the code on lowlevel.eu and mostly based on it!
 
-Their code is under the "CC BY-NC-SA 3.0 DE" so we thought we better mention them!
+Also they provide a huge Wiki where we got most of our knowledge about Operating Systems from.
+
+Therefore a big "Thanks" and, as we say in German, "Tausend Dank euch allen!"
 
 ## Authors
 
