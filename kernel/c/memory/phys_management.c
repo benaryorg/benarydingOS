@@ -31,15 +31,16 @@ void *physmalloc(unsigned int size)
 	int i,j;
 	mem_allocation_t tile;
 	mem_allocation_t *tmp;
-//	for(i=MEM_STACK_SIZE;i>=0;i--)
-	for(i=0;i<MEM_STACK_SIZE;i++)
+	for(i=MEM_STACK_SIZE;i>=0;i--)
+//	for(i=0;i<MEM_STACK_SIZE;i++) TODO
 	{
 		if(((tmp=physmemgetallocation(i))->start))
 		{
 			tile.start=tmp->end+1;
 			tile.end=tile.start+size-1;
-			if(tile.end>getramsize())
+			if(0)//tile.end>getramsize()) TODO
 			{
+				printf("%p/%p\n",getramsize,tile.end);
 				break;
 			}
 			for(j=0;j<MEM_STACK_SIZE;j++)
@@ -96,7 +97,6 @@ void physmeminit(multiboot_info_t *mb_info)
 		}
 		mmap++;
 	}
-	setramsize((void *)((mmap-1)->BaseAddr+(mmap-1)->Length));
 	for(i=0;i<mb_info->mbs_mods_count;i++)
 	{
 		printf("Module %d:\n",i);
