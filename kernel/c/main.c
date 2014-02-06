@@ -4,8 +4,8 @@ int main(void)
 {
 	cleardisplay();
 	puts("BenarydingOS Running!");
-	puts("Memorydump:");
-	memdump();
+//	puts("Memorydump:");
+//	memdump();
 	cleardisplay();
 
 	puts("Awaiting Input!\n");
