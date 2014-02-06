@@ -14,7 +14,7 @@ void init(multiboot_info_t *mb_info)
 	physmeminit(mb_info);
 	puts("Physical Memory initialised");
 	printf("Loaded %u Modules\n",(unsigned)mb_info->mbs_mods_count);
-	if(0)//if(memtest(128,128))
+	if(memtest(128,128))
 	{
 		setfgcolor(COLOR_LIGHT_RED);
 		memdump();
@@ -26,7 +26,7 @@ void init(multiboot_info_t *mb_info)
 		return;
 	}
 	puts("Memtest OK");
-	paging_init();
+	//paging_init();
 	puts("Paging initialised and activated");
 	activate_hardware_ints();
 	puts("Activated Hardware Interrupts");
