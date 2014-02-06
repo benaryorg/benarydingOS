@@ -10,7 +10,7 @@ ASFLAGS = -m32
 CFLAGS = -m32 -Wall -g -fno-stack-protector -nostdinc -Iheader -ffunction-sections
 LDFLAGS = -melf_i386 -Tlinker/linker.ld
 
-all: $(addprefix ../build/,$(addsuffix .bin,$(basename $(notdir $(OBJS))))) clean
+all: cleanmodules $(addprefix ../build/,$(addsuffix .bin,$(basename $(notdir $(OBJS))))) clean
 
 $(addprefix ../build/,$(addsuffix .bin,$(basename $(notdir $(OBJS))))): $(LIBOBJS) $(OBJS)
 	$(LD) $(LDFLAGS) -o $@ $^
@@ -19,9 +19,12 @@ $(addprefix ../build/,$(addsuffix .bin,$(basename $(notdir $(OBJS))))): $(LIBOBJ
 	$(CC) $(CFLAGS) -c -o $@ $^
 
 clean:
-	rm $(OBJS)
+	rm -f $(OBJS)
 
-cleanall: clean
-	rm $(LIBOBJS)
+cleanall: clean cleanmodules
+	rm -f $(LIBOBJS)
 
-.PHONY: clean
+cleanmodules:
+	rm -f ../build/*.bin
+
+.PHONY: clean cleanall cleanmodules

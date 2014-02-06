@@ -20,8 +20,7 @@ build/kernel: $(OBJS)
 %.o: %.S
 	$(CC) $(ASFLAGS) -c -o $(subst kernel,build/kernel_,$@) $^
 
-
 clean:
-	rm $(subst ./kernel,./build/kernel_,$(OBJS))
+	rm -f $(subst ./kernel,./build/kernel_,$(OBJS))
 
 .PHONY: clean
