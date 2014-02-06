@@ -19,6 +19,9 @@ $(addprefix ../build/,$(addsuffix .bin,$(basename $(notdir $(OBJS))))): $(LIBOBJ
 	$(CC) $(CFLAGS) -c -o $@ $^
 
 clean:
-	rm $(OBJS) $(LIBOBJS)
+	rm $(OBJS)
+
+cleanall: clean
+	rm $(LIBOBJS)
 
 .PHONY: clean
