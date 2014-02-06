@@ -1,4 +1,18 @@
-#include "pcspeaker.h"
+#include "header.h"
+
+enum spkr_code {
+    SPKR_BELL = 0x00,
+    SPKR_TONE = 0x01,
+};
+
+int pcspeaker_event(unsigned int code, int value);
+void pcspeaker_off();
+void pcspeaker_beep();
+
+void _start(void)
+{
+    pcspeaker_event(SPKR_TONE, 1000);
+}
 
 int pcspeaker_event(unsigned int code, int value) {
 	unsigned int tick_rate = 1193182; /* PIT tick rate = 1.193182 MHz */
