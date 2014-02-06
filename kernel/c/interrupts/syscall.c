@@ -18,9 +18,12 @@ cpu_state_t *handler_syscall(cpu_state_t *cpu)
 		case SYSCALL_HOOK_INT:
 			setinterrupthandler(cpu->ebx,(void *)cpu->ecx);
 			break;
-		case SYSCALL_INB:
-			*(int *)(cpu->ecx)=inb(cpu->ebx);
-			break;
+        case SYSCALL_INB:
+            *(int *)(cpu->ecx)=inb(cpu->ebx);
+            break;
+        case SYSCALL_OUTB:
+            outb(cpu->ebx,cpu->ecx);
+            break;
 		case SYSCALL_TASK_EXIT:
 			return task_next(0);
 		default:

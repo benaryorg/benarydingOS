@@ -20,3 +20,8 @@ int inb(int port)
 	asm("int $0x30" : : "a" (SYSCALL_INB), "b" (port), "c" (&res));
 	return res;
 }
+
+void outb(int port, int data)
+{
+    asm("int $0x30" : : "a" (SYSCALL_OUTB), "b" (port), "c" (data));
+}
