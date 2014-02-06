@@ -25,6 +25,38 @@ void *ram_size_func(void *ptr)
 	return ramsize;
 }
 
+void *physmallocblock(void)
+{
+	static uint32_t last=0;
+	uint32_t i;
+	int j;
+	mem_allocation_t tile;
+	mem_allocation_t *tmp;
+	for(i=last+0x1000;i!=last;i+=0x1000)
+	{
+		tile.start=(void *)i;
+		tile.end=tile.start+4096;
+		for(j=0;j<MEM_STACK_SIZE;j++)
+		{
+			if((tmp=physmemgetallocation(j))->start)
+			{
+				if(!((tmp->end<tile.start&&tmp->start<tile.start)||(tmp->start>=tile.end&&tmp->end>=tile.end)))
+				{
+					break;
+				}
+			}
+		}
+		if(j>=MEM_STACK_SIZE)
+		{
+			last=i;
+			physmemsetallocation(&tile);
+			printf("%p\n",tile.start);
+			return tile.start;
+		}
+	}
+	return 0;
+}
+
 void *physmalloc(unsigned int size)
 {
 //	static int last=0;
