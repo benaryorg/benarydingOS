@@ -1,14 +1,18 @@
 #include "header.h"
 
 cpu_state_t *onkey(cpu_state_t *);
+void send(int);
 
 void _start(void)
 {
-	asm("int $0x30" : : "a" (SYSCALL_HOOK_INT), "b" (0x21), "c" (onkey));
 	while(inb(0x64)&0x1)
 	{
 		inb(0x60);
 	}
+
+	send(0xF4);
+
+	asm("int $0x30" : : "a" (SYSCALL_HOOK_INT), "b" (0x21), "c" (onkey));
 
 	exit(0);
 }
@@ -26,4 +30,10 @@ cpu_state_t *onkey(cpu_state_t *cpu)
 		}
 	}
 	return cpu;
+}
+
+void send(int cmd)
+{
+	while((inb(0x64)&0x2));
+	outb(0x60,cmd);
 }
