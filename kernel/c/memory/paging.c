@@ -9,13 +9,12 @@ void paging_init(void)
 
 	kernel=page_mk_context();
 
-	for(i=1;i<4*1024*1024;i+=0x1000)
+	for(i=0;i<4*1024*1024;i+=0x1000)
 	{
 		page_map(kernel,i,i);
 	}
 	page_map(kernel,(uint32_t)kernel,(uint32_t)kernel);
     
-
 	page_activate_context(kernel);
 
 	asm volatile("mov %%cr0, %0" : "=r" (cr0));
@@ -26,9 +25,9 @@ void paging_init(void)
 page_context_t *page_mk_context(void)
 {
 	page_context_t *c=physmalloc(sizeof(page_context_t));
-	c->pagedir=((uint32_t)physmallocblock());
-	memset((void *)c->pagedir,0,4096);
-	c->pagedir|=PTE_PRESENT|PTE_WRITE;
+	c->pagedir=(void *)(((uint32_t)physmallocblock())|PTE_PRESENT|PTE_WRITE);
+	memset(c->pagedir,0,4096);
+	page_map(c,(uint32_t)c->pagedir,(uint32_t)c->pagedir);
 	return c;
 }
 
@@ -39,6 +38,10 @@ void page_activate_context(page_context_t *c)
 
 void page_map(page_context_t *c,uint32_t virt,uint32_t phys)
 {
+	if(!virt||((virt|phys)&0xFFF))
+	{
+		return;
+	}
 	int i=virt/4096;
 	uint32_t *pagetable=(uint32_t *)(c->pagedir+(i/1024));
 	if(!*pagetable)
@@ -48,6 +51,6 @@ void page_map(page_context_t *c,uint32_t virt,uint32_t phys)
         *pagetable|=PTE_PRESENT|PTE_WRITE;
         page_map(c,*pagetable,*pagetable);
 	}
-	((uint32_t *)*pagetable)[i%1024]=((phys&~0xEFFF)|PTE_PRESENT|PTE_WRITE);
+	((uint32_t *)*pagetable)[i%1024]=phys|PTE_PRESENT|PTE_WRITE;
 	asm volatile("invlpg %0" : : "m" (*(char*)virt));
 }

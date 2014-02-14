@@ -39,7 +39,7 @@ void memdump(void);
 
 typedef struct
 {
-	uint32_t pagedir;
+	uint32_t *pagedir;
 }
 page_context_t;
 
