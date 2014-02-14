@@ -50,7 +50,7 @@ void *physmallocblock(void)
 		{
 			last=i;
 			physmemsetallocation(&tile);
-			printf("%p\n",tile.start);
+			//printf("%p\n",tile.start);
 			return tile.start;
 		}
 	}

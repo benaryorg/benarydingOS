@@ -12,6 +12,7 @@ void pcspeaker_beep();
 void _start(void)
 {
     pcspeaker_event(SPKR_TONE, 1000);
+    exit(0);
 }
 
 int pcspeaker_event(unsigned int code, int value) {
