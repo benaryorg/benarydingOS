@@ -9,7 +9,7 @@ void paging_init(void)
 
 	kernel=page_mk_context();
 
-	for(i=0;i<4*1024*1024;i+=0x1000)
+	for(i=0;i<1024*1024*1024;i+=0x1000)
 	{
 		page_map(kernel,i,i);
 	}

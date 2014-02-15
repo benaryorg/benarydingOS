@@ -5,7 +5,7 @@
 
 BUILDDIR=build
 KERNEL=$BUILDDIR/kernel
-QEMU_ARGS="-s -S -kernel $KERNEL -initrd build/*.bin $@"
+QEMU_ARGS="-s -S -kernel $KERNEL -d cpu_reset,int $@" # -initrd build/*.bin
 
 if command -v qemu >/dev/null 2>&1 ; then
 	qemu='qemu'
