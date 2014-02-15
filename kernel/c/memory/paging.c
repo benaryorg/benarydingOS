@@ -1,5 +1,8 @@
 #include "header.h"
 
+#define KERNEL_PAGE_TABLES_VADDR 0x3fc00000
+#define PGDIR_SHIFT 22
+
 static page_context_t *kernel;
 
 void paging_init(void)
@@ -38,11 +41,13 @@ void page_activate_context(page_context_t *c)
 
 void page_map(page_context_t *c,uint32_t virt,uint32_t phys)
 {
+	int i=virt/4096;
 	if(!virt||((virt|phys)&0xFFF))
 	{
+		for(i=0;i<10000000;i++);
+		putchar('#');
 		return;
 	}
-	int i=virt/4096;
 	uint32_t *pagetable=(uint32_t *)(c->pagedir+(i/1024));
 	if(!*pagetable)
 	{
@@ -51,6 +56,6 @@ void page_map(page_context_t *c,uint32_t virt,uint32_t phys)
         *pagetable|=PTE_PRESENT|PTE_WRITE;
         page_map(c,*pagetable,*pagetable);
 	}
-	((uint32_t *)*pagetable)[i%1024]=phys|PTE_PRESENT|PTE_WRITE;
+	((uint32_t *)*pagetable)[i%1024]=phys|PTE_PRESENT|PTE_WRITE|0xFFF;
 	asm volatile("invlpg %0" : : "m" (*(char*)virt));
 }

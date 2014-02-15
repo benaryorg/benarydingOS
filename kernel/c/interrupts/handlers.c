@@ -141,6 +141,10 @@ cpu_state_t *int_handler(cpu_state_t *cpu)
 		}
 		outb(0xa0,0x20);
 	}
+	if(old_cpu!=cpu)
+	{
+		//TODO change pagedir
+	}
 	return cpu;
 }
 
