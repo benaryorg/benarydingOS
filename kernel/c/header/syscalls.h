@@ -8,6 +8,7 @@
 #define SYSCALL_INB					0x04
 #define SYSCALL_OUTB				0x05
 #define SYSCALL_TASK_EXIT			0x06
+#define SYSCALL_HOOK_SYSCALL		0x07
 
 #define SYSCALL_REBOOT				0xFF //TODO
 

@@ -39,7 +39,7 @@ void page_activate_context(page_context_t *c)
 void page_map(page_context_t *c,uint32_t virt,uint32_t phys,uint32_t flags)
 {
 	int i=virt/4096;
-	if(!virt||((virt|phys)&0xFFF))
+	if(!virt||(phys&0xFFF))
 	{
 		return;
 	}
@@ -48,7 +48,7 @@ void page_map(page_context_t *c,uint32_t virt,uint32_t phys,uint32_t flags)
 	{
 		*pagetable=(uint32_t)physmallocblock();
 		memset((void *)*pagetable,0,4096);
-        *pagetable|=PTE_PRESENT|PTE_WRITE;
+        *pagetable|=PTE_PRESENT;
         page_map(c,*pagetable,*pagetable,PTE_PRESENT|PTE_WRITE);
 	}
 	((uint32_t *)*pagetable)[i%1024]=phys|flags;
