@@ -46,7 +46,7 @@ page_context_t;
 void page_activate_context(page_context_t *);
 page_context_t *page_mk_context(void);
 void paging_init(void);
-void page_map(page_context_t *,uint32_t,uint32_t);
+void page_map(page_context_t *,uint32_t,uint32_t,uint32_t);
 
 /** PAGING END **/
 

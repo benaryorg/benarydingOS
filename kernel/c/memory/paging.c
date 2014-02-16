@@ -1,8 +1,5 @@
 #include "header.h"
 
-#define KERNEL_PAGE_TABLES_VADDR 0x3fc00000
-#define PGDIR_SHIFT 22
-
 static page_context_t *kernel;
 
 void paging_init(void)
@@ -12,11 +9,11 @@ void paging_init(void)
 
 	kernel=page_mk_context();
 
-	for(i=0;i<4*1024*1024;i+=0x1000)
+	for(i=0;i<4*1024*1024;i+=0x0400)
 	{
-		page_map(kernel,i,i);
+		page_map(kernel,i,i,PTE_PRESENT|PTE_WRITE);
 	}
-	page_map(kernel,(uint32_t)kernel,(uint32_t)kernel);
+	page_map(kernel,(uint32_t)kernel,(uint32_t)kernel,PTE_PRESENT|PTE_WRITE);
     
 	page_activate_context(kernel);
 
@@ -28,9 +25,9 @@ void paging_init(void)
 page_context_t *page_mk_context(void)
 {
 	page_context_t *c=physmalloc(sizeof(page_context_t));
-	c->pagedir=(void *)(((uint32_t)physmallocblock())|PTE_PRESENT|PTE_WRITE);
+	c->pagedir=(uint32_t *)physmallocblock();
 	memset(c->pagedir,0,4096);
-	page_map(c,(uint32_t)c->pagedir,(uint32_t)c->pagedir);
+	page_map(c,(uint32_t)c->pagedir,(uint32_t)c->pagedir,PTE_PRESENT|PTE_WRITE);
 	return c;
 }
 
@@ -39,13 +36,11 @@ void page_activate_context(page_context_t *c)
 	asm volatile("mov %0, %%cr3" : : "r" (c->pagedir));
 }
 
-void page_map(page_context_t *c,uint32_t virt,uint32_t phys)
+void page_map(page_context_t *c,uint32_t virt,uint32_t phys,uint32_t flags)
 {
 	int i=virt/4096;
 	if(!virt||((virt|phys)&0xFFF))
 	{
-		for(i=0;i<10000000;i++);
-		putchar('#');
 		return;
 	}
 	uint32_t *pagetable=(uint32_t *)(c->pagedir+(i/1024));
@@ -54,8 +49,8 @@ void page_map(page_context_t *c,uint32_t virt,uint32_t phys)
 		*pagetable=(uint32_t)physmallocblock();
 		memset((void *)*pagetable,0,4096);
         *pagetable|=PTE_PRESENT|PTE_WRITE;
-        page_map(c,*pagetable,*pagetable);
+        page_map(c,*pagetable,*pagetable,PTE_PRESENT|PTE_WRITE);
 	}
-	((uint32_t *)*pagetable)[i%1024]=phys|PTE_PRESENT|PTE_WRITE|0xFFF;
+	((uint32_t *)*pagetable)[i%1024]=phys|flags;
 	asm volatile("invlpg %0" : : "m" (*(char*)virt));
 }

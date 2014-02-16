@@ -23,12 +23,11 @@ void init(multiboot_info_t *mb_info)
 		puts("Please contact your local benarydingOS-supplier immediately!");
 		puts("It is possible, that this is a bug!");
 		kernelpanic("Memtest Failure!");
-		return;
 	}
 	puts("Memtest OK");
 	paging_init();
 	puts("Paging initialised and activated");
-	activate_hardware_ints();
+	//activate_hardware_ints();
 	puts("Activated Hardware Interrupts");
 	puts("Starting Main\n");
 	resetcolor();
