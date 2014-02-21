@@ -17,7 +17,6 @@ void paging_init(void)
 
 	asm volatile("mov %%cr0, %0" : "=r" (cr0));
 	cr0|=(1<<31);
-	cr0=~0;
 	asm volatile("mov %0, %%cr0" : : "r" (cr0));
 }
 
