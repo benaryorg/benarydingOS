@@ -34,6 +34,10 @@ void *physmallocblock(void)
 	mem_allocation_t *tmp;
 	for(i=last+0x1000;i!=last;i+=0x1000)
 	{
+		if(i>0x180000)//tile.end>=getramsize()) TODO
+		{
+			i=0;
+		}
 		tile.start=(void *)i;
 		tile.end=tile.start+4096;
 		for(j=0;j<MEM_STACK_SIZE;j++)
@@ -50,7 +54,6 @@ void *physmallocblock(void)
 		{
 			last=i;
 			physmemsetallocation(&tile);
-			//printf("%p\n",tile.start);
 			return tile.start;
 		}
 	}

@@ -118,5 +118,5 @@ intr_common_handler:
 .section .data
 .section .rodata
 .section .bss
-.space 65536
+.space 32768
 kstack:
