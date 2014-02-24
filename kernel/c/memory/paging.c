@@ -9,11 +9,13 @@ void paging_init(void)
 
 	kernel=page_mk_context();
 
-	for(i=0;i<4*1024*1024;i+=0x0400)
+	for(i=0;i<4*1024*1024;i+=0x400)
 	{
 		page_map(kernel,i,i,PTE_PRESENT|PTE_WRITE);
 	}
 	page_map(kernel,(uint32_t)kernel,(uint32_t)kernel,PTE_PRESENT|PTE_WRITE);
+	page_map(kernel,(uint32_t)kernel->pagedir,(uint32_t)kernel->pagedir,PTE_PRESENT|PTE_WRITE);
+	page_map(kernel,0xB8000,0xB8000,PTE_PRESENT|PTE_WRITE);
     
 	page_activate_context(kernel);
 
@@ -27,7 +29,6 @@ page_context_t *page_mk_context(void)
 	page_context_t *c=physmalloc(sizeof(page_context_t));
 	c->pagedir=(uint32_t *)physmallocblock();
 	memset(c->pagedir,0,4096);
-	page_map(c,(uint32_t)c->pagedir,(uint32_t)c->pagedir,PTE_PRESENT|PTE_WRITE);
 	return c;
 }
 

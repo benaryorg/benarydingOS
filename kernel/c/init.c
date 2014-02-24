@@ -26,6 +26,7 @@ void init(multiboot_info_t *mb_info)
 	}
 	puts("Memtest OK");
 	paging_init();
+	while(1);
 	puts("Paging initialised and activated");
 	//activate_hardware_ints();
 	puts("Activated Hardware Interrupts");
