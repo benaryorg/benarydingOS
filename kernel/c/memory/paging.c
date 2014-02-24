@@ -32,12 +32,17 @@ page_context_t *page_mk_context(void)
 
 void page_activate_context(page_context_t *c)
 {
-	asm volatile("mov %0, %%cr3" : :  "r" (c->pagedir));
+	asm volatile("movl %0, %%cr3" : :  "r" (c->pagedir));
+}
+
+void invalpage(uint32_t virt)
+{
+	asm volatile("invlpg %0" : : "m" (*(char *)virt));
 }
 
 void page_map(page_context_t *c,uint32_t virt,uint32_t phys,uint32_t flags)
 {
-	if(!virt||(phys&0x1))
+	if(!virt||(phys&0xFFF))
 	{
 		kernelpanic("Evil Flags!");
 		return;
@@ -51,5 +56,5 @@ void page_map(page_context_t *c,uint32_t virt,uint32_t phys,uint32_t flags)
         page_map(c,*pagetable,*pagetable,PTE_PRESENT|PTE_WRITE);
 	}
 	((uint32_t *)*pagetable)[i%1024]=phys|flags;
-	asm volatile("invlpg %0" : : "m" (*(char*)virt));
+	invalpage(virt);
 }
