@@ -22,4 +22,4 @@ all: ../build/kernel clean
 clean:
 	@rm -f $(OBJS)
 
-.PHONY: clean
+.PHONY: clean all

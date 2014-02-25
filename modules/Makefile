@@ -20,12 +20,12 @@ all: cleanmodules $(MODS) clean
 	$(CC) $(CFLAGS) -c -o $@ $^
 
 clean:
-	rm -f $(OBJS)
+	@rm -f $(OBJS)
 
 cleanall: clean cleanmodules
-	rm -f $(LIBOBJS)
+	@rm -f $(LIBOBJS)
 
 cleanmodules:
-	rm -f ../build/*.bin
+	@rm -f ../build/*.bin
 
-.PHONY: clean cleanall cleanmodules
+.PHONY: clean cleanall cleanmodules all
