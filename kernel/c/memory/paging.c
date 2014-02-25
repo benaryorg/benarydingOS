@@ -13,6 +13,10 @@ void paging_init(void)
 	{
 		page_map(kernel_ctx,i,i,PTE_PRESENT|PTE_WRITE);
 	}
+	page_map(kernel_ctx,(uint32_t)kernel_ctx,(uint32_t)kernel_ctx,PTE_PRESENT|PTE_WRITE);
+	page_map(kernel_ctx,(uint32_t)kernel_ctx->pagedir,(uint32_t)kernel_ctx->pagedir,PTE_PRESENT|PTE_WRITE);
+	page_map(kernel_ctx,0xB8000,0xB8000,PTE_PRESENT|PTE_WRITE);
+    
 	page_activate_context(kernel_ctx);
 
 	asm volatile("mov %%cr0, %0" : "=r" (cr0));
@@ -26,7 +30,6 @@ page_context_t *page_mk_context(void)
 	page_map(c,(uint32_t)c,(uint32_t)c,PTE_PRESENT|PTE_WRITE);
 	c->pagedir=(uint32_t *)physmallocblock();
 	memset(c->pagedir,0,4096);
-	page_map(c,(uint32_t)c->pagedir,(uint32_t)c->pagedir,PTE_PRESENT|PTE_WRITE);
 	return c;
 }
 
