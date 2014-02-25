@@ -11,7 +11,7 @@ ASFLAGS = -m32
 CFLAGS = -m32 -Wall -g -fno-stack-protector -nostdinc -Iheader -ffunction-sections
 LDFLAGS = -melf_i386 -Tlinker/linker.ld
 
-all: cleanmodules $(MODS) clean
+all: $(MODS)
 
 %.bin: $(LIBOBJS) $(OBJS)
 	$(LD) $(LDFLAGS) -o $@ $(LIBOBJS) $(addsuffix .o,$(basename $(notdir $@)))
@@ -21,11 +21,7 @@ all: cleanmodules $(MODS) clean
 
 clean:
 	@rm -f $(OBJS)
-
-cleanall: clean cleanmodules
 	@rm -f $(LIBOBJS)
-
-cleanmodules:
 	@rm -f ../build/*.bin
 
-.PHONY: clean cleanall cleanmodules all
+.PHONY: clean all
