@@ -37,9 +37,13 @@ void memdump(void);
 #define PTE_PRESENT 0x01
 #define PTE_WRITE 0x02
 
+typedef uint32_t *page_t;
+typedef page_t *pagetable_t;
+typedef pagetable_t *pagedir_t;
+
 typedef struct
 {
-	uint32_t *pagedir;
+	pagedir_t pagedir;
 }
 page_context_t;
 
