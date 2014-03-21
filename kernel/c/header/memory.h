@@ -32,6 +32,9 @@ mem_allocation_t *phys_mem_allocation(size_t,mem_allocation_t *,char);
 int memtest(const int arrs,const int bytes);
 void memdump(void);
 
+void *memcpy(void *,const void *,unsigned int);
+void *memset(void *,int,unsigned int);
+
 /** PAGING **/
 
 #define PTE_PRESENT 0x01
@@ -53,8 +56,5 @@ void paging_init(void);
 void page_map(page_context_t *,uint32_t,uint32_t,uint32_t);
 
 /** PAGING END **/
-
-void *memcpy(void *,const void *,unsigned int);
-void *memset(void *,int,unsigned int);
 
 #endif

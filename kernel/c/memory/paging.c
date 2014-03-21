@@ -45,18 +45,18 @@ void invalpage(uint32_t virt)
 
 void page_map(page_context_t *c,uint32_t virt,uint32_t phys,uint32_t flags)
 {
-	if(!virt||(phys&0xFF))
+	if(!virt||(phys&0xFFF))
 	{
 		kernelpanic("Evil Flags!");
 		return;
 	}
-	int i=virt/4096;
+	int i=virt>>12;
 	if(!c->pagedir[i/1024])
 	{
 		c->pagedir[i/1024]=(pagetable_t)physmallocblock();
 		memset((void *)c->pagedir[i/1024],0,4096);
         page_map(c,(uint32_t)c->pagedir[i/1024],(uint32_t)c->pagedir[i/1024],PTE_PRESENT|PTE_WRITE);
 	}
-	c->pagedir[i/1024][i%1024]=(void *)(phys|flags);
+	c->pagedir[i/1024][i%1024]=(uint32_t *)(phys|flags);
 	invalpage(virt);
 }
