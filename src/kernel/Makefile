@@ -8,7 +8,7 @@ LD = ld
 
 ASFLAGS = -m32
 CFLAGS = -m32 -Wall -g -fno-stack-protector -nostdinc -std=gnu89 -Iheader
-LDFLAGS = -melf_i386 -Ttext=0x100000 -Tkernel.ld
+LDFLAGS = -melf_i386 -Ttext=0x100000 -Tlinker.ld
 
 all: $(BUILD_DIR)/kernel
 
