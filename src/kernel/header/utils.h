@@ -12,6 +12,10 @@ void haltcpu(void);
 void kernelpanic(const char *);
 void register_reload(void);
 
+/* memoryfunctions */
+void *memcpy(void *,const void *,unsigned int);
+void *memset(void *,int,unsigned int);
+
 /* stdlib */
 int atoi (const char *nptr);
 

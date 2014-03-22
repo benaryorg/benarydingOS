@@ -45,7 +45,7 @@ void invalpage(uint32_t virt)
 
 void page_map(page_context_t *c,uint32_t virt,uint32_t phys,uint32_t flags)
 {
-	if(!virt||(phys&0xFFF))
+	if(!virt||((virt|phys)&0xFFF))
 	{
 		kernelpanic("Evil Flags!");
 		return;

@@ -1,6 +1,8 @@
+BUILD_DIR=../../build
+
 SRCS = $(shell find -maxdepth 1 -name '*.c')
 OBJS = $(addsuffix .o,$(basename $(SRCS)))
-MODS = $(addprefix ../build/,$(notdir $(addsuffix .bin,$(basename $(OBJS)))))
+MODS = $(addprefix $(BUILD_DIR)/,$(notdir $(addsuffix .bin,$(basename $(OBJS)))))
 LIBSRCS = $(shell find libs -name '*.c')
 LIBOBJS = $(addsuffix .o,$(basename $(LIBSRCS)))
 
@@ -9,9 +11,11 @@ LD = ld
 
 ASFLAGS = -m32
 CFLAGS = -m32 -Wall -g -fno-stack-protector -nostdinc -Iheader -ffunction-sections
-LDFLAGS = -melf_i386 -Tlinker/linker.ld
+LDFLAGS = -melf_i386 -Tlinker.ld
 
-all: $(MODS)
+default: $(MODS)
+
+all: $(MODS) clean
 
 %.bin: $(LIBOBJS) $(OBJS)
 	$(LD) $(LDFLAGS) -o $@ $(LIBOBJS) $(addsuffix .o,$(basename $(notdir $@)))
@@ -22,6 +26,6 @@ all: $(MODS)
 clean:
 	@rm -f $(OBJS)
 	@rm -f $(LIBOBJS)
-	@rm -f ../build/*.bin
+	@rm -f $(BUILD_DIR)/*.bin
 
-.PHONY: clean all
+.PHONY: clean
