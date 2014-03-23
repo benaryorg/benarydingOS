@@ -8,7 +8,7 @@ void init(multiboot_info_t *mb_info)
 	physmeminit(mb_info);
 	puts("Physical Memory initialised");
 	printf("Loaded %u Modules\n",(unsigned)mb_info->mbs_mods_count);
-	paging_init();
+	page_context_t *c=paging_init();
 	puts("Paging initialised and activated");
 	pic_init();
 	puts("PIC Reprogrammed");
@@ -27,9 +27,14 @@ void init(multiboot_info_t *mb_info)
 		kernelpanic("Memtest Failure!");
 	}
 	puts("Memtest OK");
-	activate_hardware_ints();
-	puts("Activated Hardware Interrupts");
 	puts("Starting Main\n");
 	resetcolor();
-	main();
+
+    task_t task;
+    task.context=c;
+    task.cpu=cpu_new(task.context,main,0);
+    task_schedule(&task);
+	activate_hardware_ints();
+	puts("Activated Hardware Interrupts");
+    asm volatile("int $0x20");
 }

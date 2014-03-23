@@ -1,20 +1,20 @@
 #include "header.h"
 
-void paging_init(void)
+page_context_t *paging_init(void)
 {
     static page_context_t *kernel_ctx;
 
     uint32_t cr0;
     int i;
 
-    kernel_ctx=page_mk_context(1); //is blocking HERE!
+    kernel_ctx=page_mk_context(1);
 
-    for(i=0x1000;i<4*1024*1024;i+=0x1000)
+    for(i=1;i<0x1000;i++)
     {
-        page_map(kernel_ctx,i,i,PTE_PRESENT|PTE_WRITE);
+        page_map(kernel_ctx,i<<12,i<<12,PTE_PRESENT|PTE_WRITE);
     }
     page_map(kernel_ctx,(uint32_t)kernel_ctx,(uint32_t)kernel_ctx,PTE_PRESENT|PTE_WRITE);
-//    page_map(kernel_ctx,(uint32_t)kernel_ctx->pagedir,(uint32_t)kernel_ctx->pagedir,PTE_PRESENT|PTE_WRITE);
+    page_map(kernel_ctx,(uint32_t)kernel_ctx->pagedir,(uint32_t)kernel_ctx->pagedir,PTE_PRESENT|PTE_WRITE);
     for(i=0;i<2;i++)
     {
         page_map(kernel_ctx,(0xB8+i)*0x1000,(0xB8+i)*0x1000,PTE_PRESENT|PTE_WRITE);
@@ -24,6 +24,8 @@ void paging_init(void)
     asm volatile("mov %%cr0, %0" : "=r" (cr0));
     cr0|=(1<<31);
     asm volatile("mov %0, %%cr0" : : "r" (cr0));
+
+    return kernel_ctx;
 }
 
 page_context_t *page_mk_context(char use_phys)
@@ -54,6 +56,7 @@ void invalpage(uint32_t virt)
 
 void page_map(page_context_t *c,uint32_t virt,uint32_t phys,uint32_t flags)
 {
+//    printf("Map p%x to v%x\n",phys,virt);
     if(!virt||((virt|phys)&0xFFF))
     {
         printf("ctx:%x\npd:%x\nv:%x\np:%x\n",(unsigned)c,(unsigned)c->pagedir,(unsigned)virt,(unsigned)phys);

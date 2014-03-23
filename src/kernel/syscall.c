@@ -55,6 +55,9 @@ cpu_state_t *handler_syscall(cpu_state_t *cpu)
             task->cpu=0;
 //          free(task->context);
 //			return task_next()->cpu;
+        case SYSCALL_GET_CPU:
+            *(uint32_t *)cpu->ebx=(uint32_t)cpu;
+            break;
 		case SYSCALL_REBOOT:
 			break;
 		default:

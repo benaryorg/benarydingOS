@@ -148,13 +148,16 @@ cpu_state_t *int_handler(cpu_state_t *cpu)
     {
         cpu=f(cpu);
     }
-    if(old_task->cpu->intr>=0x20&&old_task->cpu->intr<0x30)
+    if(task)
     {
-        if(old_task->cpu->intr<0x29)
+        if(old_task->cpu->intr>=0x20&&old_task->cpu->intr<0x30)
         {
-            outb(0x20,0x20);
+            if(old_task->cpu->intr<0x29)
+            {
+                outb(0x20,0x20);
+            }
+            outb(0xa0,0x20);
         }
-        outb(0xa0,0x20);
     }
     if(old_task!=task)
     {
@@ -190,11 +193,12 @@ cpu_state_t *cpu_new(page_context_t *c,void *ptr,char userspace)
     ptr=0;
     while(!ptr)
     {
-        ptr=mallocblocks(c,stackspace/4096);
+        ptr=mallocblocks(c,1);
     }
     cpu.esp=(uint32_t)ptr+stackspace;
     cpu_state_t *state=(void *)(ptr+stackspace-sizeof(cpu));
-    *state=cpu;
+//    printf("%x/%x\n",&cpu,state);
+    memcpy(state,&cpu,sizeof(cpu));
     return state;
 }
 

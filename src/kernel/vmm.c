@@ -14,20 +14,21 @@ void *mallocblocks(page_context_t *c,int blocks)
         {
             for(j=0;j<1024-blocks;j++)
             {
-                for(k=0;k<blocks&&tmp;k++)
+                for(tmp=k=0;k<blocks&&tmp;k++)
                 {
                     if(((uint32_t)c->pagedir[i/1024][j+k])&1)
                     {
                         tmp=1;
                     }
                 }
-                if(!k)
+                if(!tmp)
                 {
                     for(k=0;k<blocks&&tmp;k++)
                     {
-                        page_map(c,(uint32_t)((i*1024+j+k)*4096),(uint32_t)physmallocblock(),PTE_PRESENT|PTE_WRITE);
+                        page_map(c,(uint32_t)((i*1024+j+k)<<12),(uint32_t)physmallocblock(),PTE_PRESENT|PTE_WRITE);
                     }
-                    return c->pagedir[i/1024][j+k];
+//                    printf("%x\n",c->pagedir[i/1024][j+k]);
+                    return (void *)(((uint32_t)c->pagedir[i/1024][j+k])&~0xFFF);
                 }
             }
         }
@@ -37,12 +38,13 @@ void *mallocblocks(page_context_t *c,int blocks)
         if(!(((uint32_t)c->pagedir[i/1024])&1))
         {
             c->pagedir[i/1024]=(pagetable_t)(((uint32_t)physmallocblock())|PTE_PRESENT);
-            page_map(c,(uint32_t)c->pagedir[i/1024]&~0xFFF,(uint32_t)c->pagedir[i/1024]&~0xFFF,PTE_PRESENT|PTE_WRITE);
-            for(k=0;k<blocks&&tmp;k++)
+            page_map(c,((i<<10)<<12),((i<<10)<<12),PTE_PRESENT|PTE_WRITE);
+/*          
             {
-                page_map(c,(uint32_t)((i*1024+k)*4096),(uint32_t)physmallocblock(),PTE_PRESENT|PTE_WRITE);
+                page_map(c,(uint32_t)((i*1024+j)<<12),(uint32_t)physmallocblock(),PTE_PRESENT|PTE_WRITE);
             }
-            return c->pagedir[i/1024][k];
+*/
+            return mallocblocks(c,blocks);
         }
     }
     return 0;
