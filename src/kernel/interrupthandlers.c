@@ -223,7 +223,7 @@ cpu_state_t *cpu_new(page_context_t *c,void *ptr,char userspace)
     cpu.esp=(uint32_t)ptr+stackspace;
     cpu_state_t *state=(void *)(ptr+stackspace-sizeof(cpu));
 //    printf("%x/%x\n",&cpu,state);
-    memcpy(state,&cpu,sizeof(cpu));
+    memcpy(state,&cpu,sizeof(cpu)); //PAGE FAULT #PF
     return state;
 }
 
