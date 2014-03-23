@@ -31,10 +31,11 @@ page_context_t *paging_init(void)
 page_context_t *page_mk_context(char use_phys)
 {
     page_context_t *c=physmallocblock();//(sizeof(page_context_t));
+    page_map(c,(uint32_t)c,(uint32_t)c,PTE_PRESENT|PTE_WRITE);
     if(use_phys)
     {
         c->pagedir=(pagedir_t)physmallocblock();
-        page_map(c,(uint32_t)c,(uint32_t)c,PTE_PRESENT|PTE_WRITE);
+        page_map(c,(uint32_t)c->pagedir,(uint32_t)c->pagedir,PTE_PRESENT|PTE_WRITE);
     }
     else
     {
@@ -59,6 +60,7 @@ void page_map(page_context_t *c,uint32_t virt,uint32_t phys,uint32_t flags)
 //    printf("Map p%x to v%x\n",phys,virt);
     if(!virt||((virt|phys)&0xFFF))
     {
+        resetcolor();
         printf("ctx:%x\npd:%x\nv:%x\np:%x\n",(unsigned)c,(unsigned)c->pagedir,(unsigned)virt,(unsigned)phys);
         kernelpanic("Evil Flags!");
         return;
@@ -66,9 +68,9 @@ void page_map(page_context_t *c,uint32_t virt,uint32_t phys,uint32_t flags)
     int i=virt>>12;
     if(!(((uint32_t)c->pagedir[i/1024])&0xFFF))
     {
-        c->pagedir[i/1024]=(pagetable_t)(((uint32_t)mallocblocks(c,1))|PTE_PRESENT);
-//        page_map(c,(uint32_t)c->pagedir[i/1024]&~0xFFF,(uint32_t)c->pagedir[i/1024]&~0xFFF,PTE_PRESENT|PTE_WRITE);
-        memset((void *)c->pagedir[i/1024],0,4096);
+        c->pagedir[i/1024]=(pagetable_t)(((uint32_t)physmallocblock())|PTE_PRESENT);
+        page_map(c,(uint32_t)c->pagedir[i/1024]&~0xFFF,(uint32_t)c->pagedir[i/1024]&~0xFFF,PTE_PRESENT|PTE_WRITE);
+        memset((void *)(((uint32_t)c->pagedir[i/1024])&~0xFFF),0,4096);
     }
     pagetable_t table=(pagetable_t)(((uint32_t)c->pagedir[i/1024])&~0xFF);
     table[i%1024]=(uint32_t *)(phys|flags);

@@ -72,7 +72,7 @@ cpu_state_t *handler_exception(cpu_state_t *cpu)
             printf("Page Fault\nError Code: %u\n",err);
             for(i=0;i<5;i++)
             {
-                printf("Bit: %2d:\t",i);
+                printf("Bit %1d(%1d):\t",i,((err>>i)&1));
                 switch(i)
                 {
                     case 0:
@@ -85,7 +85,7 @@ cpu_state_t *handler_exception(cpu_state_t *cpu)
                         puts(((err>>i)&1)?"User Mode":"Kernel Mode");
                         break;
                     case 3:
-                        printf("Reserved was %d",((err>>i)&1));
+                        printf("Reserved was %d\n",((err>>i)&1));
                         break;
                     case 4:
                         puts(((err>>i)&1)?"Code Access":"Data Access");
