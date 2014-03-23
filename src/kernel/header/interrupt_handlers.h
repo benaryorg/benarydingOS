@@ -32,6 +32,6 @@ task_t *get_task_by_cpu(cpu_state_t *);
 task_t *task_schedule(task_t *);
 task_t *task_next(void);
 void exit(int);
-cpu_state_t *cpu_new(void *,char);
+cpu_state_t *cpu_new(page_context_t *,void *,char);
 
 #endif

@@ -1,5 +1,7 @@
 #include "header.h"
 
+//TODO memtest should use vmm not pmm
+
 int memtest(const int arrs,const int bytes)
 {
 	unsigned char **f=physmalloc(sizeof(unsigned char *)*arrs);

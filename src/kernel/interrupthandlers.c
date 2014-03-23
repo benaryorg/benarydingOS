@@ -167,7 +167,7 @@ task_t *task_next(void)
     return task_schedule(0);
 }
 
-cpu_state_t *cpu_new(void *ptr,char userspace)
+cpu_state_t *cpu_new(page_context_t *c,void *ptr,char userspace)
 {
     const int stackspace=4096;
     cpu_state_t cpu;
@@ -189,7 +189,7 @@ cpu_state_t *cpu_new(void *ptr,char userspace)
     ptr=0;
     while(!ptr)
     {
-        ptr=physmalloc(stackspace);
+        ptr=mallocblocks(c,stackspace/4096);
     }
     cpu.esp=(uint32_t)ptr+stackspace;
     cpu_state_t *state=(void *)(ptr+stackspace-sizeof(cpu));
