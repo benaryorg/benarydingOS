@@ -101,6 +101,8 @@ void *physmalloc(unsigned int size)
 
 void physmeminit(multiboot_info_t *mb_info)
 {
+    cpu_state_t *cpu;
+    task_t task;
     mem_allocation_t addr;
     addr.start=addr.end=0;
 
@@ -119,7 +121,7 @@ void physmeminit(multiboot_info_t *mb_info)
     addr.start=modules;
     addr.end=(char *)addr.start+4096;
     physmemsetallocation(&addr);
-    int i;
+    int i,j;
     multiboot_mmap_t *mmap=(multiboot_mmap_t *)mb_info->mbs_mmap_addr;
     multiboot_mmap_t *map_end=(multiboot_mmap_t *)((uintptr_t)mb_info->mbs_mmap_addr+mb_info->mbs_mmap_length);
     while(mmap<map_end)
@@ -147,7 +149,13 @@ void physmeminit(multiboot_info_t *mb_info)
         addr.end=addr.start+length;
         physmemsetallocation(&addr);
         puts("\tNew Memory allocated");
-        task_new(load_addr,0);
+        cpu=cpu_new(load_addr,0);
+        task.cpu=cpu;
+        task.context=page_mk_context();
+        for(j=0;j<0x50000;j+=0x1000)
+        {
+            page_map(task.context,((uint32_t)load_addr)+j,0x200000+j,PTE_PRESENT|PTE_WRITE);
+        }
         puts("\tNew Task added\n");
     }
 }

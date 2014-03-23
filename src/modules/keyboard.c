@@ -14,6 +14,8 @@ void _start(void)
 
 	asm("int $0x30" : : "a" (SYSCALL_HOOK_INT), "b" (0x21), "c" (onkey));
 
+//    putchar('#');
+
 	exit(0);
 }
 

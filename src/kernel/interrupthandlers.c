@@ -107,24 +107,37 @@ cpu_state_t *handler_exception(cpu_state_t *cpu)
 cpu_state_t *handler_hardware_int(cpu_state_t *cpu)
 {
     int intr=cpu->intr;
+    task_t *task;
     switch(intr-0x20)
     {
         case 0x00:
 //            puts("Timer");
-            cpu=task_next(cpu);
-            tss_entry_set(1,(uint32_t)(cpu+1));
+            task=task_next();
+            tss_entry_set(1,(uint32_t)(task->cpu+1));
             break;
         default:
             printf("IRQ %3d\n",intr-0x20);
             break;
     }
-    return cpu;
+    return task->cpu;
+}
+
+task_t *get_task_by_cpu(cpu_state_t *cpu)
+{
+    task_t *task=0;
+    do
+    {
+        task=task_schedule(0);
+    }
+    while(task->cpu!=cpu);
+    return task;
 }
 
 cpu_state_t *int_handler(cpu_state_t *cpu)
 {
     cpu_state_t *(*f)(cpu_state_t *)=getinterrupthandler(cpu->intr);
-    cpu_state_t *old_cpu=cpu;
+    task_t *task=get_task_by_cpu(cpu);
+    task_t *old_task=task;
     if(!f)
     {
         kernelpanic("Unhandeled Interrupt!");
@@ -133,27 +146,27 @@ cpu_state_t *int_handler(cpu_state_t *cpu)
     {
         cpu=f(cpu);
     }
-    if(old_cpu->intr>=0x20&&old_cpu->intr<0x30)
+    if(old_task->cpu->intr>=0x20&&old_task->cpu->intr<0x30)
     {
-        if(old_cpu->intr<0x29)
+        if(old_task->cpu->intr<0x29)
         {
             outb(0x20,0x20);
         }
         outb(0xa0,0x20);
     }
-    if(old_cpu!=cpu)
+    if(old_task!=task)
     {
-        //TODO change pagedir
+        page_activate_context(task->context);
     }
     return cpu;
 }
 
-cpu_state_t *task_next(cpu_state_t *task)
+task_t *task_next(void)
 {
-    return task_schedule(task,0);
+    return task_schedule(0);
 }
 
-void task_new(void *ptr,char userspace)
+cpu_state_t *cpu_new(void *ptr,char userspace)
 {
     const int stackspace=4096;
     cpu_state_t cpu;
@@ -180,11 +193,12 @@ void task_new(void *ptr,char userspace)
     cpu.esp=(uint32_t)ptr+stackspace;
     cpu_state_t *state=(void *)(ptr+stackspace-sizeof(cpu));
     *state=cpu;
-    task_schedule(state,1);
+    return state;
 }
 
-cpu_state_t *task_schedule(cpu_state_t *task,char add)
+task_t *task_schedule(task_t *task)
 {
+    static int last=0;
     static task_t tasks[TASKS_SIZE]={};
 
     int i;
@@ -194,40 +208,19 @@ cpu_state_t *task_schedule(cpu_state_t *task,char add)
         for(i=0;tasks[i].cpu&&i<TASKS_SIZE;i++);
         if(i<TASKS_SIZE)
         {
-            tasks[i].cpu=task;
-            tasks[i].ticks=3;
-            tasks[i].tick=4;
+            tasks[i]=*task;
         }
-
-        if(add)
-        {
-            return 0;
-        }
-
-        task=0;
+        return 0;
     }
-
-    do
+    
+    for(i=last;!tasks[i].cpu;i++)
     {
-        for(i=0;i<TASKS_SIZE;i++)
+        if(i>=TASKS_SIZE)
         {
-            if(tasks[i].ticks>tasks[i].tick)
-            {
-                tasks[i].tick++;
-                task=tasks[i].cpu;
-                tasks[i].cpu=0;
-                break;
-            }
+            i=-1;
         }
-        if(!task)
-        {
-            for(i=0;i<TASKS_SIZE;i++)
-            {
-                tasks[i].tick=0;
-            }
-        }
-    } while(!task);
-    return task;
+    }
+    return tasks+i;
 }
 
 void exit(int ret)

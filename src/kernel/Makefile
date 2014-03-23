@@ -10,7 +10,9 @@ ASFLAGS = -m32
 CFLAGS = -m32 -Wall -g -fno-stack-protector -nostdinc -std=gnu89 -Iheader
 LDFLAGS = -melf_i386 -Ttext=0x100000 -Tlinker.ld
 
-all: $(BUILD_DIR)/kernel
+default: $(BUILD_DIR)/kernel
+
+all: clean $(BUILD_DIR)/kernel
 
 $(BUILD_DIR)/kernel: $(OBJS)
 	$(LD) $(LDFLAGS) -o $@ $^

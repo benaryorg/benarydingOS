@@ -52,7 +52,7 @@ cpu_state_t *handler_syscall(cpu_state_t *cpu)
             outb(cpu->ebx,cpu->ecx);
             break;
 		case SYSCALL_TASK_EXIT:
-			return task_next(0);
+			return task_next()->cpu;
 		default:
 			kernelpanic("Unknown Syscall");
 			break;

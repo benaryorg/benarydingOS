@@ -8,8 +8,9 @@
 typedef struct
 {
 	cpu_state_t *cpu;
-	uint8_t ticks;
-	uint8_t tick;
+    page_context_t *context;
+//	uint8_t ticks;
+//	uint8_t tick;
 }
 task_t;
 
@@ -21,13 +22,15 @@ cpu_state_t *handler_syscall(cpu_state_t *);
 cpu_state_t *(**interrupt_handlers(int))(cpu_state_t *);
 cpu_state_t *(*getinterrupthandler(int))(cpu_state_t *);
 void setinterrupthandler(int,cpu_state_t *(*)(cpu_state_t *));
+
 cpu_state_t *(**syscall_handlers(int))(cpu_state_t *);
 cpu_state_t *(*getsyscallhandler(int))(cpu_state_t *);
 void setsyscallhandler(int,cpu_state_t *(*)(cpu_state_t *));
 
-cpu_state_t *task_schedule(cpu_state_t *,char);
-cpu_state_t *task_next(cpu_state_t *);
+task_t *get_task_by_cpu(cpu_state_t *);
+task_t *task_schedule(task_t *);
+task_t *task_next(void);
 void exit(int);
-void task_new(void *,char);
+cpu_state_t *cpu_new(void *,char);
 
 #endif

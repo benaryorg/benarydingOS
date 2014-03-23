@@ -45,18 +45,18 @@ void invalpage(uint32_t virt)
 
 void page_map(page_context_t *c,uint32_t virt,uint32_t phys,uint32_t flags)
 {
-    if(!virt||((virt|phys)&0xFF))
+    if(!virt||((virt|phys)&0xFFF))
     {
-//        kernelpanic("Evil Flags!");
-        printf("Evil Flags!");
+        printf("ctx:%x\npd:%x\nv:%x\np:%x\n",(uint32_t)c,(uint32_t)c->pagedir,(uint32_t)virt,(uint32_t)phys);
+        kernelpanic("Evil Flags!");
         return;
     }
     int i=virt>>12;
-    if(!(((uint32_t)c->pagedir[i/1024])&0x1))
+    if(!(((uint32_t)c->pagedir[i/1024])&0xFFF))
     {
         c->pagedir[i/1024]=(pagetable_t)(((uint32_t)physmallocblock())|PTE_PRESENT);
         memset((void *)c->pagedir[i/1024],0,4096);
-        page_map(c,(uint32_t)c->pagedir[i/1024],(uint32_t)c->pagedir[i/1024],PTE_PRESENT|PTE_WRITE);
+        page_map(c,(uint32_t)c->pagedir[i/1024]&~0xFFF,(uint32_t)c->pagedir[i/1024]&~0xFFF,PTE_PRESENT|PTE_WRITE);
     }
     pagetable_t table=(pagetable_t)(((uint32_t)c->pagedir[i/1024])&~0xFF);
     table[i%1024]=(uint32_t *)(phys|flags);
