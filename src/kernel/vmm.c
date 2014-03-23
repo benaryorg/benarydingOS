@@ -27,7 +27,7 @@ void *mallocblocks(page_context_t *c,int blocks)
                     {
                         page_map(c,(uint32_t)((i*1024+j+k)<<12),(uint32_t)physmallocblock(),PTE_PRESENT|PTE_WRITE);
                     }
-                    printf("%x\n",c->pagedir[i/1024][j+k]);
+//                    printf("%x\n",c->pagedir[i/1024][j+k]);
                     return (void *)((i*1024+j+k)<<12); //(void *)(((uint32_t)c->pagedir[i/1024][j+k])&~0xFFF);
                 }
             }
