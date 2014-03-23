@@ -27,6 +27,7 @@ cpu_state_t *(**syscall_handlers(int))(cpu_state_t *);
 cpu_state_t *(*getsyscallhandler(int))(cpu_state_t *);
 void setsyscallhandler(int,cpu_state_t *(*)(cpu_state_t *));
 
+task_t *task_func(int);
 task_t *get_task_by_cpu(cpu_state_t *);
 task_t *task_schedule(task_t *);
 task_t *task_next(void);

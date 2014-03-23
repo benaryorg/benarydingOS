@@ -125,12 +125,13 @@ cpu_state_t *handler_hardware_int(cpu_state_t *cpu)
 task_t *get_task_by_cpu(cpu_state_t *cpu)
 {
     task_t *task=0;
+    int i=0;
     do
     {
-        task=task_schedule(0);
+        task=task_func(i++);
     }
-    while(task->cpu!=cpu);
-    return task;
+    while(task->cpu!=cpu&&i<TASKS_SIZE);
+    return i<TASKS_SIZE?task:0;
 }
 
 cpu_state_t *int_handler(cpu_state_t *cpu)
@@ -196,31 +197,35 @@ cpu_state_t *cpu_new(void *ptr,char userspace)
     return state;
 }
 
+task_t *task_func(int i)
+{
+    static task_t tasks[TASKS_SIZE]={};
+    return tasks+i;
+}
+
 task_t *task_schedule(task_t *task)
 {
     static int last=0;
-    static task_t tasks[TASKS_SIZE]={};
-
     int i;
 
     if(task)
     {
-        for(i=0;tasks[i].cpu&&i<TASKS_SIZE;i++);
+        for(i=0;task_func(i)->cpu&&i<TASKS_SIZE;i++);
         if(i<TASKS_SIZE)
         {
-            tasks[i]=*task;
+            *task_func(i)=*task;
         }
         return 0;
     }
     
-    for(i=last;!tasks[i].cpu;i++)
+    for(i=last;!task_func(i)->cpu;i++)
     {
         if(i>=TASKS_SIZE)
         {
             i=-1;
         }
     }
-    return tasks+i;
+    return task_func(i);
 }
 
 void exit(int ret)
