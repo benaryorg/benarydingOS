@@ -66,6 +66,31 @@ cpu_state_t *handler_exception(cpu_state_t *cpu)
             kernelpanic("#GP");
             break;
         case 0x0e:
+            resetcolor();
+            unsigned int err=cpu->error;
+            int i;
+            printf("Page Fault\nError Code: %u\n",err);
+            for(i=0;i<5;i++)
+            {
+                printf("Bit: %2d:\t",i);
+                switch(i)
+                {
+                    case 0:
+                        puts(((err>>i)&1)?"Active Page":"Not active Page");
+                        break;
+                    case 1:
+                        puts(((err>>i)&1)?"Write Access":"Read Access");
+                        break;
+                    case 2:
+                        puts(((err>>i)&1)?"User Mode":"Kernel Mode");
+                        break;
+                    case 3:
+                        printf("Reserved was %d",((err>>i)&1));
+                        break;
+                    case 4:
+                        puts(((err>>i)&1)?"Code Access":"Data Access");
+                }
+            }
             kernelpanic("#PF - Page Fault");
             break;
         case 0x10:
