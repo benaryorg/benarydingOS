@@ -156,13 +156,6 @@ void physmeminit(multiboot_info_t *mb_info)
         {
             page_map(task.context,((uint32_t)load_addr)+j,0x200000+j,PTE_PRESENT|PTE_WRITE);
         }
-        for(j=0x1000;j<4*1024*1024;j+=0x1000)
-        {
-            page_map(task.context,j,j,PTE_PRESENT|PTE_WRITE);
-        }
-        page_map(task.context,(uint32_t)task.context,(uint32_t)task.context,PTE_PRESENT|PTE_WRITE);
-        page_map(task.context,(uint32_t)task.context->pagedir,(uint32_t)task.context->pagedir,PTE_PRESENT|PTE_WRITE);
-        page_map(task.context,0xB8000,0xB8000,PTE_PRESENT|PTE_WRITE);
         puts("\tNew Task added\n");
     }
 }

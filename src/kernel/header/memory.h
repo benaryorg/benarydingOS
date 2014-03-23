@@ -54,4 +54,10 @@ void page_map(page_context_t *,uint32_t,uint32_t,uint32_t);
 
 /** PAGING END **/
 
+/** VIRTUAL MEMORY MANAGEMENT **/
+
+void *mallocblocks(page_context_t *,int);
+
+/** VIRTUAL MEMORY MANAGEMENT END **/
+
 #endif

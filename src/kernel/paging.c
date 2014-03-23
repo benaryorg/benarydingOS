@@ -14,7 +14,7 @@ void paging_init(void)
         page_map(kernel_ctx,i,i,PTE_PRESENT|PTE_WRITE);
     }
     page_map(kernel_ctx,(uint32_t)kernel_ctx,(uint32_t)kernel_ctx,PTE_PRESENT|PTE_WRITE);
-    page_map(kernel_ctx,(uint32_t)kernel_ctx->pagedir,(uint32_t)kernel_ctx->pagedir,PTE_PRESENT|PTE_WRITE);
+//    page_map(kernel_ctx,(uint32_t)kernel_ctx->pagedir,(uint32_t)kernel_ctx->pagedir,PTE_PRESENT|PTE_WRITE);
     page_map(kernel_ctx,0xB8000,0xB8000,PTE_PRESENT|PTE_WRITE);
     
     page_activate_context(kernel_ctx);
@@ -27,8 +27,7 @@ void paging_init(void)
 page_context_t *page_mk_context(void)
 {
     page_context_t *c=physmallocblock();//(sizeof(page_context_t));
-    page_map(c,(uint32_t)c,(uint32_t)c,PTE_PRESENT|PTE_WRITE);
-    c->pagedir=(pagedir_t)physmallocblock();
+    c->pagedir=(pagedir_t)mallocblocks(c,1);
     memset(c->pagedir,0,4096);
     return c;
 }
@@ -54,9 +53,9 @@ void page_map(page_context_t *c,uint32_t virt,uint32_t phys,uint32_t flags)
     int i=virt>>12;
     if(!(((uint32_t)c->pagedir[i/1024])&0xFFF))
     {
-        c->pagedir[i/1024]=(pagetable_t)(((uint32_t)physmallocblock())|PTE_PRESENT);
+        c->pagedir[i/1024]=(pagetable_t)(((uint32_t)mallocblocks(c,1))|PTE_PRESENT);
+//        page_map(c,(uint32_t)c->pagedir[i/1024]&~0xFFF,(uint32_t)c->pagedir[i/1024]&~0xFFF,PTE_PRESENT|PTE_WRITE);
         memset((void *)c->pagedir[i/1024],0,4096);
-        page_map(c,(uint32_t)c->pagedir[i/1024]&~0xFFF,(uint32_t)c->pagedir[i/1024]&~0xFFF,PTE_PRESENT|PTE_WRITE);
     }
     pagetable_t table=(pagetable_t)(((uint32_t)c->pagedir[i/1024])&~0xFF);
     table[i%1024]=(uint32_t *)(phys|flags);
