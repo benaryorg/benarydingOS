@@ -114,12 +114,13 @@ cpu_state_t *handler_hardware_int(cpu_state_t *cpu)
 //            puts("Timer");
             task=task_next();
             tss_entry_set(1,(uint32_t)(task->cpu+1));
+            cpu=task->cpu;
             break;
         default:
             printf("IRQ %3d\n",intr-0x20);
             break;
     }
-    return task->cpu;
+    return cpu;
 }
 
 task_t *get_task_by_cpu(cpu_state_t *cpu)

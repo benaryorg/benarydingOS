@@ -21,6 +21,7 @@ void setsyscallhandler(int i,cpu_state_t *(*f)(cpu_state_t *))
 
 cpu_state_t *handler_syscall(cpu_state_t *cpu)
 {
+    task_t *task;
 	cpu_state_t *(*f)(cpu_state_t *)=getsyscallhandler(cpu->eax);
 	if(f)
 	{
@@ -33,8 +34,6 @@ cpu_state_t *handler_syscall(cpu_state_t *cpu)
 			break;
 		case SYSCALL_CLEAR:
 			cleardisplay();
-			break;
-		case SYSCALL_REBOOT:
 			break;
 		case SYSCALL_TASK_NEXT:
 			asm volatile("int $0x20");
@@ -52,7 +51,12 @@ cpu_state_t *handler_syscall(cpu_state_t *cpu)
             outb(cpu->ebx,cpu->ecx);
             break;
 		case SYSCALL_TASK_EXIT:
-			return task_next()->cpu;
+            task=get_task_by_cpu(cpu);
+            task->cpu=0;
+//          free(task->context);
+//			return task_next()->cpu;
+		case SYSCALL_REBOOT:
+			break;
 		default:
 			kernelpanic("Unknown Syscall");
 			break;

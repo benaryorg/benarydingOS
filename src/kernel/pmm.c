@@ -150,12 +150,17 @@ void physmeminit(multiboot_info_t *mb_info)
         physmemsetallocation(&addr);
         puts("\tNew Memory allocated");
         task.context=page_mk_context(0);
+        for(i=0x1000;i<4*1024*1024;i+=0x1000)
+        {
+            page_map(task.context,i,i,PTE_PRESENT);
+        }
         for(j=0;j<0x50000;j+=0x1000)
         {
             page_map(task.context,((uint32_t)load_addr)+j,0x200000+j,PTE_PRESENT|PTE_WRITE);
         }
         cpu=cpu_new(task.context,load_addr,0);
         task.cpu=cpu;
+        task_schedule(&task);
         puts("\tNew Task added\n");
     }
 }
