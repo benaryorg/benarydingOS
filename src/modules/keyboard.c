@@ -5,6 +5,8 @@ void send(int);
 
 void _start(void)
 {
+    while(1)
+        putchar('#');
 	while(inb(0x64)&0x1)
 	{
 		inb(0x60);
