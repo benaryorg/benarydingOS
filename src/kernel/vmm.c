@@ -16,7 +16,7 @@ void *mallocblocks(page_context_t *c,int blocks)
             {
                 for(tmp=k=0;k<blocks&&!tmp;k++)
                 {
-                    if(((uint32_t)c->pagedir[i/1024][j+k])&1)
+                    if((((uint32_t)c->pagedir[i/1024][j+k])&((1<<9)|1))==((1<<9)|1))
                     {
                         tmp=1;
                     }
@@ -25,9 +25,9 @@ void *mallocblocks(page_context_t *c,int blocks)
                 {
                     for(k=0;k<blocks&&tmp;k++)
                     {
-                        page_map(c,(uint32_t)((i*1024+j+k)<<12),(uint32_t)physmallocblock(),PTE_PRESENT|PTE_WRITE);
+                        page_map(c,(uint32_t)((i*1024+j+k)<<12),(uint32_t)physmallocblock(),PTE_PRESENT|PTE_WRITE|(1<<9));
                     }
-//                    printf("%x\n",c->pagedir[i/1024][j+k]);
+                    printf("%x\n",c->pagedir[i/1024][j+k]);
                     return (void *)((i*1024+j+k)<<12); //(void *)(((uint32_t)c->pagedir[i/1024][j+k])&~0xFFF);
                 }
             }

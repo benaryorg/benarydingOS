@@ -11,13 +11,13 @@ page_context_t *paging_init(void)
 
     for(i=1;i<0x1000;i++)
     {
-        page_map(kernel_ctx,i<<12,i<<12,PTE_PRESENT|PTE_WRITE);
+        page_map(kernel_ctx,i<<12,i<<12,PTE_PRESENT|PTE_WRITE|(((i<0x200)?1<<9:0)));
     }
-    page_map(kernel_ctx,(uint32_t)kernel_ctx,(uint32_t)kernel_ctx,PTE_PRESENT|PTE_WRITE);
-    page_map(kernel_ctx,(uint32_t)kernel_ctx->pagedir,(uint32_t)kernel_ctx->pagedir,PTE_PRESENT|PTE_WRITE);
+    page_map(kernel_ctx,(uint32_t)kernel_ctx,(uint32_t)kernel_ctx,PTE_PRESENT|PTE_WRITE|(1<<9));
+    page_map(kernel_ctx,(uint32_t)kernel_ctx->pagedir,(uint32_t)kernel_ctx->pagedir,PTE_PRESENT|PTE_WRITE|(1<<9));
     for(i=0;i<2;i++)
     {
-        page_map(kernel_ctx,(0xB8+i)*0x1000,(0xB8+i)*0x1000,PTE_PRESENT|PTE_WRITE);
+        page_map(kernel_ctx,(0xB8+i)*0x1000,(0xB8+i)*0x1000,PTE_PRESENT|PTE_WRITE|(1<<9));
     }
     page_activate_context(kernel_ctx);
 

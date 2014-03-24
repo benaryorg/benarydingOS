@@ -208,6 +208,7 @@ cpu_state_t *cpu_new(page_context_t *c,void *ptr,char userspace)
     cpu.edi=0;
     cpu.ebp=0;
     cpu.eip=(uint32_t)ptr;
+    page_map(c,((uint32_t)ptr)&~0xFFF,((uint32_t)ptr)&~0xFFF,PTE_PRESENT|PTE_WRITE|(1<<9));
     cpu.cs=0x08;
     if(userspace)
     {
@@ -222,6 +223,7 @@ cpu_state_t *cpu_new(page_context_t *c,void *ptr,char userspace)
     }
     cpu.esp=(uint32_t)ptr+stackspace;
     cpu_state_t *state=(void *)(ptr+stackspace-sizeof(cpu));
+    page_map(c,((uint32_t)state)&~0xFFF,((uint32_t)state)&~0xFFF,PTE_PRESENT|PTE_WRITE|(1<<9));
 //    printf("%x/%x\n",&cpu,state);
     memcpy(state,&cpu,sizeof(cpu)); //PAGE FAULT #PF
     return state;
