@@ -27,14 +27,15 @@ void init(multiboot_info_t *mb_info)
 		kernelpanic("Memtest Failure!");
 	}
 	puts("Memtest OK");
-	puts("Starting Main\n");
-	resetcolor();
+	puts("Starting Main");
 
     task_t task;
+    task.id=0;
     task.context=c;
     task.cpu=cpu_new(task.context,main,0);
     task_schedule(&task);
-	activate_hardware_ints();
+//	activate_hardware_ints();
 	puts("Activated Hardware Interrupts");
+	resetcolor();
     asm volatile("int $0x20");
 }

@@ -159,6 +159,7 @@ void physmeminit(multiboot_info_t *mb_info)
             page_map(task.context,((uint32_t)load_addr)+j,0x200000+j,PTE_PRESENT|PTE_WRITE|(1<<9));
         }
         cpu=cpu_new(task.context,load_addr,0);
+        task.id=100+i;
         task.cpu=cpu;
         task_schedule(&task);
         puts("\tNew Task added\n");

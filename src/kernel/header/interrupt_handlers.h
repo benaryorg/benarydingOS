@@ -9,6 +9,7 @@ typedef struct
 {
 	cpu_state_t *cpu;
     page_context_t *context;
+    int id;
 //	uint8_t ticks;
 //	uint8_t tick;
 }
@@ -30,7 +31,7 @@ void setsyscallhandler(int,cpu_state_t *(*)(cpu_state_t *));
 task_t *task_func(int);
 task_t *get_task_by_cpu(cpu_state_t *);
 task_t *task_schedule(task_t *);
-task_t *task_next(void);
+task_t *task_next(cpu_state_t *);
 void exit(int);
 cpu_state_t *cpu_new(page_context_t *,void *,char);
 

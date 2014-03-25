@@ -137,7 +137,7 @@ cpu_state_t *handler_hardware_int(cpu_state_t *cpu)
     {
         case 0x00:
 //            puts("Timer");
-            task=task_next();
+            task=task_next(cpu);
             tss_entry_set(1,(uint32_t)(task->cpu+1));
             cpu=task->cpu;
             break;
@@ -191,9 +191,9 @@ cpu_state_t *int_handler(cpu_state_t *cpu)
     return cpu;
 }
 
-task_t *task_next(void)
+task_t *task_next(cpu_state_t *cpu)
 {
-    return task_schedule(0);
+    return task_schedule(get_task_by_cpu(cpu));
 }
 
 cpu_state_t *cpu_new(page_context_t *c,void *ptr,char userspace)
@@ -232,6 +232,16 @@ cpu_state_t *cpu_new(page_context_t *c,void *ptr,char userspace)
 task_t *task_func(int i)
 {
     static task_t tasks[TASKS_SIZE]={};
+    static char setup=0;
+    if(!setup)
+    {
+        int x;
+        for(x=0;x<TASKS_SIZE;x++)
+        {
+            tasks[x].id=-1;
+        }
+        setup=1;
+    }
     return tasks+i;
 }
 
@@ -242,15 +252,29 @@ task_t *task_schedule(task_t *task)
 
     if(task)
     {
-        for(i=0;task_func(i)->cpu&&i<TASKS_SIZE;i++);
+        for(i=0;task_func(i)->id!=task->id&&i<TASKS_SIZE;i++);
         if(i<TASKS_SIZE)
         {
             *task_func(i)=*task;
+            task=task_func(i);
         }
-        return 0;
+        else
+        {
+            for(i=0;task_func(i)->id!=-1&&i<TASKS_SIZE;i++);
+            if(i<TASKS_SIZE)
+            {
+                *task_func(i)=*task;
+                task=task_func(i);
+            }
+        }
+        if(task->id==-1)
+        {
+            task->id=i;
+            return 0;
+        }
     }
     
-    for(i=last;!task_func(i)->cpu;i++)
+    for(i=last;task_func(i)->id==-1;i++)
     {
         if(i>=TASKS_SIZE)
         {
