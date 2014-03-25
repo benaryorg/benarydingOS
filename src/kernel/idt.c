@@ -27,21 +27,21 @@ void idt_init(void)
 {
 	int i;
 
-	idt_entry_set(0,0x08,intr_stub_0 ,0,IDT_TRAP_GATE);
-	idt_entry_set(1,0x08,intr_stub_1 ,0,IDT_TRAP_GATE);
-	idt_entry_set(2,0x08,intr_stub_2 ,0,IDT_TRAP_GATE);
-	idt_entry_set(3,0x08,intr_stub_3 ,0,IDT_TRAP_GATE);
-	idt_entry_set(4,0x08,intr_stub_4 ,0,IDT_TRAP_GATE);
-	idt_entry_set(5,0x08,intr_stub_5 ,0,IDT_TRAP_GATE);
-	idt_entry_set(6,0x08,intr_stub_6 ,0,IDT_TRAP_GATE);
-	idt_entry_set(7,0x08,intr_stub_7 ,0,IDT_TRAP_GATE);
-	idt_entry_set(8,0x08,intr_stub_8 ,0,IDT_TRAP_GATE);
-	idt_entry_set(9,0x08,intr_stub_9 ,0,IDT_TRAP_GATE);
+	idt_entry_set(0 ,0x08,intr_stub_0 ,0,IDT_TRAP_GATE);
+	idt_entry_set(1 ,0x08,intr_stub_1 ,0,IDT_TRAP_GATE);
+	idt_entry_set(2 ,0x08,intr_stub_2 ,0,IDT_TRAP_GATE);
+	idt_entry_set(3 ,0x08,intr_stub_3 ,0,IDT_TRAP_GATE);
+	idt_entry_set(4 ,0x08,intr_stub_4 ,0,IDT_TRAP_GATE);
+	idt_entry_set(5 ,0x08,intr_stub_5 ,0,IDT_TRAP_GATE);
+	idt_entry_set(6 ,0x08,intr_stub_6 ,0,IDT_TRAP_GATE);
+	idt_entry_set(7 ,0x08,intr_stub_7 ,0,IDT_TRAP_GATE);
+	idt_entry_set(8 ,0x08,intr_stub_8 ,0,IDT_TRAP_GATE);
+	idt_entry_set(9 ,0x08,intr_stub_9 ,0,IDT_TRAP_GATE);
 	idt_entry_set(10,0x08,intr_stub_10,0,IDT_TRAP_GATE);
 	idt_entry_set(11,0x08,intr_stub_11,0,IDT_TRAP_GATE);
 	idt_entry_set(12,0x08,intr_stub_12,0,IDT_TRAP_GATE);
 	idt_entry_set(13,0x08,intr_stub_13,0,IDT_TRAP_GATE);
-	idt_entry_set(14,0x08,intr_stub_14,0,IDT_INTERRUPT_GATE);
+	idt_entry_set(14,0x08,intr_stub_14,0,IDT_TRAP_GATE);
 	idt_entry_set(15,0x08,intr_stub_15,0,IDT_TRAP_GATE);
 	idt_entry_set(16,0x08,intr_stub_16,0,IDT_TRAP_GATE);
 	idt_entry_set(17,0x08,intr_stub_17,0,IDT_TRAP_GATE);

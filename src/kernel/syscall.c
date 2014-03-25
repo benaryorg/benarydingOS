@@ -35,9 +35,6 @@ cpu_state_t *handler_syscall(cpu_state_t *cpu)
 		case SYSCALL_CLEAR:
 			cleardisplay();
 			break;
-		case SYSCALL_TASK_NEXT:
-			asm volatile("int $0x20");
-			break;
 		case SYSCALL_HOOK_INT:
 			setinterrupthandler(cpu->ebx,(void *)cpu->ecx);
 			break;
@@ -52,7 +49,11 @@ cpu_state_t *handler_syscall(cpu_state_t *cpu)
 			break;
 		case SYSCALL_TASK_EXIT:
 			task=get_task_by_cpu(cpu);
-			task->cpu=0;
+//			freetask(task);
+			task->id=-1;
+		case SYSCALL_TASK_NEXT:
+			asm volatile("int $0x20");
+			break;
 //		  free(task->context);
 //			return task_next()->cpu;
 		case SYSCALL_GET_CPU:
