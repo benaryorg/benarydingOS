@@ -29,13 +29,13 @@ void init(multiboot_info_t *mb_info)
 	puts("Memtest OK");
 	puts("Starting Main");
 
-    task_t task;
-    task.id=0;
-    task.context=c;
-    task.cpu=cpu_new(task.context,main,0);
-    task_schedule(&task);
+	task_t task;
+	task.id=0;
+	task.context=c;
+	task.cpu=cpu_new(task.context,main,0);
+	task_schedule(&task);
 //	activate_hardware_ints();
 	puts("Activated Hardware Interrupts");
 	resetcolor();
-    asm volatile("int $0x20");
+	asm volatile("int $0x20");
 }

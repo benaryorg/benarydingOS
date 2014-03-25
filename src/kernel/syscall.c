@@ -21,7 +21,7 @@ void setsyscallhandler(int i,cpu_state_t *(*f)(cpu_state_t *))
 
 cpu_state_t *handler_syscall(cpu_state_t *cpu)
 {
-    task_t *task;
+	task_t *task;
 	cpu_state_t *(*f)(cpu_state_t *)=getsyscallhandler(cpu->eax);
 	if(f)
 	{
@@ -44,20 +44,20 @@ cpu_state_t *handler_syscall(cpu_state_t *cpu)
 		case SYSCALL_HOOK_SYSCALL:
 			setsyscallhandler(cpu->ebx,(void *)cpu->ecx);
 			break;
-        case SYSCALL_INB:
-            *(int *)(cpu->ecx)=inb(cpu->ebx);
-            break;
-        case SYSCALL_OUTB:
-            outb(cpu->ebx,cpu->ecx);
-            break;
+		case SYSCALL_INB:
+			*(int *)(cpu->ecx)=inb(cpu->ebx);
+			break;
+		case SYSCALL_OUTB:
+			outb(cpu->ebx,cpu->ecx);
+			break;
 		case SYSCALL_TASK_EXIT:
-            task=get_task_by_cpu(cpu);
-            task->cpu=0;
-//          free(task->context);
+			task=get_task_by_cpu(cpu);
+			task->cpu=0;
+//		  free(task->context);
 //			return task_next()->cpu;
-        case SYSCALL_GET_CPU:
-            *(uint32_t *)cpu->ebx=(uint32_t)cpu;
-            break;
+		case SYSCALL_GET_CPU:
+			*(uint32_t *)cpu->ebx=(uint32_t)cpu;
+			break;
 		case SYSCALL_REBOOT:
 			break;
 		default:
