@@ -1,5 +1,7 @@
 #include "header.h"
 
+extern task_t *current_task;
+
 void init(multiboot_info_t *mb_info)
 {
 	cleardisplay();
@@ -29,13 +31,12 @@ void init(multiboot_info_t *mb_info)
 	puts("Memtest OK");
 	puts("Starting Main");
 
-	task_t task;
+	task_t task,tmp;
 	task.id=1;
 	task.context=c;
 	task.cpu=cpu_new(task.context,main,0);
 	task_schedule(&task);
-//	activate_hardware_ints();
-	puts("Activated Hardware Interrupts");
+    current_task=&tmp;
 	resetcolor();
 	asm volatile("int $0x20");
 }

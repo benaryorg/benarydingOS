@@ -1,5 +1,7 @@
 #include "header.h"
 
+task_t *current_task=0;
+
 cpu_state_t *(**interrupt_handlers(int i))(cpu_state_t *)
 {
 	static cpu_state_t *(*ints[256])(cpu_state_t *)={};
@@ -63,7 +65,7 @@ cpu_state_t *handler_exception(cpu_state_t *cpu)
 		case 0x0d:
 			resetcolor();
 			printf("General Protection Fault\nError Code: %u\n",(unsigned int)cpu->error);
-			kernelpanic("#GP");
+			kernelpanic("#GP - General Protection Fault");
 			break;
 		case 0x0e:
 			resetcolor();
@@ -141,6 +143,9 @@ cpu_state_t *handler_hardware_int(cpu_state_t *cpu)
 			tss_entry_set(1,(uint32_t)(task->cpu+1));
 			cpu=task->cpu;
 			break;
+        case 0x01:
+            puts("Keyboard");
+            break;
 		default:
 			printf("IRQ %3d\n",intr-0x20);
 			break;
@@ -163,8 +168,9 @@ task_t *get_task_by_cpu(cpu_state_t *cpu)
 cpu_state_t *int_handler(cpu_state_t *cpu)
 {
 	cpu_state_t *(*f)(cpu_state_t *)=getinterrupthandler(cpu->intr);
-	task_t *task=get_task_by_cpu(cpu);
-	task_t *old_task=task;
+//	task_t *task=get_task_by_cpu(cpu);
+    current_task->cpu=cpu;
+	task_t *old_task=current_task;
 	if(!f)
 	{
 		kernelpanic("Unhandeled Interrupt!");
@@ -173,6 +179,7 @@ cpu_state_t *int_handler(cpu_state_t *cpu)
 	{
 		cpu=f(cpu);
 	}
+    task_t *task=current_task;
 	if(task)
 	{
 		if(old_task->cpu->intr>=0x20&&old_task->cpu->intr<0x30)
@@ -193,7 +200,9 @@ cpu_state_t *int_handler(cpu_state_t *cpu)
 
 task_t *task_next(cpu_state_t *cpu)
 {
-	return task_schedule(get_task_by_cpu(cpu));
+    current_task->cpu=cpu;
+    current_task=task_schedule(current_task);
+	return current_task;
 }
 
 cpu_state_t *cpu_new(page_context_t *c,void *ptr,char userspace)
@@ -226,7 +235,7 @@ cpu_state_t *cpu_new(page_context_t *c,void *ptr,char userspace)
 	cpu_state_t *state=(void *)(ptr+stackspace-sizeof(cpu));
 	page_map(c,((uint32_t)state)&~0xFFF,((uint32_t)state)&~0xFFF,PTE_PRESENT|PTE_WRITE|(1<<9));
 //	printf("%x/%x\n",&cpu,state);
-	memcpy(state,&cpu,sizeof(cpu));
+    *state=cpu;
 	return state;
 }
 

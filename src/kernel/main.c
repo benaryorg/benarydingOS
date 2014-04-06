@@ -2,13 +2,18 @@
 
 int main(void)
 {
-	cleardisplay();
+    puts("Main started");
+	activate_hardware_ints();
+	puts("Activated Hardware Interrupts");
+//	cleardisplay();
 	puts("benarydingOS Running!");
 //	puts("Memorydump:");
 //	memdump();
-	cleardisplay();
+//	cleardisplay();
 
 	puts("Awaiting Input!\n");
+
+//    exit(0);
 
 	while(1);
 

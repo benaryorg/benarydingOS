@@ -1,5 +1,7 @@
 #include "header.h"
 
+extern task_t *current_task;
+
 cpu_state_t *(**syscall_handlers(int i))(cpu_state_t *)
 {
 	static cpu_state_t *(*syscalls[256])(cpu_state_t *)={};
@@ -48,7 +50,7 @@ cpu_state_t *handler_syscall(cpu_state_t *cpu)
 			outb(cpu->ebx,cpu->ecx);
 			break;
 		case SYSCALL_TASK_EXIT:
-			task=get_task_by_cpu(cpu);
+			task=current_task;
 //			freetask(task);
 			task->id=-1;
 		case SYSCALL_TASK_NEXT:
