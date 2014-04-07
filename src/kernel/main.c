@@ -3,8 +3,6 @@
 int main(void)
 {
     puts("Main started");
-	activate_hardware_ints();
-	puts("Activated Hardware Interrupts");
 //	cleardisplay();
 	puts("benarydingOS Running!");
 //	puts("Memorydump:");
@@ -12,6 +10,16 @@ int main(void)
 //	cleardisplay();
 
 	puts("Awaiting Input!\n");
+
+    puts("Tasks:");
+    int i;
+    for(i=0;i<TASKS_SIZE;i++)
+    {
+        if(task_func(i)->id>0)
+        {
+            printf("%d: cpu=%x\n",task_func(i)->id,task_func(i)->cpu);
+        }
+    }
 
 //    exit(0);
 

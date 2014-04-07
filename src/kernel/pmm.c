@@ -102,7 +102,8 @@ void *physmalloc(unsigned int size)
 void physmeminit(multiboot_info_t *mb_info)
 {
 	cpu_state_t *cpu;
-	task_t task;
+    page_context_t *c;
+	task_t *task;
 	mem_allocation_t addr;
 	addr.start=addr.end=0;
 
@@ -149,19 +150,21 @@ void physmeminit(multiboot_info_t *mb_info)
 		addr.end=addr.start+length;
 		physmemsetallocation(&addr);
 		puts("\tNew Memory allocated");
-		task.context=page_mk_context(1);
+		c=page_mk_context(1);
+        task=mallocblocks(c,1);
+        task->context=c;
 		for(i=0x1000;i<4*1024*1024;i+=0x1000)
 		{
-			page_map(task.context,i,i,PTE_PRESENT|(1<<9));
+			page_map(task->context,i,i,PTE_PRESENT|(1<<9));
 		}
-		for(j=0;j<0x50000;j+=0x1000)
+		for(j=0;j<0x50;j+=0x1)
 		{
-			page_map(task.context,((uint32_t)load_addr)+j,0x200000+j,PTE_PRESENT|PTE_WRITE|(1<<9));
+			page_map(task->context,((uint32_t)load_addr)+(j*0x5000),0x200000+(j*0x5000),PTE_PRESENT|PTE_WRITE|(1<<9));
 		}
-		cpu=cpu_new(task.context,load_addr,0);
-		task.id=100+i;
-		task.cpu=cpu;
-		task_schedule(&task);
+		cpu=cpu_new(task->context,load_addr,0);
+		task->id=0;
+		task->cpu=cpu;
+		task_schedule(task);
 		puts("\tNew Task added\n");
 	}
 }

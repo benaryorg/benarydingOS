@@ -36,6 +36,8 @@ void init(multiboot_info_t *mb_info)
 	task.context=c;
 	task.cpu=cpu_new(task.context,main,0);
 	task_schedule(&task);
+	activate_hardware_ints();
+	puts("Activated Hardware Interrupts");
 	resetcolor();
 	asm volatile("int $0x20");
 }

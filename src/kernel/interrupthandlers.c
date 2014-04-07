@@ -142,6 +142,7 @@ cpu_state_t *handler_hardware_int(cpu_state_t *cpu)
 			task=task_next(cpu);
 			tss_entry_set(1,(uint32_t)(task->cpu+1));
 			cpu=task->cpu;
+//            printf("Switching task! id=%d\n",current_task->id);
 			break;
         case 0x01:
             puts("Keyboard");
@@ -287,7 +288,7 @@ task_t *task_schedule(task_t *task)
 		}
 	}
 	
-	for(i=last;task_func(i)->id<=0;i++)
+	for(i=last+1;task_func(i)->id<=0;i++)
 	{
 		if(i>=TASKS_SIZE)
 		{
