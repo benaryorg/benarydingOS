@@ -170,7 +170,7 @@ cpu_state_t *int_handler(cpu_state_t *cpu)
 	cpu_state_t *(*f)(cpu_state_t *)=getinterrupthandler(cpu->intr);
 //	task_t *task=get_task_by_cpu(cpu);
 //    current_task->cpu=cpu;
-	task_t *old_task=current_task;
+	cpu_state_t *old_cpu=cpu;
 	if(!f)
 	{
 		kernelpanic("Unhandeled Interrupt!");
@@ -180,18 +180,18 @@ cpu_state_t *int_handler(cpu_state_t *cpu)
 		cpu=f(cpu);
 	}
     task_t *task=current_task;
-	if(task)
+	if(old_cpu)
 	{
-		if(old_task->cpu->intr>=0x20&&old_task->cpu->intr<0x30)
+		if(old_cpu->intr>=0x20&&old_cpu->intr<0x30)
 		{
-			if(old_task->cpu->intr<0x29)
+			if(old_cpu->intr<0x29)
 			{
 				outb(0x20,0x20);
 			}
 			outb(0xa0,0x20);
 		}
 	}
-	if(old_task!=task)
+	if(old_cpu!=task->cpu)
 	{
 		page_activate_context(task->context);
 	}
@@ -273,21 +273,21 @@ task_t *task_schedule(task_t *task)
 		}
 		else
 		{
-			for(i=0;task_func(i)->id!=-1&&i<TASKS_SIZE;i++);
+			for(i=0;task_func(i)->id>0&&i<TASKS_SIZE;i++);
 			if(i<TASKS_SIZE)
 			{
 				*task_func(i)=*task;
 				task=task_func(i);
 			}
 		}
-		if(task->id==-1)
+		if(task->id<=0)
 		{
-			task->id=i;
+			task->id=i+1;
 			return 0;
 		}
 	}
 	
-	for(i=last;task_func(i)->id==-1;i++)
+	for(i=last;task_func(i)->id<=0;i++)
 	{
 		if(i>=TASKS_SIZE)
 		{

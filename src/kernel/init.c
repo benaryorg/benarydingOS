@@ -32,7 +32,7 @@ void init(multiboot_info_t *mb_info)
 	puts("Starting Main");
 
 	task_t task;
-	task.id=1;
+    task.id=0;
 	task.context=c;
 	task.cpu=cpu_new(task.context,main,0);
 	task_schedule(&task);
