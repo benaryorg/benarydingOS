@@ -169,7 +169,7 @@ cpu_state_t *int_handler(cpu_state_t *cpu)
 {
 	cpu_state_t *(*f)(cpu_state_t *)=getinterrupthandler(cpu->intr);
 //	task_t *task=get_task_by_cpu(cpu);
-    current_task->cpu=cpu;
+//    current_task->cpu=cpu;
 	task_t *old_task=current_task;
 	if(!f)
 	{
@@ -200,7 +200,10 @@ cpu_state_t *int_handler(cpu_state_t *cpu)
 
 task_t *task_next(cpu_state_t *cpu)
 {
-    current_task->cpu=cpu;
+    if(current_task)
+    {
+        current_task->cpu=cpu;
+    }
     current_task=task_schedule(current_task);
 	return current_task;
 }
@@ -291,6 +294,7 @@ task_t *task_schedule(task_t *task)
 			i=-1;
 		}
 	}
+    last=i;
 	return task_func(i);
 }
 
