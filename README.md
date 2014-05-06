@@ -79,8 +79,9 @@ Therefore a big "Thanks" and, as we say in German, "Tausend Dank euch allen!"
 
 The main authors are:
 
-benaryorg
-nilsding
+benaryorg, nilsding and all other contributors!
+
+If you want to have _your_ code explicitly mentioned as such, please add a comment!
 
 We *trust* you!
 
