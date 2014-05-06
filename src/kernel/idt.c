@@ -1,5 +1,14 @@
 #include "header.h"
 
+/**
+ * Set IDT entry
+ *
+ * @param intr What interrupt
+ * @param selector Selector
+ * @param handler Handler
+ * @param dpl DPL
+ * @param type Type
+ */
 void idt_entry_set(int intr,uint16_t selector,void *handler,int dpl,int type)
 {
 	int_desc_t entry;
@@ -11,11 +20,22 @@ void idt_entry_set(int intr,uint16_t selector,void *handler,int dpl,int type)
 	*idt_func(intr)=entry;
 }
 
+/**
+ * Get ith IDT entry
+ *
+ * @param i What entry
+ */
 int_desc_t idt_entry_get(int i)
 {
 	return *idt_func(i);
 }
 
+/**
+ * Internal function for handling the IDT (DO NOT USE)
+ * 
+ * @param i what entry
+ * @return The entry pointer
+ */
 int_desc_t *idt_func(int i)
 {
 	static int_desc_t idt[IDT_SIZE]={};
@@ -23,10 +43,14 @@ int_desc_t *idt_func(int i)
 	return idt+i;
 }
 
+/**
+ * Initialise the IDT
+ */
 void idt_init(void)
 {
 	int i;
 
+    //Exceptions
 	idt_entry_set(0 ,0x08,intr_stub_0 ,0,IDT_TRAP_GATE);
 	idt_entry_set(1 ,0x08,intr_stub_1 ,0,IDT_TRAP_GATE);
 	idt_entry_set(2 ,0x08,intr_stub_2 ,0,IDT_TRAP_GATE);
@@ -47,6 +71,7 @@ void idt_init(void)
 	idt_entry_set(17,0x08,intr_stub_17,0,IDT_TRAP_GATE);
 	idt_entry_set(18,0x08,intr_stub_18,0,IDT_TRAP_GATE);
 
+    //Hardware Interrupts
 	idt_entry_set(32,0x08,intr_stub_32,0,IDT_INTERRUPT_GATE);
 	idt_entry_set(33,0x08,intr_stub_33,0,IDT_TRAP_GATE);
 	idt_entry_set(34,0x08,intr_stub_34,0,IDT_TRAP_GATE);
@@ -64,8 +89,10 @@ void idt_init(void)
 	idt_entry_set(46,0x08,intr_stub_46,0,IDT_TRAP_GATE);
 	idt_entry_set(47,0x08,intr_stub_47,0,IDT_TRAP_GATE);
 
+    //Syscalls
 	idt_entry_set(48,0x08,intr_stub_48,0,IDT_TRAP_GATE);
 
+    //Set standard handlers
 	for(i=0;i<0x20;i++)
 	{
 		setinterrupthandler(i,handler_exception);

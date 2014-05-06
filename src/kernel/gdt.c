@@ -1,5 +1,13 @@
 #include "header.h"
 
+/**
+ * Set ith entry in the GDT
+ * 
+ * @param i Entry
+ * @param base Base
+ * @param limit Limit
+ * @param flags The flags to use
+ */
 void gdt_entry_set(int i,unsigned int base,unsigned int limit,int flags)
 {
 	uint64_t entry=0;
@@ -12,11 +20,23 @@ void gdt_entry_set(int i,unsigned int base,unsigned int limit,int flags)
 	*gdt_func(i)=entry;
 }
 
+/**
+ * Get the ith GDT entry
+ *
+ * @param i What entry
+ * @return entry content
+ */
 uint64_t gdt_entry_get(int i)
 {
 	return *gdt_func(i);
 }
 
+/**
+ * The function for handling the GDT (INTERNAL USE ONLY, DO NOT USE)
+ *
+ * @param i What entry
+ * @return the pointer to the content
+ */
 uint64_t *gdt_func(int i)
 {
 	static uint64_t gdt[GDT_SIZE]={};
@@ -24,9 +44,14 @@ uint64_t *gdt_func(int i)
 	return gdt+i;
 }
 
+/**
+ * Initialise the GDT
+ */
 void gdt_init(void)
 {
+    //NULL Entry
 	gdt_entry_set(0,0,0,0);
+
 	gdt_entry_set(1,0,0xfffff,GDT_FLAG_SEGMENT|GDT_FLAG_32_BIT|GDT_FLAG_CODESEG|GDT_FLAG_4K_GRAN|GDT_FLAG_PRESENT);
 	gdt_entry_set(2,0,0xfffff,GDT_FLAG_SEGMENT|GDT_FLAG_32_BIT|GDT_FLAG_DATASEG|GDT_FLAG_4K_GRAN|GDT_FLAG_PRESENT);
 	gdt_entry_set(3,0,0xfffff,GDT_FLAG_SEGMENT|GDT_FLAG_32_BIT|GDT_FLAG_CODESEG|GDT_FLAG_4K_GRAN|GDT_FLAG_PRESENT|GDT_FLAG_RING3);

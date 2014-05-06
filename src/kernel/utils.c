@@ -1,5 +1,8 @@
 #include "header.h"
 
+/**
+ * Halts the CPU and deactivates the Interrupts
+ */
 void haltcpu(void)
 {
 	while(1)
@@ -8,6 +11,11 @@ void haltcpu(void)
 	}
 }
 
+/**
+ * Kernel Panic
+ *
+ * @param str Message
+ */
 void kernelpanic(const char *str)
 {
 	char s[256] = "Kernel Panic: ";
@@ -18,6 +26,9 @@ void kernelpanic(const char *str)
 	haltcpu();
 }
 
+/**
+ * Reloads the registers
+ */
 void register_reload(void)
 {
 	asm volatile
@@ -33,7 +44,13 @@ void register_reload(void)
 	);
 }
 
-/* inefficient and nonstandard pow() */
+/**
+ * Inefficient and nonstandard pow()
+ *
+ * @param a base
+ * @param b exponent
+ * @return result
+ */
 int _pow(int a, int b) {
 	int i;
 	int retval = 1;
@@ -43,7 +60,12 @@ int _pow(int a, int b) {
 	return retval;
 }
 
-/* converts the string pointed to by nptr to int. */
+/**
+ * Converts the string pointed to by nptr to int
+ *
+ * @param nptr pointer to the string
+ * @return Integer
+ */
 int atoi (const char *nptr) {
 	int i, len, retval = 0;
 	len = strlen(nptr);
@@ -57,6 +79,14 @@ int atoi (const char *nptr) {
 	return retval;
 }
 
+/**
+ * Converts an integer to a string
+ *
+ * @param value The integer to convert
+ * @param str where to write the string to
+ * @param base What base to use
+ * @return str
+ */
 const char *itoa (int value, char *str, int base) {
 	int i, j, pos = 0;
 	char c;
@@ -91,6 +121,9 @@ const char *itoa (int value, char *str, int base) {
 	return str;
 }
 
+/**
+ * see itoa only unsigned
+ */
 const char *uitoa (unsigned int value, char *str, int base) {
 	int i, j, pos = 0;
 	char c;
