@@ -1,18 +1,37 @@
 #include "header.h"
 
+//Current task //TODO fix this
 extern task_t *current_task;
 
+/**
+ * Function for handling the syscall handlers
+ *
+ * @param i The function (0-255)
+ * @return A pointer to the function pointer in the array
+ */
 cpu_state_t *(**syscall_handlers(int i))(cpu_state_t *)
 {
 	static cpu_state_t *(*syscalls[256])(cpu_state_t *)={};
 	return syscalls+i;
 }
 
+/**
+ * Return the function pointer to the ith syscall handler function
+ *
+ * @param i The ith function
+ * @return The function pointer
+ */
 cpu_state_t *(*getsyscallhandler(int i))(cpu_state_t *)
 {
 	return *syscall_handlers(i);
 }
 
+/**
+ * Sets the syscallhandler for the syscall i
+ *
+ * @param i What syscall
+ * @param f The function pointer
+ */
 void setsyscallhandler(int i,cpu_state_t *(*f)(cpu_state_t *))
 {
 	if(i>0xFF)

@@ -1,5 +1,8 @@
 #include "header.h"
 
+/**
+ * Reprogram the programmable interrupt controller (stolen from lowlevel.eu)
+ */
 void pic_init(void)
 {
 	//Master-PIC initialisieren
@@ -19,7 +22,18 @@ void pic_init(void)
 	outb(0xa0,0x0);
 }
 
+/**
+ * Activate the interrupts
+ */
 void activate_hardware_ints(void)
 {
 	asm volatile("sti");
+}
+
+/**
+ * Deactivate the interrupts
+ */
+void deactivate_hardware_ints(void)
+{
+	asm volatile("cli");
 }

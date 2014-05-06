@@ -1,5 +1,8 @@
 #include "header.h"
 
+/**
+ * printf
+ */
 int printf(const char *format,...)
 {
 	const char *p;

@@ -1,5 +1,8 @@
 #include "header.h"
 
+/**
+ * Function for moving the lines on the display up (used if the console is full)
+ */
 void movelinesup(void)
 {
 	memcpy(BUFFER_TEXT,BUFFER_TEXT+BUFFER_TEXT_WIDTH*2,(BUFFER_TEXT_HEIGHT-1)*BUFFER_TEXT_WIDTH*2);
@@ -11,6 +14,9 @@ void movelinesup(void)
 	}
 }
 
+/**
+ * Clears the console and resets the cursor position
+ */
 void cleardisplay(void)
 {
 	size_t i;

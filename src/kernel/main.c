@@ -11,6 +11,7 @@ int main(void)
 
 	puts("Awaiting Input!\n");
 
+    //Print out the tasks
     puts("Tasks:");
     int i;
     for(i=0;i<TASKS_SIZE;i++)
@@ -23,6 +24,7 @@ int main(void)
 
 //    exit(0);
 
+    //TODO remove endless looop
 	while(1);
 
 	exit(0);

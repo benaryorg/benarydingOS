@@ -1,7 +1,13 @@
 #include "header.h"
 
 //TODO memtest should use vmm not pmm
-
+/**
+ * Memtest function for testing the memory
+ *
+ * @param arrs How many arrays to use
+ * @param bytes Size of one array
+ * @return Not null if an error occured
+ */
 int memtest(const int arrs,const int bytes)
 {
 	unsigned char **f=physmalloc(sizeof(unsigned char *)*arrs);
@@ -39,6 +45,9 @@ int memtest(const int arrs,const int bytes)
 	return 0;
 }
 
+/**
+ * Slowly print all allocated memory
+ */
 void memdump(void)
 {
 	int i;
