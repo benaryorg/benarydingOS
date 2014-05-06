@@ -1,5 +1,13 @@
 #include "header.h"
 
+/**
+ * Allocate and map blocks
+ * TODO comment
+ * 
+ * @param c context to map the blocks in
+ * @param blocks how many blocks to map
+ * @return the pointer to the first block (virtual address)
+ */
 void *mallocblocks(page_context_t *c,int blocks)
 {
 	if(blocks>1024)
