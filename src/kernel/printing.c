@@ -1,5 +1,12 @@
 #include "header.h"
 
+/**
+ * Prints the character to the console and moves cursor. Also accepts control characters!
+ * TODO comment
+ *
+ * @param c character to print
+ * @return the character printed
+ */
 int putchar(int c)
 {
 	int position=getposition();
@@ -37,6 +44,12 @@ int putchar(int c)
 	return c;
 }
 
+/**
+ * Prints an integer
+ *
+ * @param i the integer to print
+ * @return the length printed
+ */
 size_t printint(int i)
 {
 	size_t n=0;
@@ -66,6 +79,12 @@ size_t printint(int i)
 	return n;
 }
 
+/**
+ * Simple puts! Prints string and '\n' and returns length
+ *
+ * @param s string
+ * @return count of characters printed
+ */
 int puts(const char *s)
 {
 	int i;

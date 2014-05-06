@@ -1,20 +1,41 @@
 #include "header.h"
 
+/**
+ * Physical free
+ *
+ * @param ptr address to free
+ */
 void physfree(void *ptr)
 {
 	physmemrmalloc(ptr);
 }
 
+/**
+ * Get last possible address
+ *
+ * @return address
+ */
 void *getramsize(void)
 {
 	return ram_size_func(0);
 }
 
+/**
+ * Set last possible address
+ *
+ * @param ptr Address to set
+ */
 void setramsize(void *ptr)
 {
 	ram_size_func(ptr);
 }
 
+/**
+ * Internal function for this pointer (DO NOT USE)
+ *
+ * @param ptr set if not 0
+ * @return return ramsize
+ */
 void *ram_size_func(void *ptr)
 {
 	static void *ramsize=0;
@@ -25,6 +46,12 @@ void *ram_size_func(void *ptr)
 	return ramsize;
 }
 
+/**
+ * Allocate one block
+ * TODO comment
+ *
+ * @return the address of the block
+ */
 void *physmallocblock(void)
 {
 	static uint32_t last=0;
@@ -60,6 +87,13 @@ void *physmallocblock(void)
 	return 0;
 }
 
+/**
+ * Allocate size block
+ * TODO comment
+ *
+ * @param size count of blocks
+ * @return the address of the first block
+ */
 void *physmalloc(unsigned int size)
 {
 //	static int last=0;
@@ -99,6 +133,12 @@ void *physmalloc(unsigned int size)
 	return 0;
 }
 
+/**
+ * Initialize physical memory
+ * TODO comment
+ * 
+ * @param mb_info multiboot structure
+ */
 void physmeminit(multiboot_info_t *mb_info)
 {
 	cpu_state_t *cpu;
@@ -169,6 +209,11 @@ void physmeminit(multiboot_info_t *mb_info)
 	}
 }
 
+/**
+ * Set an allocation from tile.start to tile.end
+ *
+ * @param tile the tile to allocate
+ */
 void physmemsetallocation(mem_allocation_t *tile)
 {
 	size_t i;
@@ -191,6 +236,11 @@ void physmemsetallocation(mem_allocation_t *tile)
 	}
 }
 
+/**
+ * Remove allocations at ptr
+ *
+ * @param ptr The pointer to the start of the allocation to remove
+ */
 void physmemrmalloc(void *ptr)
 {
 	size_t i;
@@ -207,11 +257,25 @@ void physmemrmalloc(void *ptr)
 	}
 }
 
+/**
+ * Get ith allocation
+ *
+ * @param i What tile
+ * @return "Allocation Tile"
+ */
 mem_allocation_t *physmemgetallocation(size_t i)
 {
 	return phys_mem_allocation(i,0,0);
 }
 
+/**
+ * Backend for allocated tiles (DO NOT USE)
+ *
+ * @param i tile to set/return
+ * @param tile tile to set entry to
+ * @param set if not 0 tile is set else returned
+ * @return if set is 0 then returns the pointer to the tile in the array else 0
+ */
 mem_allocation_t *phys_mem_allocation(size_t i,mem_allocation_t *tile,char set)
 {
 	static mem_allocation_t stack[MEM_STACK_SIZE];

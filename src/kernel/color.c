@@ -44,6 +44,7 @@ unsigned char color(char data, char set)
 	}
 	return 0;
 }
+
 /**
  * The frontend function for getting the console color
  *

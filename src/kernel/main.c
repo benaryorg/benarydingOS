@@ -18,7 +18,7 @@ int main(void)
     {
         if(task_func(i)->id>0)
         {
-            printf("%d: cpu=%x\n",task_func(i)->id,task_func(i)->cpu);
+            printf("%d: cpu=%x\n",task_func(i)->id,(unsigned int)task_func(i)->cpu);
         }
     }
 

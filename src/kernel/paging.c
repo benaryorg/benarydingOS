@@ -1,5 +1,11 @@
 #include "header.h"
 
+/**
+ * Initialise paging
+ * TODO comment
+ *
+ * @return First and basic paging context
+ */
 page_context_t *paging_init(void)
 {
 	static page_context_t *kernel_ctx;
@@ -28,6 +34,13 @@ page_context_t *paging_init(void)
 	return kernel_ctx;
 }
 
+/**
+ * Create a basic paging context
+ * TODO comment
+ *
+ * @param use_phys Tells if physical addresses should be used
+ * @return the context
+ */
 page_context_t *page_mk_context(char use_phys)
 {
 	page_context_t *c=physmallocblock();//(sizeof(page_context_t));
@@ -45,16 +58,35 @@ page_context_t *page_mk_context(char use_phys)
 	return c;
 }
 
+/**
+ * Activates the context
+ *
+ * @param c Context to activate
+ */
 void page_activate_context(page_context_t *c)
 {
 	asm volatile("movl %0, %%cr3" : :  "r" (c->pagedir));
 }
 
+/**
+ * Invalidate page at virtual address virt to prevent caching
+ *
+ * @param virt Address of page to invalidate
+ */
 void invalpage(uint32_t virt)
 {
 	asm volatile("invlpg %0" : : "m" (*(char *)virt));
 }
 
+/**
+ * Map a page into context
+ * TODO comment
+ *
+ * @param c pageing context
+ * @param virt Virtual address to map to
+ * @param phys Physical address to map
+ * @param flags The flags to use
+ */
 void page_map(page_context_t *c,uint32_t virt,uint32_t phys,uint32_t flags)
 {
 //	printf("Map p%x to v%x\n",phys,virt);

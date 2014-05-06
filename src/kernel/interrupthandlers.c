@@ -1,23 +1,48 @@
 #include "header.h"
 
+//TODO I hate global vars!
 task_t *current_task=0;
 
+/**
+ * Internal interrupt handling (DO NOT USE)
+ *
+ * @params i the number of the entry
+ * @return The pointer to the array entry (function pointer)
+ */
 cpu_state_t *(**interrupt_handlers(int i))(cpu_state_t *)
 {
 	static cpu_state_t *(*ints[256])(cpu_state_t *)={};
 	return ints+i;
 }
 
+/**
+ * Get the ith interrupt handler
+ *
+ * @param i What entry
+ * @return the handler
+ */
 cpu_state_t *(*getinterrupthandler(int i))(cpu_state_t *)
 {
 	return *interrupt_handlers(i);
 }
 
+/**
+ * Set the ith interrupt handler
+ *
+ * @param i What entry
+ * @param f The Handler
+ */
 void setinterrupthandler(int i,cpu_state_t *(*f)(cpu_state_t *))
 {
 	*interrupt_handlers(i)=f;
 }
 
+/**
+ * Interrupt handler for exceptions
+ *
+ * @praram cpu CPU state
+ * @return CPU state to continue with
+ */
 cpu_state_t *handler_exception(cpu_state_t *cpu)
 {
 	int intr=cpu->intr;
@@ -131,6 +156,12 @@ cpu_state_t *handler_exception(cpu_state_t *cpu)
 	return cpu;
 }
 
+/**
+ * Interrupt handler for hardware interrupts
+ *
+ * @praram cpu CPU state
+ * @return CPU state to continue with
+ */
 cpu_state_t *handler_hardware_int(cpu_state_t *cpu)
 {
 	int intr=cpu->intr;
@@ -154,6 +185,12 @@ cpu_state_t *handler_hardware_int(cpu_state_t *cpu)
 	return cpu;
 }
 
+/**
+ * Get the task by the cpu state
+ *
+ * @praram cpu CPU state
+ * @return pointer to the task
+ */
 task_t *get_task_by_cpu(cpu_state_t *cpu)
 {
 	task_t *task=0;
@@ -166,6 +203,12 @@ task_t *get_task_by_cpu(cpu_state_t *cpu)
 	return i<TASKS_SIZE?task:0;
 }
 
+/**
+ * Prehandler for all Interrupts (Also resets PIC if needed)
+ *
+ * @param cpu CPU State
+ * @return CPU state to continue with
+ */
 cpu_state_t *int_handler(cpu_state_t *cpu)
 {
 	cpu_state_t *(*f)(cpu_state_t *)=getinterrupthandler(cpu->intr);
@@ -181,6 +224,7 @@ cpu_state_t *int_handler(cpu_state_t *cpu)
 		cpu=f(cpu);
 	}
     task_t *task=current_task;
+    //TODO Comment
 	if(old_cpu)
 	{
 		if(old_cpu->intr>=0x20&&old_cpu->intr<0x30)
@@ -199,6 +243,13 @@ cpu_state_t *int_handler(cpu_state_t *cpu)
 	return cpu;
 }
 
+/**
+ * Get next task
+ *
+ * TODO fix!
+ * @param cpu actual CPU state
+ * @return task pointer to the next task
+ */
 task_t *task_next(cpu_state_t *cpu)
 {
     if(current_task)
@@ -209,6 +260,14 @@ task_t *task_next(cpu_state_t *cpu)
 	return current_task;
 }
 
+/**
+ * Creates a new CPU state, with stack and so on, cpu starts at ptr
+ *
+ * @param c Context for paging
+ * @param ptr Pointer to the start of executable code
+ * @param userspace Userspace?
+ * @return CPU state
+ */
 cpu_state_t *cpu_new(page_context_t *c,void *ptr,char userspace)
 {
 	const int stackspace=16384;
@@ -243,6 +302,13 @@ cpu_state_t *cpu_new(page_context_t *c,void *ptr,char userspace)
 	return state;
 }
 
+/**
+ * Handles the task array
+ * TODO convert tasks to list
+ *
+ * @param i number of entry
+ * @return task pointer to array element
+ */
 task_t *task_func(int i)
 {
 	static task_t tasks[TASKS_SIZE]={};
@@ -259,6 +325,13 @@ task_t *task_func(int i)
 	return tasks+i;
 }
 
+/**
+ * Gets a task and returns the task to be executed next
+ * TODO comment
+ *
+ * @param task old task
+ * @return new task
+ */
 task_t *task_schedule(task_t *task)
 {
 	static int last=0;
@@ -299,6 +372,11 @@ task_t *task_schedule(task_t *task)
 	return task_func(i);
 }
 
+/**
+ * Exit current task/process
+ *
+ * @param ret Return value
+ */
 void exit(int ret)
 {
 	while(1)
