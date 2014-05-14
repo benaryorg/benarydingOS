@@ -67,7 +67,7 @@ benaryorg: @benaryorg
 
 ## Licensing
 
-This projekt is under the license found in the LICENSE file!
+This project is under the license found in the LICENSE file!
 
 Some essential parts of our code are very similar to the code on lowlevel.eu and mostly based on it!
 
