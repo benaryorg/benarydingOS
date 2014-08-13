@@ -2,6 +2,9 @@
 
 An Operating System by benaryorg and nilsding
 
+Warning! Abandoned at the moment!
+Me (benaryorg) will start a complete rewrite soon.
+
 ## How to build
 
 Building our OS easy!  First, you set up the build environment and then you just run `make`.
